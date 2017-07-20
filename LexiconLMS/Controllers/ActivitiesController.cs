@@ -7,12 +7,32 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LexiconLMS.Controllers
 {
     public class ActivitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        [Authorize(Roles = "Student")]
+        public ActionResult Assignments()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
+            Course UserCourse = currentUser.Course;
+            ICollection<Module> Modules = UserCourse.Modules;
+            ICollection<Activity> Activities = new List<Activity>();
+            foreach (var module in Modules)
+            {
+                foreach (var activity in module.Activities)
+                {
+                    Activities.Add(activity);
+                }
+            }
+            Activities = Activities.Where(a => a.ActivityType == ActivityType.Assignment).ToList();
+            return View(Activities);
+        }
 
         // GET: Activities
         public ActionResult Index()
