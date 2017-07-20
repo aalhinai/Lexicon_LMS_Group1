@@ -1,0 +1,57 @@
+﻿@model IEnumerable<LexiconLMS.Models.Module>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModuleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModuleDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModuleStartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModuleEndDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModuleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModuleDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModuleStartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModuleEndDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ModuleId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ModuleId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ModuleId })
+        </td>
+    </tr>
+}
+
+</table>

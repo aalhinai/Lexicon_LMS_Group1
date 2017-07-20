@@ -10,7 +10,18 @@ namespace LexiconLMS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            { 
+                if (User.IsInRole("Teacher"))
+                {
+                    return RedirectToAction("Index", "Courses");
+                }
+                else if (User.IsInRole("Student"))
+                {
+                    return RedirectToAction("Index", "Courses");
+                }
+            }
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult About()
