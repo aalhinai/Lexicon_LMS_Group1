@@ -11,7 +11,7 @@ namespace LexiconLMS.Models
         public DateTime CourseEndDate { get; set; }
         public string CourseDescription { get; set; }
 
-        public virtual ICollection<User> Students { get; set; }
+        public virtual ICollection<ApplicationUser> Students { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
     }

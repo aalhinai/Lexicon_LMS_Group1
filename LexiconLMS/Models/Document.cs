@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Models
 {
     public class Document
     {
+        [Key]
         public int DocId { get; set; }
         public string DocName { get; set; }
         public string DocDescription { get; set; }
@@ -15,7 +17,7 @@ namespace LexiconLMS.Models
         public int? ActivityId { get; set; }
 
 
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual Course Course { get; set; }
         public virtual Module Module { get; set; }
         public virtual Activity Activity { get; set; }

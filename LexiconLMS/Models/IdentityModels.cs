@@ -3,12 +3,26 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
 
 namespace LexiconLMS.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        //public int UserId { get; set; }
+        //public string UserName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        public string UserFullName { get { return UserFirstName + UserLastName; } }
+        //public string UserEmail { get; set; }
+        public DateTime UserStartDate { get; set; }
+        public int? CourseId { get; set; }
+
+        public virtual Course Course { get; set; }
+        public virtual ICollection<Document> Documents { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -21,7 +35,7 @@ namespace LexiconLMS.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("LexiconLMS", throwIfV1Schema: false)
         {
         }
 
@@ -29,5 +43,11 @@ namespace LexiconLMS.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Models.Activity> activities { get; set; }
+        public DbSet<Models.Course> courses { get; set; }
+        public DbSet<Models.Document> documents { get; set; }
+        public DbSet<Models.Module> modules { get; set; }
     }
+
 }
