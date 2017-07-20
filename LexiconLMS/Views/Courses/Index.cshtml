@@ -8,6 +8,14 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @if(ViewBag.currentAction == "History")
+    {
+        @Html.ActionLink("Hide History", "Index", new { currentAction = "Index" })
+    }
+    else
+    {
+        @Html.ActionLink("Show History", "Index", new { currentAction = "History"})
+    }
 </p>
 <table class="table">
     <tr>

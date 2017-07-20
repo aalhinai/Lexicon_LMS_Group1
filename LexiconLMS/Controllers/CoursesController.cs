@@ -15,9 +15,15 @@ namespace LexiconLMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index()
+        public ActionResult Index(string currentAction)
         {
-            return View(db.courses.ToList());
+            ViewBag.currentAction = currentAction;
+            var Courses = db.courses.Select(c => c);
+            if (currentAction != "History")
+            {
+                Courses = Courses.Where(c => c.CourseEndDate > DateTime.Now);
+            }
+            return View(Courses.ToList());
         }
 
         // GET: Courses/Details/5
