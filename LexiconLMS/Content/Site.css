@@ -28,7 +28,8 @@ body {
     /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.428571429;*/
-    color: darkblue;
+    padding-top: 70px;
+    /*color: darkblue;*/
     background-color: lightyellow;
 }
 
@@ -70,11 +71,11 @@ th, tr, td {
     background-color: darkblue;
 }
 .navbar-inverse {
-    background-color: darkblue;
+    /*background-color: darkblue;*/
     border-color:lightblue;
 }
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    background-color: darkblue;
+    /*background-color: darkblue;*/
     border-color:lightblue;
 }
 .navbar-inverse .navbar-brand {
