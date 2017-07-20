@@ -194,9 +194,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707200803487_DbSet.cs" />
-    <Compile Include="Migrations\201707200803487_DbSet.Designer.cs">
-      <DependentUpon>201707200803487_DbSet.cs</DependentUpon>
+    <Compile Include="Migrations\201707200832091_DbSet.cs" />
+    <Compile Include="Migrations\201707200832091_DbSet.Designer.cs">
+      <DependentUpon>201707200832091_DbSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707200935498_Added Init.cs" />
+    <Compile Include="Migrations\201707200935498_Added Init.Designer.cs">
+      <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707200939343_add init database.cs" />
+    <Compile Include="Migrations\201707200939343_add init database.Designer.cs">
+      <DependentUpon>201707200939343_add init database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -268,11 +276,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707200803487_DbSet.resx">
-      <DependentUpon>201707200803487_DbSet.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +292,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707200832091_DbSet.resx">
+      <DependentUpon>201707200832091_DbSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707200935498_Added Init.resx">
+      <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707200939343_add init database.resx">
+      <DependentUpon>201707200939343_add init database.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
