@@ -284,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="pics\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707200832091_DbSet.resx">
