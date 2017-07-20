@@ -29,7 +29,7 @@ namespace LexiconLMS.Migrations
                 {
                     //creates Roll
                     var role = new IdentityRole { Name = roleName };
-
+ 
                     var result = roleManager.Create(role);
                     if(!result.Succeeded)
                     {
@@ -67,7 +67,7 @@ namespace LexiconLMS.Migrations
 
             var teacherUser = userManager.FindByName("teacher@lexicon.se");
             userManager.AddToRole(teacherUser.Id, "Teacher");
-            //teacherUser.UserFirstName.Replace(Null, "Teacher");
+           // teacherUser.UserFirstName.Replace(null, "Teacher");
 
 
             var studentUser = userManager.FindByName("student@lexicon.se");
