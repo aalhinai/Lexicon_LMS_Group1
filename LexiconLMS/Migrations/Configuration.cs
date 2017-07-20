@@ -67,12 +67,46 @@ namespace LexiconLMS.Migrations
 
             var teacherUser = userManager.FindByName("teacher@lexicon.se");
             userManager.AddToRole(teacherUser.Id, "Teacher");
-           // teacherUser.UserFirstName.Replace(null, "Teacher");
+            // teacherUser.UserFirstName.Replace(null, "Teacher");
 
 
             var studentUser = userManager.FindByName("student@lexicon.se");
-            userManager.AddToRole(teacherUser.Id, "Student");
+            userManager.AddToRole(studentUser.Id, "Student");
             //teacherUser.UserFirstName.Replace(null, "Student");
+
+
+
+
+            // adding Course data
+            context.courses.AddOrUpdate(
+                c => c.CourseName,
+                new Course {CourseName = ".Net", CourseStartDate= DateTime.Now, CourseEndDate=DateTime.Now.AddMonths(4) , CourseDescription = "see the PDF files "},
+                new Course { CourseName = "Java", CourseStartDate = DateTime.Now, CourseEndDate = DateTime.Now.AddMonths(4), CourseDescription = "see the PDF files " });
+                context.SaveChanges();
+
+
+            // adding Module testData
+            context.modules.AddOrUpdate(
+                m => m.ModuleName,
+                new Module { ModuleName = "CSharp", ModuleDescription = "See CSharp PDF ", ModuleStartDate = DateTime.Now, ModuleEndDate = DateTime.Now.AddMonths(1), CourseId = context.courses.First().CourseId },
+                new Module { ModuleName = "ASP.NET MVC 5", ModuleDescription = "See CSharp PDF ", ModuleStartDate = DateTime.Now.AddMonths(1), ModuleEndDate = DateTime.Now.AddMonths(2), CourseId = context.courses.First().CourseId });
+            context.SaveChanges();
+
+
+            // adding Activities testData
+            
+            context.activities.AddOrUpdate(
+                a => a.ActivityName,
+                new Activity { ActivityType = ActivityType.ELearning, ActivityName = "ABC", ActivityStartDate = DateTime.Now, ActivityEndDate = DateTime.Now.AddMonths(4), ActivityDescription = "See the Activity PDF", ModuleId = context.modules.FirstOrDefault().ModuleId },
+                new Activity { ActivityType = ActivityType.Assignment,
+                ActivityName = "Assignment", ActivityStartDate = DateTime.Now, ActivityEndDate = DateTime.Now.AddMonths(4), ActivityDescription = "See the Activity PDF", ModuleId = context.modules.FirstOrDefault().ModuleId });
+            context.SaveChanges();
+
+
+
+
+
+
 
         }
     }
