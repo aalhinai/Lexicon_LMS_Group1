@@ -197,10 +197,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707200832091_DbSet.cs" />
-    <Compile Include="Migrations\201707200832091_DbSet.Designer.cs">
-      <DependentUpon>201707200832091_DbSet.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201707200935498_Added Init.cs" />
     <Compile Include="Migrations\201707200935498_Added Init.Designer.cs">
       <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
@@ -310,11 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="pics\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707200832091_DbSet.resx">
-      <DependentUpon>201707200832091_DbSet.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707200935498_Added Init.resx">
       <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
     </EmbeddedResource>
