@@ -15,7 +15,7 @@ namespace LexiconLMS.Models
         //public string UserName { get; set; }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
-        public string UserFullName { get { return UserFirstName + UserLastName; } }
+        public string UserFullName { get { return UserFirstName + " " + UserLastName; } }
         //public string UserEmail { get; set; }
         public DateTime UserStartDate { get; set; }
         public int? CourseId { get; set; }
