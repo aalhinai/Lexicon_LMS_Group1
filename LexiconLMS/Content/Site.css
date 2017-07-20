@@ -135,3 +135,18 @@ th, tr, td {
     }
 }
 /* <-- Stefans tillägg */
+
+/**********************************
+Responsive navbar-brand image CSS
+- Remove navbar-brand padding for firefox bug workaround
+- add 100% height and width auto ... similar to how bootstrap img-responsive class works
+***********************************/
+navbar-header .navbar-brand {
+  padding: 0px;
+}
+
+.navbar> .navbar-header> .navbar-brand> img {
+  height: 110px;
+  padding: 15px;
+  width: 38px;
+}
