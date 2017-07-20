@@ -10,18 +10,23 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index(string currentAction)
+        public ActionResult Index(string currentAction, string searchValue)
         {
             ViewBag.currentAction = currentAction;
             var Courses = db.courses.Select(c => c);
             if (currentAction != "History")
             {
                 Courses = Courses.Where(c => c.CourseEndDate > DateTime.Now);
+            }
+            if (!string.IsNullOrWhiteSpace(searchValue))
+            {
+                Courses = Courses.Where(c => c.CourseName.Contains(searchValue));
             }
             return View(Courses.ToList());
         }

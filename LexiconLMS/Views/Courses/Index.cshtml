@@ -17,6 +17,11 @@
         @Html.ActionLink("Show History", "Index", new { currentAction = "History"})
     }
 </p>
+<form>
+    <input type="text" name="searchValue" />
+    <input type="hidden" name="currentAction" value="@ViewBag.currentAction" />
+    <button type="submit"><i class='glyphicon glyphicon-search'></i></button>
+</form>
 <table class="table">
     <tr>
         <th>
