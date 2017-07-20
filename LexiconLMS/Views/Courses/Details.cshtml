@@ -41,7 +41,11 @@
         <dd>
             @Html.DisplayFor(model => model.CourseDescription)
         </dd>
-
+        <dt> Course Participants</dt>
+        @foreach(var item in Model.Students)
+        {
+            <dd>@item.UserFullName</dd>
+        }
     </dl>
 </div>
 <p>

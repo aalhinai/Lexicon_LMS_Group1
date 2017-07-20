@@ -79,6 +79,14 @@ namespace LexiconLMS.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string UserFirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string UserLastName { get; set; }
     }
 
     public class ResetPasswordViewModel
