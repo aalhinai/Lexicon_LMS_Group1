@@ -23,96 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-/* Stefans tillägg --> */
-body {
-    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.428571429;*/
-    padding-top: 70px;
-    /*color: darkblue;*/
-    background-color: lightyellow;
-}
-
-a { text-decoration:none; color:darkblue; font-weight:bold; }
-a:link    { color:darkblue; }
-a:visited { color:darkblue; }
-a:active  { color:lightgreen; }
-a:hover   { color:lightgreen !important; } /* !important gillas inte Av Github. Det tyder på dålig struktur i css!! */
-a:focus   { color:lightgreen !important; } /* (Men det tyder ju snarare på krånglig struktur i bootstrap.css) */
-
-button,
-html [type="button"],
-html input[type="button"],
-/*input[type="reset"],*/
-input[type="submit"] {
-    border-radius: 10px;
-    color: darkblue;
-    background-color: lightgoldenrodyellow; /*lightgoldenrodyellow; lightblue;*/
-    border-color: darkblue;
-}
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-    color: #d00000;
-    background-color: lightgreen;
-    border-color: #d00000;
-}
-
-.table {
-    border: 3px solid darkblue;
-    border-collapse: separate;
-    border-radius: 10px;
-    width: auto;
-    /*margin-bottom: 10px;*/
-}
-th, tr, td {
-    border: 1px solid darkblue;
-    padding: 8px !important; /* <--- important!? */
-}
-.nav-bar {
-    background-color: darkblue;
-}
-.navbar-inverse {
-    /*background-color: darkblue;*/
-    border-color:lightblue;
-}
-.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    /*background-color: darkblue;*/
-    border-color:lightblue;
-}
-.navbar-inverse .navbar-brand {
-    color: lightyellow;
-}
-.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
-    color: darkblue;
-    background-color: lightgoldenrodyellow;
-}
-/*.navbar-inverse .navbar-brand > a:hover {
-    color: #d00000;
-}*/
-.navbar-inverse .navbar-nav > li > a {
-    color: lightyellow;
-}
-.navbar-inverse .navbar-nav > .dropdown > a .caret {
-    border-top-color:  lightgoldenrodyellow;
-    border-bottom-color: #999999;
-}
-/*.navbar-inverse .navbar-nav > .dropdown > a:active .caret {
-    border-top-color: #d00000;
-    border-bottom-color: #999999;
-}*/
-.navbar-inverse .navbar-nav > .dropdown > a:hover .caret {
-    border-top-color: #d00000;
-    border-bottom-color: #999999;
-}
-.navbar-inverse .navbar-nav > .dropdown > a:focus .caret {
-    border-top-color: #d00000;
-    border-bottom-color: #999999;
-}
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    color:darkblue;
-    text-decoration: none;
-    background-color: lightgoldenrodyellow;
-}
-
+/* Stefan don't remove!*/
 @media print {
     a[href]:after {
         content: none /*!important*/;
@@ -135,7 +46,7 @@ th, tr, td {
         padding: 6px !important;
     }
 }
-/* <-- Stefans tillägg */
+/* <-- Stefan */
 
 /**********************************
 Responsive navbar-brand image CSS
