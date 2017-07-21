@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
+using System.Web.Security;
+using System.Collections.Generic;
 
 namespace LexiconLMS.Controllers
 {
@@ -17,6 +19,7 @@ namespace LexiconLMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -50,6 +53,12 @@ namespace LexiconLMS.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public ActionResult TeacherList()
+        {
+            List<ApplicationUser> users = db.Users.Where(u => u.Roles.Where(r => r.RoleId == db.Roles.Where(role => role.Name == "Teacher").FirstOrDefault().Id).Any()).ToList();
+            return View(users);
         }
 
         //
