@@ -7,35 +7,29 @@
 <h2>@Model.CourseName</h2>
 
 <div>
-    <h4>To-Do This Week</h4>
+    <h4 class="text-center">To-Do This Week</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <table>
-            <tr>
-                <th>
-                    Activity Name
-                </th>
-            </tr>
-            @foreach (var Module in Model.Modules)
+    <table>
+        <tr>
+            <th>
+                Activity Name
+            </th>
+        </tr>
+        @foreach (var Module in Model.Modules)
+        {
+            foreach (var Activity in Module.Activities)
             {
-                foreach (var Activity in Module.Activities)
+                if ((DateTime.Now - Activity.ActivityStartDate).Hours <= 168) //within this week, check time value.
                 {
-                    if ((DateTime.Now - Activity.ActivityStartDate).Hours <= 168) //within this week, check time value.
-                    {
-
-
-
-                            </dt>
-
-                            <dd>
-                                @Activity.ActivityName
-                            </dd>
-                    }
+                    <tr>
+                        <td>
+                            @Activity.ActivityName
+                        </td>
+                    </tr>
                 }
             }
-        </table>
-
-    </dl>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
