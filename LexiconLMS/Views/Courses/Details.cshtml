@@ -9,38 +9,17 @@
 <div>
     <h4>Course</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseStartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseStartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseEndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseEndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseDescription)
-        </dd>
+    <button id="moduleButton" onclick="ShowModules()">Modules</button>
+    <button id="participantsButton" onclick="ShowParticipants">Participants</button>
+    <dl class="dl-horizontal" id="modules">
+        <dt>Module Names</dt>
+        @foreach (var item in Model.Modules)
+        {
+            <dd>@item.ModuleName</dd>
+        }
+    </dl>
+    <dl class="dl-horizontal" id="participants" style="display:None">
+        
         <dt> Course Participants</dt>
         @foreach(var item in Model.Students)
         {
@@ -52,3 +31,6 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script>
+    ShowModules()
+</script>
