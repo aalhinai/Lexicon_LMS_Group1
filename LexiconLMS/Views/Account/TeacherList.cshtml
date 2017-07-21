@@ -18,4 +18,7 @@
         </tr>
     }
 </table>
-@Html.ActionLink("Create New Teacher", "Register", new { role = "Teacher"})
+@if (User.IsInRole("Teacher"))
+{
+    @Html.ActionLink("Create New Teacher", "Register", new { role = "Teacher"})
+}
