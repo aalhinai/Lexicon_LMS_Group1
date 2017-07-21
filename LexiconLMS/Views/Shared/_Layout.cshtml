@@ -73,7 +73,10 @@
                                 {
                                     <li>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
                                 }
-                                <li>@Html.ActionLink("Course Participants", "Index", "Home")</li>
+                                @if (User.IsInRole("Student"))
+                                {
+                                    <li>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>
+                                }
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>

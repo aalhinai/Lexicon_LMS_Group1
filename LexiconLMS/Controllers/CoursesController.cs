@@ -1,4 +1,5 @@
 ﻿using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Data;
 using System.Data.Entity;
@@ -28,7 +29,11 @@ namespace LexiconLMS.Controllers
             }
             return View(Courses.ToList());
         }
-
+        public ActionResult Participants()
+        {
+            Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            return View(course);
+        }
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
