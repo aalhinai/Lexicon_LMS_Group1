@@ -34,6 +34,12 @@ namespace LexiconLMS.Controllers
             Course course = db.Users.Find(User.Identity.GetUserId()).Course;
             return View(course);
         }
+        [Authorize(Roles = "Student")]
+        public ActionResult MyCourse()
+        {
+            Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            return View(course);
+        }
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
