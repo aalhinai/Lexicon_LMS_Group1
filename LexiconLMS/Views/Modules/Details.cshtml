@@ -54,5 +54,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Request.UrlReferrer.ToString()">Back to list</a>
 </p>
