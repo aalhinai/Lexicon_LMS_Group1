@@ -150,6 +150,7 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.Role = role;
             ViewBag.course = courseId;
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View();
         }
 
@@ -158,7 +159,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, int? Course, string Role)
+        public async Task<ActionResult> Register(RegisterViewModel model, int? Course, string Role, string redirectString)
         {
             if (ModelState.IsValid)
             {
@@ -175,7 +176,7 @@ namespace LexiconLMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(redirectString);
                 }
                 AddErrors(result);
             }
