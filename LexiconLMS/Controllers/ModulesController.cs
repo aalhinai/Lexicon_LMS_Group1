@@ -1,4 +1,5 @@
 ﻿using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -11,9 +12,10 @@ namespace LexiconLMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
+        [Authorize(Roles = "Student")]
         public ActionResult Index()
         {
-            var modules = db.modules.Include(m => m.Course);
+            var modules = db.Users.Find(User.Identity.GetUserId()).Course.Modules;
             return View(modules.ToList());
         }
 
