@@ -33,9 +33,10 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Modules/Create
-        public ActionResult Create()
+        public ActionResult Create(int Course)
         {
-            ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName");
+            ViewBag.Course = Course;
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View();
         }
 
@@ -45,13 +46,13 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "ModuleId,ModuleName,ModuleDescription,ModuleStartDate,ModuleEndDate,CourseId")] Module module)
+        public ActionResult Create([Bind(Include = "ModuleId,ModuleName,ModuleDescription,ModuleStartDate,ModuleEndDate,CourseId")] Module module, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(redirectString);
             }
 
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
@@ -95,6 +96,7 @@ namespace LexiconLMS.Controllers
         // GET: Modules/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -111,12 +113,12 @@ namespace LexiconLMS.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string redirectString)
         {
             Module module = db.modules.Find(id);
             db.modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect(redirectString);
         }
 
         protected override void Dispose(bool disposing)
