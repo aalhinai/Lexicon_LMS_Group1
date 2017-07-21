@@ -9,28 +9,50 @@
 <div>
     <h4>Course</h4>
     <hr />
-    <button id="moduleButton" onclick="ShowModules()">Modules</button>
-    <button id="participantsButton" onclick="ShowParticipants">Participants</button>
-    <dl class="dl-horizontal" id="modules">
-        <dt>Module Names</dt>
+    <button onclick="Show('modules')">Modules</button>
+    <button onclick="Show('participants')">Participants</button>
+    <table class="table" id="modules">
+        <tr>
+            <th>Module Names</th>
+        </tr>
         @foreach (var item in Model.Modules)
         {
-            <dd>@item.ModuleName</dd>
+            <tr>
+                <td>@Html.ActionLink(item.ModuleName, "Details", "Modules", new { id = item.ModuleId }, null)</td>
+            </tr>
         }
-    </dl>
-    <dl class="dl-horizontal" id="participants" style="display:None">
-        
-        <dt> Course Participants</dt>
-        @foreach(var item in Model.Students)
+    </table>
+    <table class="table" id="participants" style="display:None">
+        <tr>
+            <th>Course Participant</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var item in Model.Students)
         {
-            <dd>@item.UserFullName</dd>
+            <tr>
+                <td>@item.UserFullName</td>
+                <td>@item.Email</td>
+                <td></td>
+            </tr>
         }
-    </dl>
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 <script>
-    ShowModules()
+    Show = function (element)
+    {
+        document.getElementById(element).setAttribute('style', 'display:table');
+        if (element == "participants")
+        {
+            document.getElementById('modules').setAttribute('style', 'display:none;')
+        }
+        else
+        {
+            document.getElementById('participants').setAttribute('style', 'display:none;')
+        }
+    }
 </script>
