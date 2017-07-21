@@ -9,46 +9,50 @@
 <div>
     <h4>Course</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseStartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseStartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseEndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseEndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseDescription)
-        </dd>
-        <dt> Course Participants</dt>
-        @foreach(var item in Model.Students)
+    <button onclick="Show('modules')">Modules</button>
+    <button onclick="Show('participants')">Participants</button>
+    <table class="table" id="modules">
+        <tr>
+            <th>Module Names</th>
+        </tr>
+        @foreach (var item in Model.Modules)
         {
-            <dd>@item.UserFullName</dd>
+            <tr>
+                <td>@Html.ActionLink(item.ModuleName, "Details", "Modules", new { id = item.ModuleId }, null)</td>
+            </tr>
         }
-    </dl>
+    </table>
+    <table class="table" id="participants" style="display:None">
+        <tr>
+            <th>Course Participant</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var item in Model.Students)
+        {
+            <tr>
+                <td>@item.UserFullName</td>
+                <td>@item.Email</td>
+                <td></td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script>
+    Show = function (element)
+    {
+        document.getElementById(element).setAttribute('style', 'display:table');
+        if (element == "participants")
+        {
+            document.getElementById('modules').setAttribute('style', 'display:none;')
+        }
+        else
+        {
+            document.getElementById('participants').setAttribute('style', 'display:none;')
+        }
+    }
+</script>

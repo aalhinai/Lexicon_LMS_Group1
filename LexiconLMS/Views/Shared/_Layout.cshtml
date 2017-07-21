@@ -50,6 +50,8 @@
 
     <div class="container">
         <div class="row">
+            @if (User.Identity.IsAuthenticated)
+            {
             <div class="col-sm-2">
                 <div class="sidebar-nav">
                     <div class="navbar navbar-default" role="navigation">
@@ -67,13 +69,17 @@
                                 <li class="active">@Html.ActionLink("Courses", "Index", "Courses") </li>
                                 <li>@Html.ActionLink("Teacher List", "Index", "Home")</li>
                                 <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
-                                <li>@Html.ActionLink("Assignments", "Index", "Activities")</li>
+                                @if(User.IsInRole("Student"))
+                                {
+                                    <li>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
+                                }
                                 <li>@Html.ActionLink("Course Participants", "Index", "Home")</li>
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>
                 </div>
             </div>
+            }
             <div class="col-sm-10">
                 <div class="container body-content">
                     @RenderBody()
