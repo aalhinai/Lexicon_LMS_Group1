@@ -6,7 +6,7 @@
 
 <h2>Index</h2>
 
-<p>
+<p class="hidden-print">
     @Html.ActionLink("Create New", "Create")
     @if(ViewBag.currentAction == "History")
     {
@@ -17,7 +17,7 @@
         @Html.ActionLink("Show History", "Index", new { currentAction = "History"})
     }
 </p>
-<form>
+<form class="hidden-print">
     <input type="text" name="searchValue" />
     <input type="hidden" name="currentAction" value="@ViewBag.currentAction" />
     <button type="submit"><i class='glyphicon glyphicon-search'></i></button>
@@ -36,7 +36,7 @@
         <th>
             @Html.DisplayNameFor(model => model.CourseDescription)
         </th>
-        <th></th>
+        <th class="hidden-print"></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -58,13 +58,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.CourseDescription)
         </td>
-        <td>
+        <td class="hidden-print">
             @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
             @if (item.CourseEndDate > DateTime.Now)
             {
                 @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <span> |</span>
 
-                @Html.ActionLink("New Student","Register", "Account", new { courseId = item.CourseId, role = "Student" }, null) <span> |</span>
+                @Html.ActionLink("New Student", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, null) <span> |</span>
             }
             @Html.ActionLink("Delete", "Delete", new { id=item.CourseId }) 
         </td>
