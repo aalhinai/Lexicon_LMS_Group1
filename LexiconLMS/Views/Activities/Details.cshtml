@@ -62,6 +62,9 @@
     </dl>
 </div>
 <p class="hidden-print">
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (User.IsInRole("Teacher"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId })
+    }
+    @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
 </p>
