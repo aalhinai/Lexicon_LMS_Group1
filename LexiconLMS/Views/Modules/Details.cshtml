@@ -49,10 +49,19 @@
         <dd>
             @Html.DisplayFor(model => model.ModuleEndDate)
         </dd>
-
+        <dt>
+            Activities
+        </dt>
+        @foreach (var item in Model.Activities)
+        {
+            <dd>
+                @item.ActivityName
+            </dd>
+        }
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) |
+    @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId}, null)
 </p>

@@ -4,15 +4,34 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LexiconLMS.Controllers
 {
     public class ActivitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        [Authorize(Roles = "Student")]
+        public ActionResult Assignments()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
+            Course UserCourse = currentUser.Course;
+            ICollection<Module> Modules = UserCourse.Modules;
+            ICollection<Activity> Activities = new List<Activity>();
+            foreach (var module in Modules)
+            {
+                foreach (var activity in module.Activities)
+                {
+                    Activities.Add(activity);
+                }
+            }
+            Activities = Activities.Where(a => a.ActivityType == ActivityType.Assignment).ToList();
+            return View(Activities);
+        }
 
         // GET: Activities
         public ActionResult Index()
@@ -37,9 +56,10 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName");
+            ViewBag.ModuleId = id;
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View();
         }
 
@@ -48,13 +68,14 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity)
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Create([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(redirectString);
             }
 
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
@@ -82,6 +103,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity)
         {
             if (ModelState.IsValid)
@@ -112,6 +134,7 @@ namespace LexiconLMS.Controllers
         // POST: Activities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
             Activity activity = db.activities.Find(id);

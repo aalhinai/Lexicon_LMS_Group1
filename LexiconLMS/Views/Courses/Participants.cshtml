@@ -1,0 +1,21 @@
+﻿@model LexiconLMS.Models.Course
+
+@{
+    ViewBag.Title = "Participants";
+}
+
+<h2>Participants</h2>
+
+<table class="table" id="participants">
+    <tr>
+        <th>Course Participant</th>
+        <th>Email</th>
+    </tr>
+    @foreach (var item in Model.Students)
+    {
+        <tr>
+            <td>@item.UserFullName</td>
+            <td>@item.Email</td>
+        </tr>
+    }
+</table>

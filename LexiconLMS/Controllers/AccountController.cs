@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
+using System.Web.Security;
+using System.Collections.Generic;
 
 namespace LexiconLMS.Controllers
 {
@@ -17,6 +19,7 @@ namespace LexiconLMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -50,6 +53,12 @@ namespace LexiconLMS.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public ActionResult TeacherList()
+        {
+            List<ApplicationUser> users = db.Users.Where(u => u.Roles.Where(r => r.RoleId == db.Roles.Where(role => role.Name == "Teacher").FirstOrDefault().Id).Any()).ToList();
+            return View(users);
         }
 
         //
@@ -141,6 +150,7 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.Role = role;
             ViewBag.course = courseId;
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View();
         }
 
@@ -149,7 +159,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, int? Course, string Role)
+        public async Task<ActionResult> Register(RegisterViewModel model, int? Course, string Role, string redirectString)
         {
             if (ModelState.IsValid)
             {
@@ -166,7 +176,7 @@ namespace LexiconLMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(redirectString);
                 }
                 AddErrors(result);
             }

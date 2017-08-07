@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
@@ -30,7 +29,17 @@ namespace LexiconLMS.Controllers
             }
             return View(Courses.ToList());
         }
-
+        public ActionResult Participants()
+        {
+            Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            return View(course);
+        }
+        [Authorize(Roles = "Student")]
+        public ActionResult MyCourse()
+        {
+            Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            return View(course);
+        }
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
@@ -55,6 +64,7 @@ namespace LexiconLMS.Controllers
         // POST: Courses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course)
@@ -70,6 +80,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,6 +100,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course)
         {
             if (ModelState.IsValid)
@@ -101,6 +113,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -116,6 +129,7 @@ namespace LexiconLMS.Controllers
         }
 
         // POST: Courses/Delete/5
+        [Authorize(Roles = "Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

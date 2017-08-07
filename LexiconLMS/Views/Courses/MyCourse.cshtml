@@ -1,0 +1,37 @@
+﻿@model LexiconLMS.Models.Course
+
+@{
+    ViewBag.Title = "MyCourse";
+}
+
+<h2>@Model.CourseName</h2>
+
+<div>
+    <h4 class="text-center">To-Do This Week</h4>
+    <hr />
+    <table>
+        <tr>
+            <th>
+                Activity Name
+            </th>
+        </tr>
+        @foreach (var Module in Model.Modules)
+        {
+            foreach (var Activity in Module.Activities)
+            {
+                if ((DateTime.Now - Activity.ActivityStartDate).Hours <= 168) //within this week, check time value.
+                {
+                    <tr>
+                        <td>
+                            @Activity.ActivityName
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
