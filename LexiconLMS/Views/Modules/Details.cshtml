@@ -60,8 +60,16 @@
         }
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
-    @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) |
-    @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId}, null)
+<p class="hidden-print">
+    @if (User.IsInRole("Teacher"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
+        @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) <span> |</span>
+        @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId }, null)
+    }
+    else
+    {
+        @Html.ActionLink("Back to list", "Index", "Modules", new { id = Model.CourseId }, null)
+    }
+    
 </p>

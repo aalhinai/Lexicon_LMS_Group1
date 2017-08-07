@@ -149,7 +149,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Register(int? courseId, string role)
         {
             ViewBag.Role = role;
-            ViewBag.course = courseId;
+            ViewBag.Course = courseId;
             ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View();
         }
