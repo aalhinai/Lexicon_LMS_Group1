@@ -40,7 +40,12 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    string endedClass = "";
+    if (item.CourseEndDate < DateTime.Now)
+    {
+        endedClass = "danger";
+    }
+    <tr class=@endedClass>
         <td>
             @Html.DisplayFor(modelItem => item.CourseName)
         </td>
@@ -54,10 +59,14 @@
             @Html.DisplayFor(modelItem => item.CourseDescription)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
             @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId }) |
-            @Html.ActionLink("New Student","Register", "Account", new { courseId = item.CourseId, role = "Student" }, null)
+            @if (item.CourseEndDate > DateTime.Now)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <span> |</span>
+
+                @Html.ActionLink("New Student","Register", "Account", new { courseId = item.CourseId, role = "Student" }, null) <span> |</span>
+            }
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId }) 
         </td>
     </tr>
 }
