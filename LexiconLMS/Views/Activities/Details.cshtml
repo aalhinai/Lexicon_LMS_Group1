@@ -10,6 +10,7 @@
     <h4>Activity</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.Module.ModuleName)
         </dt>
@@ -60,7 +61,7 @@
 
     </dl>
 </div>
-<p>
+<p class="hidden-print">
     @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

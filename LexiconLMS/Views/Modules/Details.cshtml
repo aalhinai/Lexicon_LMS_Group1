@@ -60,7 +60,7 @@
         }
     </dl>
 </div>
-<p>
+<p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
