@@ -18,7 +18,7 @@ namespace LexiconLMS.Controllers
                 }
                 else if (User.IsInRole("Student"))
                 {
-                    return RedirectToAction("Index", "Courses");
+                    return RedirectToAction("MyCourse", "Courses");
                 }
             }
             return RedirectToAction("Login", "Account");

@@ -15,6 +15,7 @@ namespace LexiconLMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
+        [Authorize(Roles = "Teacher")]
         public ActionResult Index(string currentAction, string searchValue)
         {
             ViewBag.currentAction = currentAction;

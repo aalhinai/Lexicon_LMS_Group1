@@ -8,8 +8,8 @@
 
 <div>
     <hr />
-    <button onclick="Show('modules')">Modules</button>
-    <button onclick="Show('participants')">Participants</button>
+    <button id="showModules" onclick="Show('modules')" class="btn btn-default" style="display:none">Modules</button>
+    <button id="showParticipants" onclick="Show('participants')" class="btn btn-default">Participants</button>
     <table class="table" id="modules">
         <tr>
             <th>Module Names</th>
@@ -51,10 +51,14 @@
         if (element == "participants")
         {
             document.getElementById('modules').setAttribute('style', 'display:none;')
+            document.getElementById('showModules').setAttribute('style', 'display:inline;')
+            document.getElementById('showParticipants').setAttribute('style', 'display:none;')
         }
         else
         {
             document.getElementById('participants').setAttribute('style', 'display:none;')
+            document.getElementById('showParticipants').setAttribute('style', 'display:inline;')
+            document.getElementById('showModules').setAttribute('style', 'display:none;')
         }
     }
 </script>
