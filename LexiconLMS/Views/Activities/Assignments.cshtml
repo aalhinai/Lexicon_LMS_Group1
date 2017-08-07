@@ -22,27 +22,37 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Module.ModuleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityEndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityDescription)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ActivityId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ActivityId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ActivityId })
-        </td>
-    </tr>
-}
-
+    @if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Module.ModuleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityDescription)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ActivityId })
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>There are currently no assignments.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    }
 </table>
