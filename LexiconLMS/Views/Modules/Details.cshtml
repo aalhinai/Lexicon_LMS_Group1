@@ -55,7 +55,7 @@
         @foreach (var item in Model.Activities)
         {
             <dd>
-                @item.ActivityName
+                @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
             </dd>
         }
     </dl>
