@@ -1,11 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
+@using LexiconLMS.Utilities
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Lexicon Learning Management System </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -53,19 +56,25 @@
                             <span class="visible-xs navbar-brand">Sidebar menu</span>
                         </div>
                         <div class="navbar-collapse collapse sidebar-navbar-collapse">
-                            <ul class="nav navbar-nav">
+                            <ul  class="nav navbar-nav" @*class="nav nav-tabs"*@ >
                                 @if (User.IsInRole("Teacher"))
                                 {
-                                    <li class="active">@Html.ActionLink("Courses", "Index", "Courses") </li>
+                                    @*<li class="active">@Html.ActionLink("Courses", "Index", "Courses") </li>*@
+                                    <li class='@Html.IsActive("Courses", "Index")'>@Html.ActionLink("Courses", "Index", "Courses") </li>
+
                                 }
-                                @if(User.IsInRole("Student"))
-                                {
-                                    <li>@Html.ActionLink("Home", "MyCourse", "Courses")</li>
+                                    @if (User.IsInRole("Student"))
+                                    {
+                                    @*<li>@Html.ActionLink("Home", "MyCourse", "Courses")</li>
                                     <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
                                     <li>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
-                                    <li>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>
-                                }
-                                <li>@Html.ActionLink("Teacher List", "TeacherList", "Account")</li>
+                                    <li>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>*@
+                                    <li class='@Html.IsActive("Courses", "MyCourse")'>@Html.ActionLink("Home", "MyCourse", "Courses")</li>
+                                    <li class='@Html.IsActive("Modules", "Index")'>@Html.ActionLink("Modules", "Index", "Modules")</li>
+                                    <li class='@Html.IsActive("Activities", "Assignments")'>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
+                                    <li class='@Html.IsActive("Courses", "Participants")'>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>
+                                    }
+                                <li class='@Html.IsActive("Account", "TeacherList")'>@Html.ActionLink("Teacher List", "TeacherList", "Account")</li>
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>
@@ -85,6 +94,7 @@
     </div>
 
        
+   
 
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
