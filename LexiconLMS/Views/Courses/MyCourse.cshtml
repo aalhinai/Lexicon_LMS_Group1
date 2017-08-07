@@ -4,45 +4,32 @@
     ViewBag.Title = "MyCourse";
 }
 
-<h2>MyCourse</h2>
+<h2>@Model.CourseName</h2>
 
 <div>
-    <h4>Course</h4>
+    <h4 class="text-center">To-Do This Week</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseStartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseStartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseEndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseEndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseDescription)
-        </dd>
-
-    </dl>
+    <table>
+        <tr>
+            <th>
+                Activity Name
+            </th>
+        </tr>
+        @foreach (var Module in Model.Modules)
+        {
+            foreach (var Activity in Module.Activities)
+            {
+                if ((DateTime.Now - Activity.ActivityStartDate).Hours <= 168) //within this week, check time value.
+                {
+                    <tr>
+                        <td>
+                            @Activity.ActivityName
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |

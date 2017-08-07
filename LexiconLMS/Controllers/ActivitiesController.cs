@@ -56,9 +56,10 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName");
+            ViewBag.ModuleId = id;
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View();
         }
 
@@ -68,13 +69,13 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity)
+        public ActionResult Create([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(redirectString);
             }
 
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);

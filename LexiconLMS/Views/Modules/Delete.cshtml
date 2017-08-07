@@ -53,7 +53,7 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm(new { redirectString = ViewBag.RedirectString })) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
