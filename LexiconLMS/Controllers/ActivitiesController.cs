@@ -77,7 +77,7 @@ namespace LexiconLMS.Controllers
                 db.SaveChanges();
                 return Redirect(redirectString);
             }
-
+            ViewBag.RedirectString = redirectString;
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }
@@ -94,6 +94,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }
@@ -104,14 +105,15 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity)
+        public ActionResult Edit([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity, string RedirectString)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(RedirectString);
             }
+            ViewBag.RedirectString = RedirectString;
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }

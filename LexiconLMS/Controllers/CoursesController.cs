@@ -93,6 +93,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.RedirectString = Request.UrlReferrer.ToString();
             return View(course);
         }
 
@@ -102,14 +103,15 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course)
+        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course, string RedirectString)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(RedirectString);
             }
+            ViewBag.RedirectString = RedirectString;
             return View(course);
         }
 

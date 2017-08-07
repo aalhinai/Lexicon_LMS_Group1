@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Activities", new { RedirectString = ViewBag.RedirectString}))
 {
     @Html.AntiForgeryToken()
     
@@ -74,7 +74,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@ViewBag.RedirectString">Back</a>
 </div>
 
 @section Scripts {
