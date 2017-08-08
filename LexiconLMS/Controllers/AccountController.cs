@@ -55,7 +55,12 @@ namespace LexiconLMS.Controllers
 
         public ActionResult TeacherList()
         {
-            List<ApplicationUser> users = db.Users.Where(u => u.Roles.Where(r => r.RoleId == db.Roles.Where(role => role.Name == "Teacher").FirstOrDefault().Id).Any()).ToList();
+            List<ApplicationUser> fullUsers = db.Users.Where(u => u.Roles.Where(r => r.RoleId == db.Roles.Where(role => role.Name == "Teacher").FirstOrDefault().Id).Any()).ToList();
+            List<DisplayUserViewModel> users = new List<DisplayUserViewModel>();
+            foreach (var item in fullUsers)
+            {
+                users.Add(new DisplayUserViewModel { Email = item.Email, UserFirstName = item.UserFirstName, UserLastName = item.UserLastName, Id = item.Id });
+            }
             return View(users);
         }
 
@@ -107,7 +112,8 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser user = db.Users.Find(id);
+            ApplicationUser fullUser = db.Users.Find(id);
+            DisplayUserViewModel user = new DisplayUserViewModel { Email = fullUser.Email, UserFirstName = fullUser.UserFirstName, UserLastName = fullUser.UserLastName };
             if (user == null)
             {
                 return HttpNotFound();
@@ -264,7 +270,9 @@ namespace LexiconLMS.Controllers
                 }
                 AddErrors(result);
             }
-
+            ViewBag.RedirectString = redirectString;
+            ViewBag.Role = Role;
+            ViewBag.Course = Course;
             // If we got this far, something failed, redisplay form
             return View(model);
         }

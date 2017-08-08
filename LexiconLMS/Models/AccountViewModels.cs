@@ -117,4 +117,30 @@ namespace LexiconLMS.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class DisplayUserViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string UserFirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string UserLastName { get; set; }
+
+        public string UserFullName
+        {
+            get
+            {
+                return UserFirstName + " " + UserFirstName;
+            }
+        }
+
+        public string Id { get; set; }
+    }
 }
