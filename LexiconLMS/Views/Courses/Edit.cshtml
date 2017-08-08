@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CourseStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CourseStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.CourseStartDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.CourseStartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CourseEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CourseEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.CourseEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.CourseEndDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -63,4 +63,24 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    @Scripts.Render("~/bundles/jqueryuiTime")
+    @Styles.Render("~/Content/cssjqryUiTime")
+    <script type="text/javascript">
+
+     $(document).ready(function () {
+         $('.date-picker').datetimepicker({
+             dateFormat: "dd/MM/yy",
+             changeMonth: true,
+             changeYear: true,
+             minDate: new Date(),
+             yearRange: "+0:+1",
+             controlType: 'select',
+             timeFormat: 'hh:mm TT'
+
+         });
+
+     });
+    </script>
 }
