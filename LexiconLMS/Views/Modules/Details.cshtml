@@ -53,7 +53,10 @@
     <table class="table">
         <tr>
             <th>Activity Name</th>
-            <th></th>
+            @if (User.IsInRole("Teacher"))
+            {
+                <th></th>
+            }
         </tr>
         @foreach (var item in Model.Activities)
             {
@@ -61,9 +64,12 @@
                 <td>
                     @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
                 </td>
-                <td>
-                    @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
-                </td>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
+                    </td>
+                }
             </tr>
         }
     </table>
