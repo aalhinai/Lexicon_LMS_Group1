@@ -22,21 +22,22 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.ModuleName, "Details", new { id = item.ModuleId })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModuleDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModuleStartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModuleEndDate)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.ModuleName, "Details", new { id = item.ModuleId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleEndDate)
+            </td>
+        </tr>
+    }
 
 </table>
