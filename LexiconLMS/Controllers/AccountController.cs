@@ -1,16 +1,14 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using LexiconLMS.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using LexiconLMS.Models;
-using System.Web.Security;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace LexiconLMS.Controllers
 {
@@ -99,6 +97,64 @@ namespace LexiconLMS.Controllers
                     return View(model);
             }
         }
+
+
+        // GET: /Account/Delete/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(user);
+        }
+
+        //POST: AccountCountroller/Delete/5
+        [Authorize(Roles = "Teacher")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Account/Edit/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit(string id)
+        {
+            return View();
+        }
+
+
+        //POST: Account/Edit/5
+       // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Teacher")]
+        //public ActionResult Edit([Bind(Include = "Email, UserLastName, UserFirstName")] ApplicationUser user, string RedirectString)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(User).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return Redirect(RedirectString);
+        //    }
+        //    ViewBag.RedirectString = RedirectString;
+        //    return View();
+        //}
+
+
 
         //
         // GET: /Account/VerifyCode
