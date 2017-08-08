@@ -15,6 +15,10 @@
         <tr>
             <td>@item.UserFullName</td>
             <td>@item.Email</td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span>|</span> 
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            </td>
         </tr>
     }
 </table>

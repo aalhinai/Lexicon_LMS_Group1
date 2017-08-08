@@ -1,10 +1,10 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace LexiconLMS.Models
 {
@@ -48,6 +48,8 @@ namespace LexiconLMS.Models
         public DbSet<Models.Course> courses { get; set; }
         public DbSet<Models.Document> documents { get; set; }
         public DbSet<Models.Module> modules { get; set; }
+
+        public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 
 }
