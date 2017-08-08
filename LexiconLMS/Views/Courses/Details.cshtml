@@ -31,12 +31,14 @@
                 <button id="showModules" onclick="Show('modules')" class="btn btn-default" style="font-weight:bold">Modules</button>
             </th>
             <th>Email</th>
+            <th></th>
         </tr>
         @foreach (var item in Model.Students)
         {
             <tr>
                 <td>@item.UserFullName</td>
                 <td>@item.Email</td>
+                <td>@Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id}, null)</td>
             </tr>
         }
     </table>
@@ -44,7 +46,9 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Create New Module", "Create", "Modules", new { Course = Model.CourseId,  }, null)
+    <span id="ModuleLink"> @Html.ActionLink("Create New Module", "Create", "Modules", new { Course = Model.CourseId }, null) </span>
+    <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, null)</span>
+
 </p>
 <script>
     Show = function (element)
@@ -53,10 +57,14 @@
         if (element == "participants")
         {
             document.getElementById('modules').setAttribute('style', 'display:none;')
+            document.getElementById('StudentLink').setAttribute('style', 'display: inline;')
+            document.getElementById('ModuleLink').setAttribute('style', 'display: none;')
         }
         else
         {
             document.getElementById('participants').setAttribute('style', 'display:none;')
+            document.getElementById('ModuleLink').setAttribute('style', 'display: inline;')
+            document.getElementById('StudentLink').setAttribute('style', 'display: none;')
         }
     }
 </script>
