@@ -7,10 +7,10 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm("Edit", "Activities", new { redirectString = ViewBag.RedirectString}))
+@using (Html.BeginForm("Edit", "Activities", new { redirectString = ViewBag.RedirectString }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Activity</h4>
         <hr />
@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ActivityStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ActivityStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ActivityStartDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ActivityStartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ActivityEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ActivityEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ActivityEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ActivityEndDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -80,10 +80,32 @@
     }
     else
     {
-        @Html.ActionLink("Back", "Details", "Activities", new { id = Model.ActivityId})
+        @Html.ActionLink("Back", "Details", "Activities", new { id = Model.ActivityId })
     }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    @Scripts.Render("~/bundles/jqueryuiTime")
+    @Styles.Render("~/Content/cssjqryUiTime")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.date-picker').datetimepicker({
+                //dateFormat: "dd/MM/yy",
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                yearRange: "+0:+1",
+                controlType: 'select',
+                timeFormat: 'HH:mm'
+                //timeFormat: 'hh:mm TT'
+
+            });
+
+        });
+    </script>
 }
