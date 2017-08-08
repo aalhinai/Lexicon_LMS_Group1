@@ -64,7 +64,7 @@
             }
             else
             {
-                @Html.ActionLink("Back", "Details")
+                @Html.ActionLink("Back", "Details", "Courses", new { id = Model.CourseId }, null)
             }
         </div>
     }

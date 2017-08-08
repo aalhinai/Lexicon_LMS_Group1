@@ -146,6 +146,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.RedirectString = redirectCheck();
             return View(activity);
         }
 
@@ -153,12 +154,19 @@ namespace LexiconLMS.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string redirectString)
         {
             Activity activity = db.activities.Find(id);
             db.activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (redirectString != "Empty")
+            {
+                return Redirect(redirectString);
+            }
+            else
+            {
+                return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+            }
         }
 
         private string redirectCheck()
