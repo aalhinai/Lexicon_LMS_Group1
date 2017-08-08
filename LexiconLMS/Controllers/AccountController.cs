@@ -112,7 +112,14 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            
+            if (Request.UrlReferrer != null) // Check if a redirect string can be created.
+            {
+                ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            }
+            else // If a redirect string is not available we set the value to "Empty".
+            {
+                ViewBag.RedirectString = "Empty";
+            }
             return View(user);
         }
 
@@ -120,12 +127,19 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string id, string redirectString)
         {
             ApplicationUser user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (redirectString != "Empty") // If the value is not set to "Empty" we can redirect based on our redirect string.
+            {
+                return Redirect(redirectString);
+            }
+            else // If there is no defined redirect string we presume the user came from TeacherList.
+            {
+                return RedirectToAction("TeacherList");
+            }
         }
 
         // GET: Account/Edit/5

@@ -37,13 +37,20 @@
 
     </dl>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(new { redirectString = ViewBag.RedirectString })) // Send the redirect string back to controller.
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "TeacherList")
+            @if (ViewBag.RedirectString != "Empty") // Check the value of the redirect string, if it is not set to "Empty" we can redirect back to a previous page.
+            {
+                <a href=@ViewBag.RedirectString>Back</a>
+            }
+            else // If redirect string is not defined we presume the user came from TeacherList view.
+            {
+                @Html.ActionLink("Back", "TeacherList")
+            }
         </div>
     }
 </div>
