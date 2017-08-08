@@ -150,7 +150,14 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.Role = role;
             ViewBag.Course = courseId;
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            if (Request.UrlReferrer != null)
+            {
+                ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                ViewBag.RedirectString = "Empty";
+            }
             return View();
         }
 
@@ -176,7 +183,14 @@ namespace LexiconLMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return Redirect(redirectString);
+                    if(redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 AddErrors(result);
             }

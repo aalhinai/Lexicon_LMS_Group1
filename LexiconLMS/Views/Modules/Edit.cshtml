@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm("Edit","Modules", new { RedirectString = ViewBag.RedirectString}))
+@using (Html.BeginForm("Edit","Modules", new { redirectString = ViewBag.RedirectString}))
 {
     @Html.AntiForgeryToken()
     

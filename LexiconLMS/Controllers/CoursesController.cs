@@ -93,7 +93,8 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
+            
             return View(course);
         }
 
@@ -103,15 +104,22 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course, string RedirectString)
+        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect(RedirectString);
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            ViewBag.RedirectString = RedirectString;
+            ViewBag.RedirectString = redirectString;
             return View(course);
         }
 
@@ -141,6 +149,18 @@ namespace LexiconLMS.Controllers
             db.courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private string redirectCheck()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                return "Empty";
+            }
         }
 
         protected override void Dispose(bool disposing)

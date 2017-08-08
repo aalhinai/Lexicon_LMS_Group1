@@ -66,7 +66,14 @@
 }
 
 <div>
-    <a href="@ViewBag.RedirectString">Back to List</a>
+    @if (ViewBag.RedirectString != "Empty")
+    {
+        <a href=@ViewBag.RedirectString>Back to list</a>
+    }
+    else
+    {
+        @Html.ActionLink("Back", "Index")
+    }
 </div>
 
 @section Scripts {

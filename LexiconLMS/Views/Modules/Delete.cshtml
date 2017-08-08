@@ -58,7 +58,14 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @if (ViewBag.RedirectString != "Empty")
+            {
+                <a href=@ViewBag.RedirectString>Back to list</a>
+            }
+            else
+            {
+                @Html.ActionLink("Back", "Details")
+            }
         </div>
     }
 </div>

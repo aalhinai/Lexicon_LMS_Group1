@@ -65,6 +65,17 @@
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
+        @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
     }
-    @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
+    @if (User.IsInRole("Student"))
+    {
+        if (Request.UrlReferrer != null)
+        {
+            <a href="@Request.UrlReferrer.ToString()">Back</a>
+        }
+        else
+        {
+            @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
+        }
+    }
 </p>
