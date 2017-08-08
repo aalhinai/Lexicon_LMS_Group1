@@ -49,16 +49,25 @@
         <dd>
             @Html.DisplayFor(model => model.ModuleEndDate)
         </dd>
-        <dt>
-            Activities
-        </dt>
-        @foreach (var item in Model.Activities)
-        {
-            <dd>
-                @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
-            </dd>
-        }
     </dl>
+    <table class="table">
+        <tr>
+            <th>Activity Name</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Activities)
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
+                </td>
+            </tr>
+        }
+    </table>
+
 </div>
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
@@ -71,5 +80,5 @@
     {
         @Html.ActionLink("Back to list", "Index", "Modules", new { id = Model.CourseId }, null)
     }
-    
+
 </p>
