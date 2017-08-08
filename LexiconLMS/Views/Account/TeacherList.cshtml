@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LexiconLMS.Models.ApplicationUser>
+﻿@model IEnumerable<LexiconLMS.Models.DisplayUserViewModel>
 @{
     ViewBag.Title = "TeacherList";
 }
@@ -16,7 +16,7 @@
             <td>@item.UserFullName</td>
             <td>@item.Email</td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span>|</span> 
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span> |</span> 
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
             </td>
         </tr>
