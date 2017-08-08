@@ -26,6 +26,21 @@ namespace LexiconLMS
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //Create bundel for jQueryUI  
+            //js  
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                      "~/Scripts/jquery-ui-{version}.js"));
+
+            bundles.Add(new StyleBundle("~/Content/cssjqryUi").Include(
+                   "~/Content/themes/base/jquery-ui.css"));
+
+            //This for time picker
+            bundles.Add(new ScriptBundle("~/bundles/jqueryuiTime").Include(
+                      "~/Scripts/jquery-ui-timepicker-addon.js"));
+
+            bundles.Add(new StyleBundle("~/Content/cssjqryUiTime").Include(
+                   "~/Content/jquery-ui-timepicker-addon.css"));
         }
     }
 }
