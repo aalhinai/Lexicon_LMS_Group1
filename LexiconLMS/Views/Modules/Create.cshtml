@@ -58,11 +58,11 @@
 <div>
     @if (ViewBag.RedirectString != "Empty")
     {
-        <a href=@ViewBag.RedirectString>Back to list</a>
+        <a href=@ViewBag.RedirectString>Back</a>
     }
     else
     {
-        @Html.ActionLink("Back", "Details", "Courses")
+        @Html.ActionLink("Back", "Details", "Courses", new { id = ViewBag.Course}, null)
     }
 </div>
 
