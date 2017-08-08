@@ -30,6 +30,8 @@ namespace LexiconLMS.Controllers
             }
             return View(Courses.ToList());
         }
+
+        [Authorize(Roles = "Student")]
         public ActionResult Participants()
         {
             Course course = db.Users.Find(User.Identity.GetUserId()).Course;
@@ -57,6 +59,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
             return View();
@@ -94,7 +97,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.RedirectString = redirectCheck();
-            
+
             return View(course);
         }
 

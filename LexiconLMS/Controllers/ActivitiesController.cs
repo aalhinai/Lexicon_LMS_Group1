@@ -90,6 +90,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -135,6 +136,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
