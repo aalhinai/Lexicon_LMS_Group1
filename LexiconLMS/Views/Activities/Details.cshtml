@@ -64,7 +64,7 @@
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId })
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
     }
     @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
 </p>

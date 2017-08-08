@@ -27,14 +27,12 @@
         <tr>
             <th>Course Participant</th>
             <th>Email</th>
-            <th>Actions</th>
         </tr>
         @foreach (var item in Model.Students)
         {
             <tr>
                 <td>@item.UserFullName</td>
                 <td>@item.Email</td>
-                <td></td>
             </tr>
         }
     </table>
