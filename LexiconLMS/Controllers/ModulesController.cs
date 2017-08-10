@@ -116,13 +116,16 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
                 }
-                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
+                if (db.modules.Where(a => a.ModuleId == module.ModuleId).Any())
                 {
-                    ViewBag.StartDate = "Module has an Activity starting before given start date of the Module.";
-                }
-                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderByDescending(a => a.ActivityEndDate).FirstOrDefault().ActivityEndDate > module.ModuleEndDate)
-                {
-                    ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
+                    if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
+                    {
+                        ViewBag.StartDate = "Module has an Activity starting before given start date of the Module.";
+                    }
+                    if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderByDescending(a => a.ActivityEndDate).FirstOrDefault().ActivityEndDate > module.ModuleEndDate)
+                    {
+                        ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
+                    }
                 }
                 if (ViewBag.StartDate == null && ViewBag.EndDate == null)
                 {

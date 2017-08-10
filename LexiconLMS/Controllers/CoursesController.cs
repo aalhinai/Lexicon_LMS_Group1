@@ -79,9 +79,17 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (db.courses.Where(c => c.CourseName == course.CourseName).Any())
+                {
+                    ViewBag.Name = "There is already a course with that name.";
+                }
+                if (ViewBag.Name == null)
+                {
+
+                    db.courses.Add(course);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(course);
@@ -115,15 +123,22 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(db.modules.Where(m => m.CourseId == course.CourseId).OrderBy(m => m.ModuleStartDate).FirstOrDefault().ModuleStartDate < course.CourseStartDate)
+                if (db.modules.Where(m => m.CourseId == course.CourseId).Any())
                 {
-                    ViewBag.StartDate = "Course has a module starting before given start date of the course.";
+                    if (db.modules.Where(m => m.CourseId == course.CourseId).OrderBy(m => m.ModuleStartDate).FirstOrDefault().ModuleStartDate < course.CourseStartDate)
+                    {
+                        ViewBag.StartDate = "Course has a module starting before given start date of the course.";
+                    }
+                    if (db.modules.Where(m => m.CourseId == course.CourseId).OrderByDescending(m => m.ModuleEndDate).FirstOrDefault().ModuleEndDate > course.CourseEndDate)
+                    {
+                        ViewBag.EndDate = "Course has a module that ends after the given end date of the course.";
+                    }
                 }
-                if(db.modules.Where(m => m.CourseId == course.CourseId).OrderByDescending(m => m.ModuleEndDate).FirstOrDefault().ModuleEndDate > course.CourseEndDate)
+                if (db.courses.Where(c => c.CourseName == course.CourseName).Any())
                 {
-                    ViewBag.EndDate = "Course has a module that ends after the given end date of the course.";
+                    ViewBag.Name = "There is already a course with that name.";
                 }
-                else
+                if (ViewBag.Name == null && ViewBag.EndDate == null && ViewBag.StartDate == null)
                 {
                     db.Entry(course).State = EntityState.Modified;
                     db.SaveChanges();
