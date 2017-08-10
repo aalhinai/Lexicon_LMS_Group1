@@ -32,7 +32,7 @@ namespace LexiconLMS.Controllers
             {
                 Courses = Courses.Where(c => c.CourseName.Contains(searchValue));
             }
-            return View(Courses.ToList());
+            return View(Courses.OrderBy(c => c.CourseStartDate).ToList());
         }
 
         [Authorize(Roles = "Student")]

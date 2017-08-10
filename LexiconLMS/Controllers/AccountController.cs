@@ -61,6 +61,7 @@ namespace LexiconLMS.Controllers
             {
                 users.Add(new DisplayUserViewModel { Email = item.Email, UserFirstName = item.UserFirstName, UserLastName = item.UserLastName, Id = item.Id });
             }
+            users = users.OrderBy(u => u.UserFullName).ToList();
             return View(users);
         }
 
