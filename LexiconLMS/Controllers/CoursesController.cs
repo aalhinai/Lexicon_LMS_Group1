@@ -20,9 +20,13 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.currentAction = currentAction;
             var Courses = db.courses.Select(c => c);
-            if (currentAction != "History")
+            if (currentAction != "Old")
             {
                 Courses = Courses.Where(c => c.CourseEndDate > DateTime.Now);
+            }
+            else
+            {
+                Courses = Courses.Where(c => c.CourseEndDate < DateTime.Now);
             }
             if (!string.IsNullOrWhiteSpace(searchValue))
             {

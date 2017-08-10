@@ -1,29 +1,35 @@
 ﻿@model IEnumerable<LexiconLMS.Models.DisplayUserViewModel>
 @{
-    ViewBag.Title = "TeacherList";
+    ViewBag.Title = "Teacher List";
 }
 
-<h2>TeacherList</h2>
+<h2>Teacher List</h2>
 
 <table class="table">
     <tr>
         <th>Teacher Name</th>
         <th>Email</th>
-        <th></th>
+        @if (User.IsInRole("Teacher"))
+        {
+            <th></th>
+        }
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>@item.UserFullName</td>
             <td>@item.Email</td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span> |</span> 
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-            </td>
+            @if (User.IsInRole("Teacher"))
+            {
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <span> |</span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                </td>
+            }
         </tr>
     }
 </table>
 @if (User.IsInRole("Teacher"))
 {
-    @Html.ActionLink("Create New Teacher", "Register", new { role = "Teacher"})
+    @Html.ActionLink("Create New Teacher", "Register", new { role = "Teacher" })
 }

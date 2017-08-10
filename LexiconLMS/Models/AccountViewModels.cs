@@ -137,7 +137,7 @@ namespace LexiconLMS.Models
         {
             get
             {
-                return UserFirstName + " " + UserFirstName;
+                return UserFirstName + " " + UserLastName;
             }
         }
 
