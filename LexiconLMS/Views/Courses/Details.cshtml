@@ -21,8 +21,8 @@
             <tr>
                 <td>@Html.ActionLink(item.ModuleName, "Details", "Modules", new { id = item.ModuleId }, null)</td>
                 <td>
-                    @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null) |
                     @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.ModuleId }, null)
+                    @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null) |
                 </td>
             </tr>
         }
@@ -36,7 +36,10 @@
             <th>Email</th>
             <th></th>
         </tr>
-        @foreach (var item in Model.Students)
+        @{
+            var students = Model.Students.OrderBy(u => u.UserFullName).ToList();
+         }
+        @foreach (var item in students)
         {
             <tr>
                 <td>@item.UserFullName</td>

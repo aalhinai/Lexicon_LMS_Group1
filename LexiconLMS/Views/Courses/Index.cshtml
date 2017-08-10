@@ -12,7 +12,7 @@ else
     <h2>Ongoing Courses</h2>
 }
 <p class="hidden-print">
-    <button class="btn btn-default"> @Html.ActionLink("Create New", "Create") </button>
+    <button class="btn btn-default"> @Html.ActionLink("Add New Course", "Create") </button>
     @if (ViewBag.currentAction == "Old")
     {
         <button class="btn btn-default">@Html.ActionLink("View Ongoing Courses", "Index", new { currentAction = "Ongoing" })</button>

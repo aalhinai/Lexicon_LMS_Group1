@@ -31,5 +31,5 @@
 </table>
 @if (User.IsInRole("Teacher"))
 {
-    @Html.ActionLink("Create New Teacher", "Register", new { role = "Teacher" })
+    <button class="btn btn-default">@Html.ActionLink("Add a Teacher", "Register", new { role = "Teacher" })</button>
 }

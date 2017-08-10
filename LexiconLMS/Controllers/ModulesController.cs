@@ -16,7 +16,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Index()
         {
             var modules = db.Users.Find(User.Identity.GetUserId()).Course.Modules;
-            return View(modules.ToList());
+            return View(modules.OrderBy(m => m.ModuleStartDate).ToList());
         }
 
         // GET: Modules/Details/5
