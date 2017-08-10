@@ -158,7 +158,8 @@ namespace LexiconLMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser user = db.Users.Find(id);
-            if(user == null)
+          
+            if (user == null)
             {
                 return HttpNotFound();
             }
@@ -174,22 +175,23 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "UserId, Email, UserLastName, UserFirstName")] ApplicationUser user, string redirectString)
+        public ActionResult Edit([Bind(Include = "Id, Email, UserLastName, UserFirstName")] ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                ApplicationUser dbUser= db.Users.FirstOrDefault(x => x.Id == user.Id);
+                dbUser.UserFirstName = user.UserFirstName;
+                dbUser.UserLastName = user.UserLastName;
+                dbUser.Email = user.Email;
+
+                db.Entry(dbUser).State = EntityState.Modified;
                 db.SaveChanges();
-                if (redirectString != "Empty")
-                {
-                    return Redirect(redirectString);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                
+        
+                    return RedirectToAction("TeacherList", "Account");
+                
             }
-            ViewBag.RedirectString = redirectString;
+           // ViewBag.RedirectString = redirectString;
             return View(user);
         }
 
@@ -201,6 +203,7 @@ namespace LexiconLMS.Controllers
             if (Request.UrlReferrer != null)
             {
                 return Request.UrlReferrer.ToString();
+
             }
             else
             {
