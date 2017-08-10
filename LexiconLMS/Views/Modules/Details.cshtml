@@ -4,26 +4,17 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details for module: @Html.DisplayFor(model => model.ModuleName)</h2>
 
 <div>
-    <h4>Module</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Course.CourseName)
+            Course @Html.DisplayNameFor(model => model.Course.CourseName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Course.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModuleName)
         </dd>
 
         <dt>
@@ -53,6 +44,8 @@
     <table class="table">
         <tr>
             <th>Activity Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
             @if (User.IsInRole("Teacher"))
             {
                 <th></th>
@@ -63,6 +56,12 @@
             <tr>
                 <td>
                     @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
+                </td>
+                <td>
+                    @item.ActivityStartDate
+                </td>
+                <td>
+                    @item.ActivityEndDate
                 </td>
                 @if (User.IsInRole("Teacher"))
                 {
