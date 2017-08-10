@@ -115,15 +115,26 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                if(db.modules.Where(m => m.CourseId == course.CourseId).OrderBy(m => m.ModuleStartDate).FirstOrDefault().ModuleStartDate < course.CourseStartDate)
                 {
-                    return Redirect(redirectString);
+                    ViewBag.StartDate = "Course has a module starting before given start date of the course.";
+                }
+                if(db.modules.Where(m => m.CourseId == course.CourseId).OrderByDescending(m => m.ModuleEndDate).FirstOrDefault().ModuleEndDate > course.CourseEndDate)
+                {
+                    ViewBag.EndDate = "Course has a module that ends after the given end date of the course.";
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    db.Entry(course).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             ViewBag.RedirectString = redirectString;

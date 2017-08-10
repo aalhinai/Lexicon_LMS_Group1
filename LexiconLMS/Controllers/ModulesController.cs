@@ -52,19 +52,32 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.modules.Add(module);
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                if (db.courses.Find(module.CourseId).CourseStartDate > module.ModuleStartDate)
                 {
-                    return Redirect(redirectString);
+                    ViewBag.StartDate = "Start Date of the Module can not be before the Start Date of the Course.";
                 }
-                else
+                if (db.courses.Find(module.CourseId).CourseEndDate < module.ModuleEndDate)
                 {
-                    return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
+                }
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                {
+                    db.modules.Add(module);
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    }
+
                 }
             }
             ViewBag.RedirectString = redirectString;
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
+            ViewBag.Course = module.CourseId;
             return View(module);
         }
 
@@ -95,15 +108,34 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                if (db.courses.Find(module.CourseId).CourseStartDate > module.ModuleStartDate)
                 {
-                    return Redirect(redirectString);
+                    ViewBag.StartDate = "Start Date of the Module can not be before the Start Date of the Course.";
                 }
-                else
+                if (db.courses.Find(module.CourseId).CourseEndDate < module.ModuleEndDate)
                 {
-                    return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
+                }
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
+                {
+                    ViewBag.StartDate = "Module has an Activity starting before given start date of the Module.";
+                }
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderByDescending(a => a.ActivityEndDate).FirstOrDefault().ActivityEndDate > module.ModuleEndDate)
+                {
+                    ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
+                }
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                {
+                    db.Entry(module).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    }
                 }
             }
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);

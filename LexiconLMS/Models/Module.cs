@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foolproof;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,6 +19,7 @@ namespace LexiconLMS.Models
         public DateTime ModuleStartDate { get; set; }
 
         [Display(Name = "End Date")]
+        [GreaterThan("ModuleStartDate")]
         public DateTime ModuleEndDate { get; set; }
 
         public int CourseId { get; set; }
