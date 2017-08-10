@@ -26,7 +26,12 @@
     {
         foreach (var item in Model)
         {
-            <tr>
+            string endedClass = "";
+            if (item.ActivityEndDate < DateTime.Now)
+            {
+                endedClass = "danger";
+            }
+            <tr class="@endedClass">
                 <td>
                     @Html.DisplayFor(modelItem => item.Module.ModuleName)
                 </td>
