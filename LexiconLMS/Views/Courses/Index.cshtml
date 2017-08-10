@@ -1,20 +1,25 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Course>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Courses";
 }
-
-<h2>Index</h2>
-
+@if (ViewBag.currentAction != null)
+{
+    <h2>@ViewBag.currentAction Courses</h2>
+}
+else
+{
+    <h2>Ongoing Courses</h2>
+}
 <p class="hidden-print">
-    @Html.ActionLink("Create New", "Create")
-    @if(ViewBag.currentAction == "History")
+    <button class="btn btn-default"> @Html.ActionLink("Create New", "Create") </button>
+    @if (ViewBag.currentAction == "Old")
     {
-        @Html.ActionLink("Hide History", "Index", new { currentAction = "Index" })
+        <button class="btn btn-default">@Html.ActionLink("View Ongoing Courses", "Index", new { currentAction = "Ongoing" })</button>
     }
     else
     {
-        @Html.ActionLink("Show History", "Index", new { currentAction = "History"})
+        <button class="btn btn-default">@Html.ActionLink("View Old Courses", "Index", new { currentAction = "Old" })</button>
     }
 </p>
 <form class="hidden-print">
