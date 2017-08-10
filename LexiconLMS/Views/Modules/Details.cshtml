@@ -66,6 +66,7 @@
                 @if (User.IsInRole("Teacher"))
                 {
                     <td>
+                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.ActivityId }, null) <span> |</span>
                         @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
                     </td>
                 }
