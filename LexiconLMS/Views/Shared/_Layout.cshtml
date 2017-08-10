@@ -53,27 +53,25 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <span class="visible-xs navbar-brand">Sidebar menu</span>
+                            @*<span class="visible-xs navbar-brand">Sidebar menu</span>*@
                         </div>
                         <div class="navbar-collapse collapse sidebar-navbar-collapse">
-                            <ul  class="nav navbar-nav" @*class="nav nav-tabs"*@ >
+                       
+                            <ul class="nav navbar-nav">
                                 @if (User.IsInRole("Teacher"))
                                 {
-                                    @*<li class="active">@Html.ActionLink("Courses", "Index", "Courses") </li>*@
+
                                     <li class='@Html.IsActive("Courses", "Index")'>@Html.ActionLink("Courses", "Index", "Courses") </li>
 
                                 }
-                                    @if (User.IsInRole("Student"))
-                                    {
-                                    @*<li>@Html.ActionLink("Home", "MyCourse", "Courses")</li>
-                                    <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
-                                    <li>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
-                                    <li>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>*@
+                                @if (User.IsInRole("Student"))
+                                {
+
                                     <li class='@Html.IsActive("Courses", "MyCourse")'>@Html.ActionLink("Home", "MyCourse", "Courses")</li>
                                     <li class='@Html.IsActive("Modules", "Index")'>@Html.ActionLink("Modules", "Index", "Modules")</li>
                                     <li class='@Html.IsActive("Activities", "Assignments")'>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
                                     <li class='@Html.IsActive("Courses", "Participants")'>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>
-                                    }
+                                }
                                 <li class='@Html.IsActive("Account", "TeacherList")'>@Html.ActionLink("Teacher List", "TeacherList", "Account")</li>
                             </ul>
                         </div><!--/.nav-collapse -->
@@ -99,5 +97,11 @@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
+       @section Scripts {
+        <script type="text/javascript">
+
+          
+        </script>
+    }
 </body>
 </html>
