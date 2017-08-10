@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -152,27 +153,63 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit(string id)
         {
-            return View();
+            if(id == null )
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if(user == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RedirectString = redirectCheck();
+
+            return View(user);
         }
 
 
         //POST: Account/Edit/5
-       // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Teacher")]
-        //public ActionResult Edit([Bind(Include = "Email, UserLastName, UserFirstName")] ApplicationUser user, string RedirectString)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(User).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return Redirect(RedirectString);
-        //    }
-        //    ViewBag.RedirectString = RedirectString;
-        //    return View();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit([Bind(Include = "UserId, Email, UserLastName, UserFirstName")] ApplicationUser user, string redirectString)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            ViewBag.RedirectString = redirectString;
+            return View(user);
+        }
+
+
+
+
+        private string redirectCheck()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                return "Empty";
+            }
+        }
+
+
+
 
 
 
