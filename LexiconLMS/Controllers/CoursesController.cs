@@ -20,16 +20,22 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.currentAction = currentAction;
             var Courses = db.courses.Select(c => c);
-            if (currentAction != "History")
+            if (currentAction != "Old")
             {
                 Courses = Courses.Where(c => c.CourseEndDate > DateTime.Now);
+            }
+            else
+            {
+                Courses = Courses.Where(c => c.CourseEndDate < DateTime.Now);
             }
             if (!string.IsNullOrWhiteSpace(searchValue))
             {
                 Courses = Courses.Where(c => c.CourseName.Contains(searchValue));
             }
-            return View(Courses.ToList());
+            return View(Courses.OrderBy(c => c.CourseStartDate).ToList());
         }
+
+        [Authorize(Roles = "Student")]
         public ActionResult Participants()
         {
             Course course = db.Users.Find(User.Identity.GetUserId()).Course;
@@ -57,6 +63,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
             return View();
@@ -93,7 +100,8 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
+
             return View(course);
         }
 
@@ -103,15 +111,22 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course, string RedirectString)
+        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseStartDate,CourseEndDate,CourseDescription")] Course course, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect(RedirectString);
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            ViewBag.RedirectString = RedirectString;
+            ViewBag.RedirectString = redirectString;
             return View(course);
         }
 
@@ -141,6 +156,18 @@ namespace LexiconLMS.Controllers
             db.courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private string redirectCheck()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                return "Empty";
+            }
         }
 
         protected override void Dispose(bool disposing)

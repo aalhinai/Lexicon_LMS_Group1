@@ -10,7 +10,7 @@
 @using (Html.BeginForm(new { redirectString = ViewBag.RedirectString }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Activity</h4>
         <hr />
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ActivityStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ActivityStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ActivityStartDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ActivityStartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ActivityEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ActivityEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ActivityEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ActivityEndDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <input type="hidden" value="@ViewBag.ModuleId" name="ModuleId"/>
+        <input type="hidden" value="@ViewBag.ModuleId" name="ModuleId" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -66,9 +66,38 @@
 }
 
 <div>
-    <a href="@ViewBag.RedirectString">Back to List</a>
+    @if (ViewBag.RedirectString != "Empty")
+    {
+        <a href=@ViewBag.RedirectString>Back to list</a>
+    }
+    else
+    {
+        @Html.ActionLink("Back", "Index")
+    }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    @Scripts.Render("~/bundles/jqueryuiTime")
+    @Styles.Render("~/Content/cssjqryUiTime")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.date-picker').datetimepicker({
+                //dateFormat: "dd/MM/yy",
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                yearRange: "+0:+1",
+                controlType: 'select',
+                timeFormat: 'HH:mm'
+                //timeFormat: 'hh:mm TT'
+
+            });
+
+        });
+    </script>
 }

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using LexiconLMS.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using LexiconLMS.Models;
-using System.Web.Security;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace LexiconLMS.Controllers
 {
@@ -57,7 +55,13 @@ namespace LexiconLMS.Controllers
 
         public ActionResult TeacherList()
         {
-            List<ApplicationUser> users = db.Users.Where(u => u.Roles.Where(r => r.RoleId == db.Roles.Where(role => role.Name == "Teacher").FirstOrDefault().Id).Any()).ToList();
+            List<ApplicationUser> fullUsers = db.Users.Where(u => u.Roles.Where(r => r.RoleId == db.Roles.Where(role => role.Name == "Teacher").FirstOrDefault().Id).Any()).ToList();
+            List<DisplayUserViewModel> users = new List<DisplayUserViewModel>();
+            foreach (var item in fullUsers)
+            {
+                users.Add(new DisplayUserViewModel { Email = item.Email, UserFirstName = item.UserFirstName, UserLastName = item.UserLastName, Id = item.Id });
+            }
+            users = users.OrderBy(u => u.UserFullName).ToList();
             return View(users);
         }
 
@@ -99,6 +103,79 @@ namespace LexiconLMS.Controllers
                     return View(model);
             }
         }
+
+
+        // GET: /Account/Delete/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser fullUser = db.Users.Find(id);
+            DisplayUserViewModel user = new DisplayUserViewModel { Email = fullUser.Email, UserFirstName = fullUser.UserFirstName, UserLastName = fullUser.UserLastName };
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            if (Request.UrlReferrer != null) // Check if a redirect string can be created.
+            {
+                ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            }
+            else // If a redirect string is not available we set the value to "Empty".
+            {
+                ViewBag.RedirectString = "Empty";
+            }
+            return View(user);
+        }
+
+        //POST: AccountCountroller/Delete/5
+        [Authorize(Roles = "Teacher")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id, string redirectString)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            if (redirectString != "Empty") // If the value is not set to "Empty" we can redirect based on our redirect string.
+            {
+                return Redirect(redirectString);
+            }
+            else // If there is no defined redirect string we presume the user came from TeacherList.
+            {
+                return RedirectToAction("TeacherList");
+            }
+        }
+
+        // GET: Account/Edit/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit(string id)
+        {
+            return View();
+        }
+
+
+        //POST: Account/Edit/5
+       // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Teacher")]
+        //public ActionResult Edit([Bind(Include = "Email, UserLastName, UserFirstName")] ApplicationUser user, string RedirectString)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(User).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return Redirect(RedirectString);
+        //    }
+        //    ViewBag.RedirectString = RedirectString;
+        //    return View();
+        //}
+
+
 
         //
         // GET: /Account/VerifyCode
@@ -150,7 +227,14 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.Role = role;
             ViewBag.Course = courseId;
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            if (Request.UrlReferrer != null)
+            {
+                ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                ViewBag.RedirectString = "Empty";
+            }
             return View();
         }
 
@@ -176,11 +260,20 @@ namespace LexiconLMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return Redirect(redirectString);
+                    if(redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 AddErrors(result);
             }
-
+            ViewBag.RedirectString = redirectString;
+            ViewBag.Role = Role;
+            ViewBag.Course = Course;
             // If we got this far, something failed, redisplay form
             return View(model);
         }

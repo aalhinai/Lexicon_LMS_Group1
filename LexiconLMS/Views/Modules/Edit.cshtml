@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm("Edit","Modules", new { RedirectString = ViewBag.RedirectString}))
+@using (Html.BeginForm("Edit","Modules", new { redirectString = ViewBag.RedirectString}))
 {
     @Html.AntiForgeryToken()
     
@@ -16,6 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ModuleId)
+        @Html.HiddenFor(model => model.CourseId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.ModuleName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -36,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ModuleStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ModuleStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ModuleStartDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ModuleStartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,16 +45,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ModuleEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ModuleEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ModuleEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ModuleEndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -66,9 +59,45 @@
 }
 
 <div>
-    <a href="@ViewBag.RedirectString">Back to List</a>
+    @if (ViewBag.RedirectString != "Empty")
+    {
+        <a href=@ViewBag.RedirectString>Back to list</a>
+    }
+    else
+    {
+        if (User.IsInRole("Student"))
+        {
+            @Html.ActionLink("Back", "Index")
+        }
+        else
+        {
+            @Html.ActionLink("Back", "Details", "Courses", new { id = Model.CourseId}, null)
+        }
+    }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    @Scripts.Render("~/bundles/jqueryuiTime")
+    @Styles.Render("~/Content/cssjqryUiTime")
+    <script type="text/javascript">
+
+     $(document).ready(function () {
+         $('.date-picker').datetimepicker({
+             //dateFormat: "dd/MM/yy",
+             dateFormat: 'yy-mm-dd',
+             changeMonth: true,
+             changeYear: true,
+             minDate: new Date(),
+             yearRange: "+0:+1",
+             controlType: 'select',
+             timeFormat: 'HH:mm'
+             //timeFormat: 'hh:mm TT'
+
+         });
+
+     });
+    </script>
 }

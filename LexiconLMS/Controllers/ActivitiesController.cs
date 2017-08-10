@@ -59,7 +59,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Create(int id)
         {
             ViewBag.ModuleId = id;
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
             return View();
         }
 
@@ -75,7 +75,14 @@ namespace LexiconLMS.Controllers
             {
                 db.activities.Add(activity);
                 db.SaveChanges();
-                return Redirect(redirectString);
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+                }
             }
             ViewBag.RedirectString = redirectString;
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
@@ -83,6 +90,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,10 +102,12 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }
+
+
 
         // POST: Activities/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -105,20 +115,28 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity, string RedirectString)
+        public ActionResult Edit([Bind(Include = "ActivityId,ActivityType,ActivityName,ActivityStartDate,ActivityEndDate,ActivityDescription,ModuleId")] Activity activity, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect(RedirectString);
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Activities", new { id = activity.ActivityId });
+                }
             }
-            ViewBag.RedirectString = RedirectString;
+            ViewBag.RedirectString = redirectString;
             ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }
 
         // GET: Activities/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -130,6 +148,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.RedirectString = redirectCheck();
             return View(activity);
         }
 
@@ -137,12 +156,31 @@ namespace LexiconLMS.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string redirectString)
         {
             Activity activity = db.activities.Find(id);
             db.activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (redirectString != "Empty")
+            {
+                return Redirect(redirectString);
+            }
+            else
+            {
+                return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+            }
+        }
+
+        private string redirectCheck()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                return "Empty";
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -16,7 +16,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Index()
         {
             var modules = db.Users.Find(User.Identity.GetUserId()).Course.Modules;
-            return View(modules.ToList());
+            return View(modules.OrderBy(m => m.ModuleStartDate).ToList());
         }
 
         // GET: Modules/Details/5
@@ -38,7 +38,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Create(int Course)
         {
             ViewBag.Course = Course;
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
             return View();
         }
 
@@ -54,9 +54,16 @@ namespace LexiconLMS.Controllers
             {
                 db.modules.Add(module);
                 db.SaveChanges();
-                return Redirect(redirectString);
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                }
             }
-
+            ViewBag.RedirectString = redirectString;
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
             return View(module);
         }
@@ -73,7 +80,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
             return View(module);
         }
@@ -84,23 +91,30 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "ModuleId,ModuleName,ModuleDescription,ModuleStartDate,ModuleEndDate,CourseId")] Module module, string RedirectString)
+        public ActionResult Edit([Bind(Include = "ModuleId,ModuleName,ModuleDescription,ModuleStartDate,ModuleEndDate,CourseId")] Module module, string redirectString)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect(RedirectString);
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                }
             }
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
-            ViewBag.RedirectString = RedirectString;
+            ViewBag.RedirectString = redirectString;
             return View(module);
         }
 
         // GET: Modules/Delete/5
         public ActionResult Delete(int? id)
         {
-            ViewBag.RedirectString = Request.UrlReferrer.ToString();
+            ViewBag.RedirectString = redirectCheck();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -122,7 +136,26 @@ namespace LexiconLMS.Controllers
             Module module = db.modules.Find(id);
             db.modules.Remove(module);
             db.SaveChanges();
-            return Redirect(redirectString);
+            if (redirectString != "Empty")
+            {
+                return Redirect(redirectString);
+            }
+            else
+            {
+                return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+            }
+        }
+
+        private string redirectCheck()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return Request.UrlReferrer.ToString();
+            }
+            else
+            {
+                return "Empty";
+            }
         }
 
         protected override void Dispose(bool disposing)

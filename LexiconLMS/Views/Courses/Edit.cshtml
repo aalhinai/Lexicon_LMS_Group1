@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm("Edit","Courses", new { RedirectString = ViewBag.RedirectString}))
+@using (Html.BeginForm("Edit","Courses", new { redirectString = ViewBag.RedirectString}))
 {
     @Html.AntiForgeryToken()
     
@@ -58,7 +58,14 @@
 }
 
 <div>
-    <a href=@ViewBag.RedirectString>Back to list</a>
+    @if(ViewBag.RedirectString != "Empty")
+    {
+        <a href=@ViewBag.RedirectString>Back to list</a>
+    }
+    else
+    {
+        @Html.ActionLink("Back", "Index")
+    }
 </div>
 
 @section Scripts {
@@ -71,13 +78,15 @@
 
      $(document).ready(function () {
          $('.date-picker').datetimepicker({
-             dateFormat: "dd/MM/yy",
+             //dateFormat: "dd/MM/yy",
+             dateFormat: 'yy-mm-dd',
              changeMonth: true,
              changeYear: true,
              minDate: new Date(),
              yearRange: "+0:+1",
              controlType: 'select',
-             timeFormat: 'hh:mm TT'
+             timeFormat: 'HH:mm'
+             //timeFormat: 'hh:mm TT'
 
          });
 

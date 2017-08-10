@@ -4,15 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details for activity: @Html.DisplayFor(model => model.ActivityName)</h2>
 
 <div>
-    <h4>Activity</h4>
     <hr />
     <dl class="dl-horizontal">
 
         <dt>
-            @Html.DisplayNameFor(model => model.Module.ModuleName)
+            Module @Html.DisplayNameFor(model => model.Module.ModuleName)
         </dt>
 
         <dd>
@@ -25,14 +24,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.ActivityType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ActivityName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ActivityName)
         </dd>
 
         <dt>
@@ -65,6 +56,18 @@
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
+        @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null) <span> |</span>
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId } )
     }
-    @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
+    @if (User.IsInRole("Student"))
+    {
+        if (Request.UrlReferrer != null)
+        {
+            <a href="@Request.UrlReferrer.ToString()">Back</a>
+        }
+        else
+        {
+            @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
+        }
+    }
 </p>

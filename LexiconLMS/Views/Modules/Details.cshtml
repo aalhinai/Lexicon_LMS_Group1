@@ -4,26 +4,17 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details for module: @Html.DisplayFor(model => model.ModuleName)</h2>
 
 <div>
-    <h4>Module</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Course.CourseName)
+            Course @Html.DisplayNameFor(model => model.Course.CourseName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Course.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModuleName)
         </dd>
 
         <dt>
@@ -49,16 +40,40 @@
         <dd>
             @Html.DisplayFor(model => model.ModuleEndDate)
         </dd>
-        <dt>
-            Activities
-        </dt>
-        @foreach (var item in Model.Activities)
-        {
-            <dd>
-                @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
-            </dd>
-        }
     </dl>
+    <table class="table">
+        <tr>
+            <th>Activity Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            @if (User.IsInRole("Teacher"))
+            {
+                <th></th>
+            }
+        </tr>
+        @foreach (var item in Model.Activities)
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
+                </td>
+                <td>
+                    @item.ActivityStartDate
+                </td>
+                <td>
+                    @item.ActivityEndDate
+                </td>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.ActivityId }, null) <span> |</span>
+                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+
 </div>
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
@@ -71,5 +86,5 @@
     {
         @Html.ActionLink("Back to list", "Index", "Modules", new { id = Model.CourseId }, null)
     }
-    
+
 </p>
