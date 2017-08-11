@@ -9,8 +9,6 @@
     <link rel="stylesheet" type="text/css" href="http://www.lexicon.se/fonts/417673/8BEF4B8AFBB92CC08.css">*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
 
 </head>
 <body>
@@ -26,15 +24,14 @@
                     <img src="~/pics/logo-lexicon@2x.jpg" alt="Lexicon Home" class="img-responsive">
                 </a>
 
-               
                 @*@Html.ActionLink("Lexicon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
 
             </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li style="margin-right:10px">@Html.ActionLink(" ", "Index", "Home", null, new { @class = "glyphicon glyphicon-home", style = "font-size:22px;", title = "Home page"})</li>
+                            <li style="margin-right:10px">@Html.ActionLink(" ", "About", "Home", null, new { @class = "glyphicon glyphicon-info-sign", style = "font-size:22px;", title = "About us"})</li>
+                            <li>@Html.ActionLink(" ", "Contact", "Home", null, new { @class = "glyphicon glyphicon-earphone", style = "font-size:22px;", title = "Contact us"})</li>
                         </ul>
                         @Html.Partial("_LoginPartial")
                     </div>
@@ -71,7 +68,7 @@
                                     <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
                                     <li>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
                                     <li>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>*@
-                                    <li class='@Html.IsActive("Courses", "MyCourse")'>@Html.ActionLink("Home", "MyCourse", "Courses")</li>
+                                    <li class='@Html.IsActive("Courses", "MyCourse")'>@Html.ActionLink("My Course", "MyCourse", "Courses")</li>
                                     <li class='@Html.IsActive("Modules", "Index")'>@Html.ActionLink("Modules", "Index", "Modules")</li>
                                     <li class='@Html.IsActive("Activities", "Assignments")'>@Html.ActionLink("Assignments", "Assignments", "Activities")</li>
                                     <li class='@Html.IsActive("Courses", "Participants")'>@Html.ActionLink("Course Participants", "Participants", "Courses")</li>
