@@ -81,6 +81,10 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
                 }
+                if(db.modules.Find(activity.ModuleId).Activities.Where(a => a.ActivityName == activity.ActivityName).Where(a => activity.ActivityId != activity.ActivityId).Any())
+                {
+                    ViewBag.Name = "There is already an Activity with that name in the Module.";
+                }
                 if (ViewBag.StartDate == null && ViewBag.EndDate == null)
                 {
                     db.activities.Add(activity);

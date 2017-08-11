@@ -60,7 +60,11 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
                 }
-                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                if(db.courses.Find(module.CourseId).Modules.Where(m => m.ModuleName == module.ModuleName).Any())
+                {
+                    ViewBag.Name = "There is already a Module with that name in the Course.";
+                }
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
                     db.modules.Add(module);
                     db.SaveChanges();
@@ -116,7 +120,11 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
                 }
-                if (db.modules.Where(a => a.ModuleId == module.ModuleId).Any())
+                if (db.courses.Find(module.CourseId).Modules.Where(m => m.ModuleName == module.ModuleName).Select(m => m.ModuleId != module.ModuleId).Any())
+                {
+                    ViewBag.Name = "There is already a Module with that name in the Course.";
+                }
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).Any())
                 {
                     if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
                     {
@@ -127,7 +135,7 @@ namespace LexiconLMS.Controllers
                         ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
                     }
                 }
-                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
                     db.Entry(module).State = EntityState.Modified;
                     db.SaveChanges();
