@@ -64,13 +64,13 @@ else
             @Html.DisplayFor(modelItem => item.CourseDescription)
         </td>
         <td class="hidden-print">
-            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
             @if (item.CourseEndDate > DateTime.Now)
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <span> |</span>
-
                 @Html.ActionLink("New Student", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, null) <span> |</span>
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <span> |</span>
             }
+            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.CourseId }) 
         </td>
     </tr>

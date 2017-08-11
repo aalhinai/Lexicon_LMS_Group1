@@ -53,7 +53,12 @@
         </tr>
         @foreach (var item in Model.Activities)
             {
-            <tr>
+            string endedClass = "";
+            if (item.ActivityEndDate < DateTime.Now)
+            {
+                endedClass = "danger";
+            }
+            <tr class="@endedClass">
                 <td>
                     @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
                 </td>
@@ -67,7 +72,7 @@
                 {
                     <td>
                         @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.ActivityId }, null) <span> |</span>
-                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
+                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null) 
                     </td>
                 }
             </tr>
@@ -80,7 +85,7 @@
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
         @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) <span> |</span>
-        @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId }, null)
+        @Html.ActionLink("Add New Activity", "Create", "Activities", new { id = Model.ModuleId }, null)
     }
     else
     {

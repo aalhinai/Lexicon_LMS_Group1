@@ -44,7 +44,10 @@
             <tr>
                 <td>@item.UserFullName</td>
                 <td>@item.Email</td>
-                <td>@Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id}, null)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id }, null) <span> |</span>
+                    @Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id }, null)
+                </td>
             </tr>
         }
     </table>
@@ -52,7 +55,7 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index") |
-    <span id="ModuleLink"> @Html.ActionLink("Create New Module", "Create", "Modules", new { Course = Model.CourseId }, null) </span>
+    <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, null) </span>
     <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, null)</span>
 
 </p>

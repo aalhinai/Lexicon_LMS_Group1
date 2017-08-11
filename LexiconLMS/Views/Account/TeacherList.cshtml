@@ -21,9 +21,9 @@
             <td>@item.Email</td>
             @if (User.IsInRole("Teacher"))
             {
-                <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <span> |</span>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                <td class="hidden-print">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span> |</span>
+                    @Html.ActionLink("Remove", "Delete", new { id = item.Id })
                 </td>
             }
         </tr>
@@ -31,5 +31,5 @@
 </table>
 @if (User.IsInRole("Teacher"))
 {
-    <button class="btn btn-default">@Html.ActionLink("Add a Teacher", "Register", new { role = "Teacher" })</button>
+    <button class="btn btn-default hidden-print">@Html.ActionLink("Add a Teacher", "Register", new { role = "Teacher" })</button>
 }

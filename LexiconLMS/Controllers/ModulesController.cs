@@ -120,7 +120,7 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
                 }
-                if (db.courses.Find(module.CourseId).Modules.Where(m => m.ModuleName == module.ModuleName).Select(m => m.ModuleId != module.ModuleId).Any())
+                if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleName == module.ModuleName).Any())
                 {
                     ViewBag.Name = "There is already a Module with that name in the Course.";
                 }

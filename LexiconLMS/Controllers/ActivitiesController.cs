@@ -81,11 +81,11 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
                 }
-                if(db.modules.Find(activity.ModuleId).Activities.Where(a => a.ActivityName == activity.ActivityName).Where(a => activity.ActivityId != activity.ActivityId).Any())
+                if(db.modules.Find(activity.ModuleId).Activities.Where(a => a.ActivityName == activity.ActivityName).Any())
                 {
                     ViewBag.Name = "There is already an Activity with that name in the Module.";
                 }
-                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
                     db.activities.Add(activity);
                     db.SaveChanges();
@@ -100,7 +100,8 @@ namespace LexiconLMS.Controllers
                 }
             }
             ViewBag.RedirectString = redirectString;
-            ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
+            ViewBag.ModuleId = activity.ModuleId;
+            //ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }
 
@@ -142,7 +143,11 @@ namespace LexiconLMS.Controllers
                 {
                     ViewBag.EndDate = "End Date of the Activity can not be after the End Date of the Module.";
                 }
-                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                if(db.activities.Where(a => a.ModuleId == activity.ModuleId).Where(a => a.ActivityId != activity.ActivityId).Where(a => a.ActivityName == activity.ActivityName).Any())
+                {
+                    ViewBag.Name = "There is already an Activity with that name in the Module.";
+                }
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
                     db.Entry(activity).State = EntityState.Modified;
                     db.SaveChanges();
