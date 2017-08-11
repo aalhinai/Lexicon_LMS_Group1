@@ -22,6 +22,10 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
+                @if (ViewBag.Name != null)
+                {
+                    <span class="field-validation-error text-danger">@ViewBag.Name</span>
+                }
             </div>
         </div>
 
@@ -30,6 +34,10 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CourseStartDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.CourseStartDate, "", new { @class = "text-danger" })
+                @if (ViewBag.StartDate != null)
+                {
+                    <span class="field-validation-error text-danger">@ViewBag.StartDate</span>
+                }
             </div>
         </div>
 
@@ -38,6 +46,10 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CourseEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.CourseEndDate, "", new { @class = "text-danger" })
+                @if (ViewBag.EndDate != null)
+                {
+                    <span class="field-validation-error text-danger">@ViewBag.EndDate</span>
+                }
             </div>
         </div>
 
