@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ namespace LexiconLMS.Models
     {
         //public int UserId { get; set; }
         //public string UserName { get; set; }
+        [Display(Name = "First Name")]
         public string UserFirstName { get; set; }
+        [Display(Name = "Last Name")]
         public string UserLastName { get; set; }
         public string UserFullName { get { return UserFirstName + " " + UserLastName; } }
         //public string UserEmail { get; set; }
@@ -48,6 +51,10 @@ namespace LexiconLMS.Models
         public DbSet<Models.Course> courses { get; set; }
         public DbSet<Models.Document> documents { get; set; }
         public DbSet<Models.Module> modules { get; set; }
+
+        
+
+
     }
 
 }

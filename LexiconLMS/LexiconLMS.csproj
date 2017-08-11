@@ -306,6 +306,7 @@
     <Content Include="Views\Account\TeacherList.cshtml" />
     <Content Include="Views\Courses\MyCourse.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
