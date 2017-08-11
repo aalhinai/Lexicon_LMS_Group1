@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<LexiconLMS.Models.DisplayUserViewModel>
 @{
-    ViewBag.Title = "TeacherList";
+    ViewBag.Title = "Teacher list";
 }
 
-<h2>TeacherList</h2>
+<h2>@ViewBag.Title</h2>
 
 <table class="table">
     <tr>
@@ -25,5 +25,5 @@
 </table>
 @if (User.IsInRole("Teacher"))
 {
-    @Html.ActionLink("Create New Teacher", "Register", new { role = "Teacher"})
+    @Html.ActionLink("Create New Teacher", "Register", new {role = "Teacher"}, new { @class = "hidden-print" })
 }
