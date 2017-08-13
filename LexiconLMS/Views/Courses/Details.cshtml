@@ -21,8 +21,8 @@
             <tr>
                 <td>@Html.ActionLink(item.ModuleName, "Details", "Modules", new { id = item.ModuleId }, null)</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.ModuleId }, null)
-                    @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null) |
+                    @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.ModuleId }, null) |
+                    @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null) 
                 </td>
             </tr>
         }

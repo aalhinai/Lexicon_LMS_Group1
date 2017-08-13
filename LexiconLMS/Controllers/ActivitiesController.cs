@@ -73,15 +73,26 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.activities.Add(activity);
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                if (db.modules.Find(activity.ModuleId).ModuleStartDate > activity.ActivityStartDate)
                 {
-                    return Redirect(redirectString);
+                    ViewBag.StartDate = "Start Date of the Activity can not be before the Start Date of the Module.";
                 }
-                else
+                if (db.modules.Find(activity.ModuleId).ModuleEndDate < activity.ActivityEndDate)
                 {
-                    return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+                    ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
+                }
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                {
+                    db.activities.Add(activity);
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+                    }
                 }
             }
             ViewBag.RedirectString = redirectString;
@@ -119,15 +130,27 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(activity).State = EntityState.Modified;
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                if (db.modules.Find(activity.ModuleId).ModuleStartDate > activity.ActivityStartDate)
                 {
-                    return Redirect(redirectString);
+                    ViewBag.StartDate = "Start Date of the Activity can not be before the Start Date of the Module.";
                 }
-                else
+                if (db.modules.Find(activity.ModuleId).ModuleEndDate < activity.ActivityEndDate)
                 {
-                    return RedirectToAction("Details", "Activities", new { id = activity.ActivityId });
+                    ViewBag.EndDate = "End Date of the Activity can not be after the End Date of the Module.";
+                }
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                {
+                    db.Entry(activity).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Activities", new { id = activity.ActivityId });
+                    }
+                    
                 }
             }
             ViewBag.RedirectString = redirectString;
@@ -156,16 +179,11 @@ namespace LexiconLMS.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteConfirmed(int id, string redirectString)
+        public ActionResult DeleteConfirmed(int id)
         {
             Activity activity = db.activities.Find(id);
             db.activities.Remove(activity);
             db.SaveChanges();
-            if (redirectString != "Empty")
-            {
-                return Redirect(redirectString);
-            }
-            else
             {
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }

@@ -25,13 +25,13 @@ namespace LexiconLMS.Migrations
             var roleNames = new[] { "Teacher", "Student" };
             foreach (var roleName in roleNames)
             {
-                if(!context.Roles.Any(r => r.Name ==roleName))
+                if (!context.Roles.Any(r => r.Name == roleName))
                 {
                     //creates Roll
                     var role = new IdentityRole { Name = roleName };
- 
+
                     var result = roleManager.Create(role);
-                    if(!result.Succeeded)
+                    if (!result.Succeeded)
                     {
                         throw new Exception(string.Join("\n", result.Errors));
                     }
@@ -45,7 +45,7 @@ namespace LexiconLMS.Migrations
             var emails = new[] { "user@lexicon.se", "teacher@lexicon.se", "student@lexicon.se" };
             foreach (var email in emails)
             {
-              if(!context.Users.Any(u => u.UserName == email))
+                if (!context.Users.Any(u => u.UserName == email))
                 {
 
                     //creating user
@@ -80,9 +80,9 @@ namespace LexiconLMS.Migrations
             // adding Course data
             context.courses.AddOrUpdate(
                 c => c.CourseName,
-                new Course {CourseName = ".Net", CourseStartDate= DateTime.Now, CourseEndDate=DateTime.Now.AddMonths(4) , CourseDescription = "see the PDF files "},
+                new Course { CourseName = ".Net", CourseStartDate = DateTime.Now, CourseEndDate = DateTime.Now.AddMonths(4), CourseDescription = "see the PDF files " },
                 new Course { CourseName = "Java", CourseStartDate = DateTime.Now, CourseEndDate = DateTime.Now.AddMonths(4), CourseDescription = "see the PDF files " });
-                context.SaveChanges();
+            context.SaveChanges();
 
 
             // adding Module testData
@@ -94,12 +94,19 @@ namespace LexiconLMS.Migrations
 
 
             // adding Activities testData
-            
+
             context.activities.AddOrUpdate(
                 a => a.ActivityName,
                 new Activity { ActivityType = ActivityType.ELearning, ActivityName = "ABC", ActivityStartDate = DateTime.Now, ActivityEndDate = DateTime.Now.AddMonths(4), ActivityDescription = "See the Activity PDF", ModuleId = context.modules.FirstOrDefault().ModuleId },
-                new Activity { ActivityType = ActivityType.Assignment,
-                ActivityName = "Assignment", ActivityStartDate = DateTime.Now, ActivityEndDate = DateTime.Now.AddMonths(4), ActivityDescription = "See the Activity PDF", ModuleId = context.modules.FirstOrDefault().ModuleId });
+                new Activity
+                {
+                    ActivityType = ActivityType.Assignment,
+                    ActivityName = "Assignment",
+                    ActivityStartDate = DateTime.Now,
+                    ActivityEndDate = DateTime.Now.AddMonths(4),
+                    ActivityDescription = "See the Activity PDF",
+                    ModuleId = context.modules.FirstOrDefault().ModuleId
+                });
             context.SaveChanges();
 
 
