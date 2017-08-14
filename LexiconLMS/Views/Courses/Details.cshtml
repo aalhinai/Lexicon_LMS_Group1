@@ -6,12 +6,13 @@
 
 <h2>@Model.CourseName</h2>
 
+
 <div>
     <hr />
     <table class="table" id="modules">
         <tr>
             <th>
-                Module Names&nbsp;&nbsp;&nbsp;
+                Module Names&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id="showParticipants" onclick="Show('participants')" class="btn btn-default" style="font-weight:bold">Participants</button>
             </th>
             <th>Actions</th>
@@ -44,7 +45,14 @@
             <tr>
                 <td>@item.UserFullName</td>
                 <td>@item.Email</td>
-                <td>@Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id}, null)</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id, role = "Student" }, null) <span> |</span>
+                    @Html.ActionLink("Delete", "Delete", "Account", new { id = item.Id }, null)
+                </td>
+
+
+             
+               
+              
             </tr>
         }
     </table>

@@ -152,7 +152,7 @@ namespace LexiconLMS.Controllers
 
         // GET: Account/Edit/5
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string role)
         {
             if(id == null )
             {
@@ -165,7 +165,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.RedirectString = redirectCheck();
-
+            ViewBag.Role = role;
             return View(user);
         }
 

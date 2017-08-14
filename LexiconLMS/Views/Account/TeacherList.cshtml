@@ -22,8 +22,8 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <span> |</span>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, role = "Teacher" }) <span> |</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             }
         </tr>
