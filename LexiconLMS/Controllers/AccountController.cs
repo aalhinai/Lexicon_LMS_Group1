@@ -184,6 +184,7 @@ namespace LexiconLMS.Controllers
                 dbUser.UserFirstName = user.UserFirstName;
                 dbUser.UserLastName = user.UserLastName;
                 dbUser.Email = user.Email;
+                dbUser.UserName = user.Email;
 
                 db.Entry(dbUser).State = EntityState.Modified;
                 db.SaveChanges();
