@@ -3,7 +3,7 @@
     ViewBag.Title = "Teacher List";
 }
 
-<h2>Teacher List</h2>
+<h2>@ViewBag.Title</h2>
 
 <table class="table">
     <tr>
@@ -22,7 +22,7 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td class="hidden-print">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span> |</span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, role = "Teacher" }) <span> |</span>
                     @Html.ActionLink("Remove", "Delete", new { id = item.Id })
                 </td>
             }

@@ -1,4 +1,5 @@
-﻿@model LexiconLMS.Models.DisplayUserViewModel
+﻿@model LexiconLMS.Models.ApplicationUser
+
 
 @{
     ViewBag.Title = "Edit";
@@ -8,12 +9,14 @@
 <h2>Edit</h2>
 
 
+
 @using (Html.BeginForm("Edit", "Account", new { redirectString = ViewBag.RedirectString }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>User</h4>
+        @*Checking for a particular Role, whether it is teacher or student user:*@
+        <h4>@ViewBag.Role</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)

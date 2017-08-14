@@ -6,12 +6,13 @@
 
 <h2>@Model.CourseName</h2>
 
+
 <div>
     <hr />
     <table class="table" id="modules">
         <tr>
             <th>
-                Module Names&nbsp;&nbsp;&nbsp;
+                Module Names&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id="showParticipants" onclick="Show('participants')" class="btn btn-default" style="font-weight:bold">Participants</button>
             </th>
             <th>@Html.DisplayNameFor(m => m.Modules.FirstOrDefault().ModuleStartDate)</th>
@@ -57,7 +58,7 @@
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id }, null) <span> |</span>
+                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id, role = "Student" }, null) <span> |</span>
                         @Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id }, null)
                     </td>
                 }
