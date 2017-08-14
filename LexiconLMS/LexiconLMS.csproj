@@ -201,13 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707200935498_Added Init.cs" />
-    <Compile Include="Migrations\201707200935498_Added Init.Designer.cs">
-      <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707200939343_add init database.cs" />
-    <Compile Include="Migrations\201707200939343_add init database.Designer.cs">
-      <DependentUpon>201707200939343_add init database.cs</DependentUpon>
+    <Compile Include="Migrations\201708111157119_init.cs" />
+    <Compile Include="Migrations\201708111157119_init.Designer.cs">
+      <DependentUpon>201708111157119_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -328,11 +324,8 @@
     <Folder Include="pics\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707200935498_Added Init.resx">
-      <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707200939343_add init database.resx">
-      <DependentUpon>201707200939343_add init database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708111157119_init.resx">
+      <DependentUpon>201708111157119_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
