@@ -7,13 +7,13 @@ namespace LexiconLMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addinitdatabase : IMigrationMetadata
+    public sealed partial class copypastesamefilefromgithubafterunexpecteddeletionbymistak : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addinitdatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(copypastesamefilefromgithubafterunexpecteddeletionbymistak));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707200939343_add init database"; }
+            get { return "201708121552086_copy same file from github after unexpected deletion by mistak"; }
         }
         
         string IMigrationMetadata.Source

@@ -201,13 +201,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707200935498_Added Init.cs" />
-    <Compile Include="Migrations\201707200935498_Added Init.Designer.cs">
-      <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
+    <Compile Include="Migrations\201708121539365_Init.cs" />
+    <Compile Include="Migrations\201708121539365_Init.Designer.cs">
+      <DependentUpon>201708121539365_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707200939343_add init database.cs" />
-    <Compile Include="Migrations\201707200939343_add init database.Designer.cs">
-      <DependentUpon>201707200939343_add init database.cs</DependentUpon>
+    <Compile Include="Migrations\201708121552086_copy\paste same file from github after unexpected deletion by mistak.cs" />
+    <Compile Include="Migrations\201708121552086_copy\paste same file from github after unexpected deletion by mistak.Designer.cs">
+      <DependentUpon>paste same file from github after unexpected deletion by mistak.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -242,6 +242,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -328,11 +329,11 @@
     <Folder Include="pics\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707200935498_Added Init.resx">
-      <DependentUpon>201707200935498_Added Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708121539365_Init.resx">
+      <DependentUpon>201708121539365_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707200939343_add init database.resx">
-      <DependentUpon>201707200939343_add init database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708121552086_copy\paste same file from github after unexpected deletion by mistak.resx">
+      <DependentUpon>paste same file from github after unexpected deletion by mistak.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
