@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foolproof;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,6 +27,7 @@ namespace LexiconLMS.Models
         public DateTime ActivityStartDate { get; set; }
 
         [Display(Name = "End Date")]
+        [GreaterThan("ActivityStartDate")]
         public DateTime ActivityEndDate { get; set; }
 
         [Display(Name = "Description")]

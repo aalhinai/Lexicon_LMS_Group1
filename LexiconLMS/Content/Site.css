@@ -120,13 +120,14 @@ This for Left sidebar collapse to right-side push
     left: 60%; /* 6 columns */
   }
 
-  .sidebar-offcanvas {
-    position: absolute;
-    top: 0;
-    width: 60%; /* 6 columns */
-  }
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+        width: 200px; /* 6 columns */
+        
+    }
 }
-}*/
+
 
 /* some copied from lexicon.se */
 
@@ -229,3 +230,24 @@ bootstrap.css:928
     max-width: 750px;
 }*/
 /*************************/
+
+
+
+
+
+.list-group a {
+    background-color: black;
+    font-size: 20px !important;
+    color:white;
+}
+
+.list-group a:hover {
+        color: lime !important;
+        
+}
+
+
+
+.list-group a.active {
+        background-color: #d60000;
+}

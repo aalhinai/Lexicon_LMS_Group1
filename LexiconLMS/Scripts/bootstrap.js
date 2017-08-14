@@ -684,7 +684,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
             $this[$target.hasClass('in') ? 'addClass' : 'removeClass']('collapsed')
         }
 
-         $target.collapse(option) 
+        // $target.collapse(option) (This line was preventing menu from toggling when pressed, no clue why or what the function does. -Niklas)
     })
 
 }(window.jQuery);

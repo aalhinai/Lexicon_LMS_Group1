@@ -5,75 +5,73 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Lexicon Learning Management System </title>
-    @*<link rel="stylesheet" type="text/css" href="http://www.lexicon.se/Static/styles/global.min.css?m=170605155329">
-    <link rel="stylesheet" type="text/css" href="http://www.lexicon.se/fonts/417673/8BEF4B8AFBB92CC08.css">*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" style="padding:0px;" href="@Url.Action( "Index", "Home")">
-                        <img src="~/pics/logo-lexicon@2x.jpg" alt="Lexicon Home" class="img-responsive">
-                    </a>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="padding:0px;" href="@Url.Action( "Index", "Home")">
+                    <img src="~/pics/logo-lexicon@2x.jpg" alt="Lexicon Home" class="img-responsive">
+                </a>
 
-               
                 @*@Html.ActionLink("Lexicon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
 
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li style="margin-right:10px">@Html.ActionLink(" ", "Index", "Home", null, new { @class = "glyphicon glyphicon-home", style = "font-size:22px;", title = "Home page" })</li>
+                    <li style="margin-right:10px">@Html.ActionLink(" ", "About", "Home", null, new { @class = "glyphicon glyphicon-info-sign", style = "font-size:22px;", title = "About us" })</li>
+                    <li>@Html.ActionLink(" ", "Contact", "Home", null, new { @class = "glyphicon glyphicon-earphone", style = "font-size:22px;", title = "Contact us" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
-            </div>
-          </div>
+        </div>
+    </div>
 
+    <div class="container" style="background-color:white; padding-bottom:0px; padding-left:0px;">
+        @*<div class="container">*@
+            <div class="row row-offcanvas row-offcanvas-left">
+                <div class="col-lg-9 col-xs-12 col-sm-9 col-sm-push-2">
+                    <p class="pull-left visible-xs">
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" title="Toggle sidebar" style="background-color:black"><i class="fa fa-chevron-left"></i></button>
+                    </p>
+                    <br>
+                    <div class="container-fluid">
+                    @RenderBody()
+                    <footer>
+                        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                    </footer>
+                    </div>
+                </div><!--/.col-xs-12.col-sm-9-->
 
-    <div class="container">
-        <div class="row row-offcanvas row-offcanvas-left">
-            <div class="col-lg-10 col-xs-12 col-sm-9 col-sm-push-3">
-                <p class="pull-left visible-xs">
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" title="Toggle sidebar"><i class="fa fa-chevron-left"></i></button>
-                </p>
-                <br>
-                @*<div class="container-fluid">*@
-                @RenderBody()
-                <footer>
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-                </footer>
-                @*</div>*@
-            </div><!--/.col-xs-12.col-sm-9-->
+                <div class="col-lg-3 col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas" style="width:190px;" id="sidebar">
+                    <div class="list-group">
 
-            <div class="col-lg-2 col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
-                <div class="list-group">
-                    
-                    @if (User.IsInRole("Teacher"))
-                    {
-                    <a  href="@Url.Action("Index", "Courses")" class="list-group-item @Html.IsActive("Courses", "Index")">Courses</a>
-                    <a  href="@Url.Action("TeacherList", "Account")" class="list-group-item @Html.IsActive("Account", "TeacherList")">Teacher List</a>
-                    }
-                    @if (User.IsInRole("Student"))
-                    {
-                        <a href="@Url.Action("MyCourse", "Courses")" class="list-group-item @Html.IsActive("Courses", "MyCourse")">Home</a>
-                        <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
-                        <a href="@Url.Action("Assignments", "Activities")" class="list-group-item @Html.IsActive("Activities", "Assignments")">Assignments</a>
-                        <a href="@Url.Action("Participants", "Courses")" class="list-group-item @Html.IsActive("Courses", "Participants")">Course Participants</a>
-                    }
-                </div>
-            </div><!--/.sidebar-offcanvas-->
-        </div><!--/row-->
-    </div><!--/container-fluid-->
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <a href="@Url.Action("Index", "Courses")" class="list-group-item @Html.IsActive("Courses", "Index")">Courses</a>
+                            <a href="@Url.Action("TeacherList", "Account")" class="list-group-item @Html.IsActive("Account", "TeacherList")">Teacher List</a>
+                        }
+                        @if (User.IsInRole("Student"))
+                        {
+                            <a href="@Url.Action("MyCourse", "Courses")"  class="list-group-item @Html.IsActive("Courses", "MyCourse")">Home</a>
+                            <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
+                            <a href="@Url.Action("Assignments", "Activities")" class="list-group-item @Html.IsActive("Activities", "Assignments")">Assignments</a>
+                            <a href="@Url.Action("Participants", "Courses")" class="list-group-item @Html.IsActive("Courses", "Participants")">Course Participants</a>
+                        }
+                    </div>
+                </div><!--/.sidebar-offcanvas-->
+            </div><!--/row-->
+        @*</div>*@<!--/container-fluid-->
+    </div>
 
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
@@ -84,6 +82,6 @@
                     $('.row-offcanvas').toggleClass('active')
                 });
             });
-       </script>
+        </script>
 </body>
 </html>
