@@ -14,16 +14,26 @@
                 Module Names&nbsp;&nbsp;&nbsp;
                 <button id="showParticipants" onclick="Show('participants')" class="btn btn-default" style="font-weight:bold">Participants</button>
             </th>
-            <th>Actions</th>
+            <th>@Html.DisplayNameFor(m => m.Modules.FirstOrDefault().ModuleStartDate)</th>
+            <th>@Html.DisplayNameFor(m => m.Modules.FirstOrDefault().ModuleEndDate)</th>
+            @if (Model.CourseEndDate > DateTime.Now)
+            {
+                <th>Actions</th>
+            }
         </tr>
         @foreach (var item in Model.Modules)
         {
             <tr>
                 <td>@Html.ActionLink(item.ModuleName, "Details", "Modules", new { id = item.ModuleId }, null)</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.ModuleId }, null) |
-                    @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null) 
-                </td>
+                <td>@item.ModuleStartDate</td>
+                <td>@item.ModuleEndDate</td>
+                @if (Model.CourseEndDate > DateTime.Now)
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.ModuleId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null)
+                    </td>
+                }
             </tr>
         }
     </table>
@@ -38,39 +48,42 @@
         </tr>
         @{
             var students = Model.Students.OrderBy(u => u.UserFullName).ToList();
-         }
+        }
         @foreach (var item in students)
         {
             <tr>
                 <td>@item.UserFullName</td>
                 <td>@item.Email</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id }, null) <span> |</span>
-                    @Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id }, null)
-                </td>
+                @if (Model.CourseEndDate > DateTime.Now)
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id }, null) <span> |</span>
+                        @Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id }, null)
+                    </td>
+                }
             </tr>
         }
     </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
-    @Html.ActionLink("Back to List", "Index") |
-    <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, null) </span>
-    <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, null)</span>
 
+    @if (Model.CourseEndDate > DateTime.Now)
+    {
+        <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, null) |</span>
+        <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, null) |</span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) <span> |</span>
+    }
+    @Html.ActionLink("Back to List", "Index")
 </p>
 <script>
-    Show = function (element)
-    {
+    Show = function (element) {
         document.getElementById(element).setAttribute('style', 'display:table');
-        if (element == "participants")
-        {
+        if (element == "participants") {
             document.getElementById('modules').setAttribute('style', 'display:none;')
             document.getElementById('StudentLink').setAttribute('style', 'display: inline;')
             document.getElementById('ModuleLink').setAttribute('style', 'display: none;')
         }
-        else
-        {
+        else {
             document.getElementById('participants').setAttribute('style', 'display:none;')
             document.getElementById('ModuleLink').setAttribute('style', 'display: inline;')
             document.getElementById('StudentLink').setAttribute('style', 'display: none;')
