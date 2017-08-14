@@ -9,9 +9,6 @@
 <table class="table">
     <tr>
         <th>
-            Module @Html.DisplayNameFor(model => model.Module.ModuleName)
-        </th>
-        <th>
             Assignment @Html.DisplayNameFor(model => model.ActivityName)
         </th>
         <th>
@@ -19,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ActivityDescription)
+        </th>
+        <th>
+            Module @Html.DisplayNameFor(model => model.Module.ModuleName)
         </th>
         <th></th>
     </tr>
@@ -33,9 +33,6 @@
             }
             <tr class="@endedClass">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Module.ModuleName)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.ActivityName)
                 </td>
                 <td>
@@ -43,6 +40,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActivityDescription)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Module.ModuleName, "Details", "Modules", new { id = item.ModuleId}, null)
                 </td>
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.ActivityId })
