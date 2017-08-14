@@ -243,11 +243,11 @@ bootstrap.css:928
 
 .list-group a:hover {
         color: lime !important;
-        
+        background-color: black;
 }
 
 
 
-.list-group a.active {
+.list-group a.active, .list-group a.active:hover {
         background-color: #d60000;
 }
