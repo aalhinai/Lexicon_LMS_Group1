@@ -66,8 +66,9 @@
                 </td>
                 @if (User.IsInRole("Teacher"))
                 {
-                    <td>
-                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
+                    <td>@*@{ string activityName = item.ActivityName; }*@
+                        @Html.ActionLink(" ", "Delete", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-trash", title = "Delete activity " + item.ActivityName, style = "color:red" })
+                        @*@Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete this course", style = "color:red" })*@
                     </td>
                 }
             </tr>
@@ -78,13 +79,15 @@
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
-        @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) <span> |</span>
-        @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId }, null)
+        @Html.ActionLink(" ", "Details", "Courses", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to course details" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        @Html.ActionLink(" ", "Edit", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Edit module details" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId }, new { style = "font-size:18px", title ="for this module" })
+
+        @*@Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", style = "color:red" })*@
     }
     else
     {
-        @Html.ActionLink("Back to list", "Index", "Modules", new { id = Model.CourseId }, null)
+        @Html.ActionLink(" ", "Index", "Modules", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-style:22px", title = "Back to list" })
     }
 
 </p>

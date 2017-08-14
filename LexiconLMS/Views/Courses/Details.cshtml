@@ -7,20 +7,20 @@
 <h2>@Model.CourseName</h2>
 
 <div>
-    <hr />
+    @*<hr />*@
     <table class="table" id="modules">
         <tr>
             <th>
                 Module Names&nbsp;&nbsp;&nbsp;
-                <button id="showParticipants" onclick="Show('participants')" class="btn btn-default" style="font-weight:bold">Participants</button>
+                <button id="showParticipants" onclick="Show('participants')" class="btn btn-default hidden-print" style="font-weight:bold">Participants</button>
             </th>
-            <th>Actions</th>
+            <th class="hidden-print">Actions</th>
         </tr>
         @foreach (var item in Model.Modules)
         {
             <tr>
                 <td>@Html.ActionLink(item.ModuleName, "Details", "Modules", new { id = item.ModuleId }, null)</td>
-                <td>@Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null)</td>
+                <td class="hidden-print">@Html.ActionLink(" ", "Delete", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-trash", style = "color:red", title = "Delete module " + item.ModuleName})</td>
             </tr>
         }
     </table>
@@ -28,26 +28,26 @@
         <tr>
             <th>
                 Course Participants&nbsp;&nbsp;&nbsp;
-                <button id="showModules" onclick="Show('modules')" class="btn btn-default" style="font-weight:bold">Modules</button>
+                <button id="showModules" onclick="Show('modules')" class="btn btn-default hidden-print" style="font-weight:bold">Modules</button>
             </th>
             <th>Email</th>
-            <th></th>
+            <th class="hidden-print"></th>
         </tr>
         @foreach (var item in Model.Students)
         {
             <tr>
                 <td>@item.UserFullName</td>
                 <td>@item.Email</td>
-                <td>@Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id}, null)</td>
+                <td class="hidden-print">@Html.ActionLink(" ", "Delete", "Account", new { id = item.Id}, new { @class = "glyphicon glyphicon-trash", style = "color:red", title="Delet account " + item.UserFullName} )</td>
             </tr>
         }
     </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
-    @Html.ActionLink("Back to List", "Index") |
-    <span id="ModuleLink"> @Html.ActionLink("Create New Module", "Create", "Modules", new { Course = Model.CourseId }, null) </span>
-    <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, null)</span>
+<p class="hidden-print">
+    @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style= "font-size:22px"})  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span id="ModuleLink"> @Html.ActionLink("Create New Module", "Create", "Modules", new { Course = Model.CourseId }, new { style = "font-size:16px" }) </span>
+    <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { style = "font-size:16px" })</span>
 
 </p>
 <script>

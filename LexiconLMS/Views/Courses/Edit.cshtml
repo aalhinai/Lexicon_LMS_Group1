@@ -51,7 +51,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @*<input type="submit" value="Save" class="btn btn-default" />*@
+                <button type="submit" class="btn btn-primary hidden-print" title="Save the changes"><span class="glyphicon glyphicon-save"></span></button>
             </div>
         </div>
     </div>
@@ -60,11 +61,11 @@
 <div>
     @if(ViewBag.RedirectString != "Empty")
     {
-        <a href=@ViewBag.RedirectString>Back to list</a>
+        <a href=@ViewBag.RedirectString class = "glyphicon glyphicon-arrow-left hidden-print"  style = "font-size:22px" title = "Back to list"></a>
     }
     else
     {
-        @Html.ActionLink("Back", "Index")
+        @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:18px" })
     }
 </div>
 
@@ -74,20 +75,5 @@
     @Styles.Render("~/Content/cssjqryUi")
     @Scripts.Render("~/bundles/jqueryuiTime")
     @Styles.Render("~/Content/cssjqryUiTime")
-   <script type="text/javascript" src="~/Scripts/DateTimePicker.js">
-
-     //$(document).ready(function () {
-     //    $('.date-picker').datetimepicker({
-     //        //dateFormat: "dd/MM/yy",
-     //        dateFormat: 'yy-mm-dd',
-     //        changeMonth: true,
-     //        changeYear: true,
-     //        minDate: new Date(),
-     //        yearRange: "+0:+1",
-     //        controlType: 'select',
-     //        timeFormat: 'HH:mm'
-     //    });
-     //});
-
-</script>
+   <script type="text/javascript" src="~/Scripts/DateTimePicker.js"></script>
 }

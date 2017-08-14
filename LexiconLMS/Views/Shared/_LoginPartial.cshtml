@@ -9,7 +9,7 @@
         <li>@{ string userRole = User.IsInRole("Teacher") ? "teacher" : "student"; }
             @Html.ActionLink(User.Identity.GetUserName() + " (" + userRole +")" , "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage your account", style = "font-size:24px;"})
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out" style="font-size:22px;", title="Log off"></a></li>
+        <li style="margin-left:15px;"><a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out" style="font-size:22px;", title="Log off"></a></li>
     </ul>
     }
 }

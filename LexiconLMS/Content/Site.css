@@ -137,14 +137,14 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color:#f6f6f6;
+  background-color: whitesmoke;/*#f6f6f6;*/
   padding-bottom: 0px;
 }
 .body { padding-bottom: 0px; }
 .body-content { border-color:black;
 }
 html {
-    background-color:#f6f6f6;
+    background-color:whitesmoke; /*#f6f6f6*/
 }
 .row {
     margin-right: 0px;
@@ -155,23 +155,9 @@ html {
   border-top: 2px solid #222222;
   border-bottom: 2px solid #222222;
 }
-th, tr, td {
+th, tr, td { /*gör klasser här .th .tr .td*/
     border-bottom: 1px solid #222222;
     padding: 8px !important;
 }
-/*@media (min-width: 1200px)
-bootstrap.css:1245
-.container {
-    max-width: 1170px;
-}
-@media (min-width: 992px)
-bootstrap.css:1082
-.container {
-    max-width: 970px;
-}
-@media (min-width: 768px)
-bootstrap.css:928
-.container {
-    max-width: 750px;
-}*/
+hr { border-color: darkgray;}
 /*************************/
