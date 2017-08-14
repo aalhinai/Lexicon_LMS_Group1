@@ -58,7 +58,6 @@
                         @if (User.IsInRole("Teacher"))
                         {
                             <a href="@Url.Action("Index", "Courses")" class="list-group-item @Html.IsActive("Courses", "Index")">Courses</a>
-                            <a href="@Url.Action("TeacherList", "Account")" class="list-group-item @Html.IsActive("Account", "TeacherList")">Teacher List</a>
                         }
                         @if (User.IsInRole("Student"))
                         {
@@ -66,6 +65,10 @@
                             <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
                             <a href="@Url.Action("Assignments", "Activities")" class="list-group-item @Html.IsActive("Activities", "Assignments")">Assignments</a>
                             <a href="@Url.Action("Participants", "Courses")" class="list-group-item @Html.IsActive("Courses", "Participants")">Course Participants</a>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("TeacherList", "Account")" class="list-group-item @Html.IsActive("Account", "TeacherList")">Teachers</a>
                         }
                     </div>
                 </div><!--/.sidebar-offcanvas-->

@@ -52,15 +52,8 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.courses.Find(module.CourseId).CourseStartDate > module.ModuleStartDate)
-                {
-                    ViewBag.StartDate = "Start Date of the Module can not be before the Start Date of the Course.";
-                }
-                if (db.courses.Find(module.CourseId).CourseEndDate < module.ModuleEndDate)
-                {
-                    ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
-                }
-                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                Validation(module);
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
                     db.modules.Add(module);
                     db.SaveChanges();
@@ -108,26 +101,8 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.courses.Find(module.CourseId).CourseStartDate > module.ModuleStartDate)
-                {
-                    ViewBag.StartDate = "Start Date of the Module can not be before the Start Date of the Course.";
-                }
-                if (db.courses.Find(module.CourseId).CourseEndDate < module.ModuleEndDate)
-                {
-                    ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
-                }
-                if (db.modules.Where(a => a.ModuleId == module.ModuleId).Any())
-                {
-                    if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
-                    {
-                        ViewBag.StartDate = "Module has an Activity starting before given start date of the Module.";
-                    }
-                    if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderByDescending(a => a.ActivityEndDate).FirstOrDefault().ActivityEndDate > module.ModuleEndDate)
-                    {
-                        ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
-                    }
-                }
-                if (ViewBag.StartDate == null && ViewBag.EndDate == null)
+                Validation(module);
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
                     db.Entry(module).State = EntityState.Modified;
                     db.SaveChanges();
@@ -190,6 +165,42 @@ namespace LexiconLMS.Controllers
             else
             {
                 return "Empty";
+            }
+        }
+
+        private void Validation(Module module)
+        {
+            if (db.courses.Find(module.CourseId).CourseStartDate > module.ModuleStartDate)
+            {
+                ViewBag.StartDate = "Start Date of the Module can not be before the Start Date of the Course.";
+            }
+            if (db.courses.Find(module.CourseId).CourseEndDate < module.ModuleEndDate)
+            {
+                ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
+            }
+            if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleName == module.ModuleName).Any())
+            {
+                ViewBag.Name = "There is already a Module with that name in the Course.";
+            }
+            if (db.activities.Where(a => a.ModuleId == module.ModuleId).Any())
+            {
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
+                {
+                    ViewBag.StartDate = "Module has an Activity starting before given start date of the Module.";
+                }
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderByDescending(a => a.ActivityEndDate).FirstOrDefault().ActivityEndDate > module.ModuleEndDate)
+                {
+                    ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
+                }
+                if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleStartDate < module.ModuleStartDate).Where(m => m.ModuleEndDate > module.ModuleStartDate).Any())
+                {
+                    ViewBag.StartDate = "Module can not start before previous modules within the Course end.";
+                }
+                if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleStartDate < module.ModuleEndDate).Where(m => m.ModuleEndDate > module.ModuleEndDate).Any()
+                    || db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleStartDate > module.ModuleStartDate).Where(m => m.ModuleEndDate < module.ModuleEndDate).Any())
+                {
+                    ViewBag.EndDate = "Module can not end after the next module within the Course starts.";
+                }
             }
         }
 
