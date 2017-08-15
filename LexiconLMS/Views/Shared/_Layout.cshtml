@@ -5,8 +5,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Lexicon Learning Management System </title>
-    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+            $(document).ready(function () {
+                $('[data-toggle="offcanvas"]').click(function () {
+                    $('.row-offcanvas').toggleClass('active')
+                });
+            });
+    </script>
+    @Styles.Render("~/Content/css")
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
 </head>
 <body>
@@ -18,8 +28,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" style="padding:0px;"href="@Url.Action( "Index", "Home")">
-                    <img src="~/pics/logo-lexicon@2x.jpg" alt="Lexicon Home" class="img-responsive">
+                <a class="navbar-brand" style="padding:0px;"href="http://www.lexicon.se" title="Lexicon.se"> @*@Url.Action("Index", "Home")*@
+                    <img src="~/pics/logo-lexicon@2x.jpg" alt="Lexicon Home" class="img-responsive" style="margin-right:15px">
                 </a>
 
                 @*@Html.ActionLink("Lexicon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
@@ -40,7 +50,7 @@
         @*<div class="container">*@
             <div class="row row-offcanvas row-offcanvas-left">
                 <div class="col-lg-9 col-xs-12 col-sm-9 col-sm-push-2">
-                    <p class="pull-left visible-xs">
+                    <p class="pull-left visible-xs visible-sm">
                         <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" title="Toggle sidebar" style="background-color:black"><i class="fa fa-chevron-left"></i></button>
                     </p>
                     <br>
@@ -76,15 +86,6 @@
         @*</div>*@<!--/container-fluid-->
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-        <script>
-            $(document).ready(function () {
-                $('[data-toggle="offcanvas"]').click(function () {
-                    $('.row-offcanvas').toggleClass('active')
-                });
-            });
-        </script>
+
 </body>
 </html>

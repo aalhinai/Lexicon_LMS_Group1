@@ -48,7 +48,7 @@
             <th>End Date</th>
             @if (User.IsInRole("Teacher"))
             {
-                <th></th>
+                <th class="hidden-print"></th>
             }
         </tr>
         @foreach (var item in Model.Activities)
@@ -70,10 +70,11 @@
                 </td>
                 @if (User.IsInRole("Teacher") && Model.ModuleEndDate > DateTime.Now)
                 {
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.ActivityId }, null) <span> |</span>
-                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.ActivityId }, null)
+                    <td class="hidden-print">
+                        @Html.ActionLink(" ", "Edit", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this activity", style = "font-size: 22px" })
+                        @Html.ActionLink(" ", "Delete", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-trash", title = "Delete activity " + item.ActivityName, style = "color:red" })
                     </td>
+
                 }
             </tr>
         }
@@ -81,18 +82,20 @@
 
 </div>
 <p class="hidden-print">
-    @if (User.IsInRole("Teacher"))
+    @if (User.IsInRole("Student"))
     {
-        if(Model.ModuleEndDate > DateTime.Now)
-        {
-            @Html.ActionLink("Add New Activity", "Create", "Activities", new { id = Model.ModuleId }, null) <span> |</span>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
-        }
-        @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) 
+        @Html.ActionLink(" ", "Index", "Modules", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to list" })
     }
     else
     {
-        @Html.ActionLink("Back to list", "Index", "Modules", new { id = Model.CourseId }, null)
+        @Html.ActionLink(" ", "Details", "Courses", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to course details" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        if (Model.ModuleEndDate > DateTime.Now)
+        {
+            @Html.ActionLink(" ", "Edit", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Edit module details" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @Html.ActionLink("Add New Activity", "Create", "Activities", new { id = Model.ModuleId }, new { style = "font-size:18px", title = "for this module" })
+        }
+
+        @*@Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", style = "color:red" })*@
     }
 
 </p>

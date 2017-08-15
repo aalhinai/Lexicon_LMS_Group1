@@ -61,20 +61,31 @@
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
-        @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null) <span> |</span>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId } )  <span> |</span>
-        @Html.ActionLink("Upload File", "uploadFile", new { id = Model.ActivityId }) 
+        if (Model.ActivityEndDate > DateTime.Now)
+        {
+            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Details about module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Back to course list" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        }
+
+        @*@Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp; &nbsp; &nbsp;*@
+        @*@Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
+        @*@Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
+
+        @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
+        @Html.ActionLink("Upload File", "uploadFile", new { id = Model.ActivityId })
+
     }
     @if (User.IsInRole("Student"))
     {
         if (Request.UrlReferrer != null)
         {
-            <a href="@Request.UrlReferrer.ToString()">Back</a>
+            @*<a href="@Request.UrlReferrer.ToString()">Back</a>*@
+            @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = @Request.UrlReferrer.ToString(), style = "font-size:22px", title = "Back" })
         }
         else
         {
-            @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null)
+            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName })
+
         }
     }
 </p>

@@ -8,12 +8,12 @@
 
 
 <div>
-    <hr />
+    @*<hr />*@
     <table class="table" id="modules">
         <tr>
             <th>
-                Module Names&nbsp;&nbsp;&nbsp;&nbsp;
-                <button id="showParticipants" onclick="Show('participants')" class="btn btn-default" style="font-weight:bold">Participants</button>
+                Module Names&nbsp;&nbsp;&nbsp;
+                <button id="showParticipants" onclick="Show('participants')" class="btn btn-default hidden-print" style="font-weight:bold">Participants</button>
             </th>
             <th>@Html.DisplayNameFor(m => m.Modules.FirstOrDefault().ModuleStartDate)</th>
             <th>@Html.DisplayNameFor(m => m.Modules.FirstOrDefault().ModuleEndDate)</th>
@@ -31,8 +31,8 @@
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.ModuleId }, null) |
-                        @Html.ActionLink("Delete", "Delete", "Modules", new { id = item.ModuleId }, null)
+                        @Html.ActionLink(" ", "Edit", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this module", style = "font-size:22px" }) 
+                        @Html.ActionLink(" ", "Delete", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-trash", title = "Remove this student", style = "font-size: 22px" })
                     </td>
                 }
             </tr>
@@ -42,10 +42,10 @@
         <tr>
             <th>
                 Course Participants&nbsp;&nbsp;&nbsp;
-                <button id="showModules" onclick="Show('modules')" class="btn btn-default" style="font-weight:bold">Modules</button>
+                <button id="showModules" onclick="Show('modules')" class="btn btn-default hidden-print" style="font-weight:bold">Modules</button>
             </th>
             <th>Email</th>
-            <th></th>
+            <th class="hidden-print"></th>
         </tr>
         @{
             var students = Model.Students.OrderBy(u => u.UserFullName).ToList();
@@ -58,23 +58,23 @@
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id, role = "Student" }, null) <span> |</span>
-                        @Html.ActionLink("Remove", "Delete", "Account", new { id = item.Id }, null)
+                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", title = "Edit this student", style = "font-size:22px" }) 
+                        @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", title = "Remove this student", style= "font-size: 22px"})
                     </td>
                 }
             </tr>
         }
     </table>
 </div>
-<p>
+<p class="hidden-print">
+    @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
     @if (Model.CourseEndDate > DateTime.Now)
     {
-        <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, null) |</span>
-        <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, null) |</span>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) <span> |</span>
+        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })        <span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp </span>;
+        <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, new { style = "font-size:16px" }) </span>
+        <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { style = "font-size:16px" })</span>
     }
-    @Html.ActionLink("Back to List", "Index")
 </p>
 <script>
     Show = function (element) {

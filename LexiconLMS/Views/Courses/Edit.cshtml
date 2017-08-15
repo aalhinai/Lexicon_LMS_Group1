@@ -7,10 +7,10 @@
 <h2>@ViewBag.Title</h2>
 
 
-@using (Html.BeginForm("Edit","Courses", new { redirectString = ViewBag.RedirectString}))
+@using (Html.BeginForm("Edit", "Courses", new { redirectString = ViewBag.RedirectString }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Course</h4>
         <hr />
@@ -63,7 +63,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-primary hidden-print" title="Save the changes for @Model.CourseName"><span class="glyphicon glyphicon-save"></span></button>
             </div>
         </div>
     </div>
@@ -72,11 +72,12 @@
 <div>
     @if(ViewBag.RedirectString != "Empty")
     {
-        <a href=@ViewBag.RedirectString>Back to list</a>
+        @*<a href=@ViewBag.RedirectString class = "glyphicon glyphicon-arrow-left hidden-print"  style = "font-size:22px" title = "Back to list"></a>*@
+        @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
     }
     else
     {
-        @Html.ActionLink("Back", "Index")
+        @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })
     }
 </div>
 

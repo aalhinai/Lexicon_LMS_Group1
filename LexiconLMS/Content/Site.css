@@ -16,6 +16,18 @@
     white-space: normal;
 }
 
+.btn-default, .btn-default a, .btn-default:focus
+{
+    background-color: black;
+    color: white;
+}
+.btn-default:hover > a, .btn-default:hover
+{
+    background-color: black;
+    color: lime;
+    text-decoration: none;
+    border-color:#333
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -45,6 +57,13 @@ textarea {
         border: 1px solid black;
         padding: 6px !important;
     }
+    .table-responsive {
+    width: 100%;
+    margin-bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border: 0px;
+  }
 }
 /* <-- Stefan */
 
@@ -70,7 +89,7 @@ navbar-header .navbar-brand {
   width: 38px;
 }
 
-/* some copied from lexicon.se */
+a[disabled="disabled"]{color:#000; text-decoration:none !important}
 
 /*a:visited{color:#198521}*/
 /*a:hover{color:#198521;text-decoration:underline}
@@ -137,15 +156,16 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color:#f6f6f6;
+  background-color: whitesmoke;/*#f6f6f6;*/
   padding-bottom: 0px;
 }
 .body { padding-bottom: 0px; }
 .body-content { border-color:black;
 }
 html {
-    background-color:#f6f6f6;
+    background-color:whitesmoke; /*#f6f6f6*/
 }
+
 .row {
     margin-right: 0px;
     margin-left: -15px;
@@ -170,7 +190,7 @@ This for Left sidebar collapse to right-side push
  * Off Canvas
  * --------------------------------------------------
  */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 991px) {
   .row-offcanvas {
     position: relative;
     -webkit-transition: all .25s ease-out;
@@ -202,6 +222,7 @@ This for Left sidebar collapse to right-side push
 
   .row-offcanvas-left.active {
     left: 60%; /* 6 columns */
+    background-color:white;
   }
 
     .sidebar-offcanvas {
@@ -229,4 +250,18 @@ This for Left sidebar collapse to right-side push
 
 .list-group a.active, .list-group a.active:hover {
         background-color: #d60000;
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.428571429;
+  vertical-align: top;
+  border-top: 1px solid #222222;
+  border-bottom: 1px solid #222222;
 }
+
+hr { border-color: #222222; }
+/*************************/

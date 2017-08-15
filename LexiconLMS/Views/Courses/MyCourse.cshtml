@@ -27,8 +27,8 @@
                             @Html.ActionLink(Activity.ActivityName, "Details", "Activities", new {id = Activity.ActivityId}, null)
                         </td>
                         <td>@Activity.ActivityStartDate</td>
-                        <td>@Activity.ActivityEndDate</td>
-                        <td>@Activity.Module.ModuleName</td>
+                        <td>@Activity.ActivityEndDate</td>  
+                        <td>@Html.ActionLink(Activity.Module.ModuleName, "Details", "Modules", new { id = Activity.ModuleId}, null)</td>
                     </tr>
                 }
             }

@@ -61,13 +61,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-primary hidden-print" title="Save the changes for @Model.ModuleName"><span class="glyphicon glyphicon-save"></span></button>
             </div>
         </div>
     </div>
 }
 
 <div>
+    @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
     @if (ViewBag.RedirectString != "Empty")
     {
         <a href=@ViewBag.RedirectString>Back to list</a>
