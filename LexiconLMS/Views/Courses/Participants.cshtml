@@ -11,7 +11,10 @@
         <th>Course Participant</th>
         <th>Email</th>
     </tr>
-    @foreach (var item in Model.Students)
+    @{
+        var students = Model.Students.OrderBy(u => u.UserFullName).ToList();
+    }
+    @foreach (var item in students)
     {
         <tr>
             <td>@item.UserFullName</td>

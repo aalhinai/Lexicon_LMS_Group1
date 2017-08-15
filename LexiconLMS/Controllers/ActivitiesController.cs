@@ -73,19 +73,24 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.activities.Add(activity);
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                Validation(activity);
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
-                    return Redirect(redirectString);
-                }
-                else
-                {
-                    return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+                    db.activities.Add(activity);
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
+                    }
                 }
             }
             ViewBag.RedirectString = redirectString;
-            ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
+            ViewBag.ModuleId = activity.ModuleId;
+            //ViewBag.ModuleId = new SelectList(db.modules, "ModuleId", "ModuleName", activity.ModuleId);
             return View(activity);
         }
 
@@ -119,15 +124,20 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(activity).State = EntityState.Modified;
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                Validation(activity);
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
-                    return Redirect(redirectString);
-                }
-                else
-                {
-                    return RedirectToAction("Details", "Activities", new { id = activity.ActivityId });
+                    db.Entry(activity).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Activities", new { id = activity.ActivityId });
+                    }
+
                 }
             }
             ViewBag.RedirectString = redirectString;
@@ -156,16 +166,11 @@ namespace LexiconLMS.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult DeleteConfirmed(int id, string redirectString)
+        public ActionResult DeleteConfirmed(int id)
         {
             Activity activity = db.activities.Find(id);
             db.activities.Remove(activity);
             db.SaveChanges();
-            if (redirectString != "Empty")
-            {
-                return Redirect(redirectString);
-            }
-            else
             {
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }
@@ -180,6 +185,31 @@ namespace LexiconLMS.Controllers
             else
             {
                 return "Empty";
+            }
+        }
+
+        private void Validation(Activity activity)
+        {
+            if (db.modules.Find(activity.ModuleId).ModuleStartDate > activity.ActivityStartDate)
+            {
+                ViewBag.StartDate = "Start Date of the Activity can not be before the Start Date of the Module.";
+            }
+            if (db.modules.Find(activity.ModuleId).ModuleEndDate < activity.ActivityEndDate)
+            {
+                ViewBag.EndDate = "End Date of the Activity can not be after the End Date of the Module.";
+            }
+            if (db.activities.Where(a => a.ModuleId == activity.ModuleId).Where(a => a.ActivityId != activity.ActivityId).Where(a => a.ActivityName == activity.ActivityName).Any())
+            {
+                ViewBag.Name = "There is already an Activity with that name in the Module.";
+            }
+            if (db.activities.Where(a => a.ModuleId == activity.ModuleId).Where(a => a.ActivityId != activity.ActivityId).Where(a => a.ActivityStartDate < activity.ActivityStartDate).Where(a => a.ActivityEndDate > activity.ActivityStartDate).Any())
+            {
+                ViewBag.StartDate = "Activity can not start before previous activities within the Module end.";
+            }
+            if (db.activities.Where(a => a.ModuleId == activity.ModuleId).Where(a => a.ActivityId != activity.ActivityId).Where(a => a.ActivityStartDate < activity.ActivityEndDate).Where(a => a.ActivityEndDate > activity.ActivityEndDate).Any()
+                || db.activities.Where(a => a.ModuleId == activity.ModuleId).Where(a => a.ActivityId != activity.ActivityId).Where(a => a.ActivityStartDate > activity.ActivityStartDate).Where(a => a.ActivityEndDate < activity.ActivityEndDate).Any())
+            {
+                ViewBag.EndDate = "Activity can not end after the next activity within the Module starts.";
             }
         }
 

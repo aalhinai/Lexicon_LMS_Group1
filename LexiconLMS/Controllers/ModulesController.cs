@@ -16,7 +16,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Index()
         {
             var modules = db.Users.Find(User.Identity.GetUserId()).Course.Modules;
-            return View(modules.ToList());
+            return View(modules.OrderBy(m => m.ModuleStartDate).ToList());
         }
 
         // GET: Modules/Details/5
@@ -52,19 +52,25 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.modules.Add(module);
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                Validation(module);
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
-                    return Redirect(redirectString);
-                }
-                else
-                {
-                    return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    db.modules.Add(module);
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    }
+
                 }
             }
             ViewBag.RedirectString = redirectString;
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
+            ViewBag.Course = module.CourseId;
             return View(module);
         }
 
@@ -95,15 +101,19 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
-                if (redirectString != "Empty")
+                Validation(module);
+                if (ViewBag.StartDate == null && ViewBag.EndDate == null && ViewBag.Name == null)
                 {
-                    return Redirect(redirectString);
-                }
-                else
-                {
-                    return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    db.Entry(module).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (redirectString != "Empty")
+                    {
+                        return Redirect(redirectString);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                    }
                 }
             }
             ViewBag.CourseId = new SelectList(db.courses, "CourseId", "CourseName", module.CourseId);
@@ -155,6 +165,42 @@ namespace LexiconLMS.Controllers
             else
             {
                 return "Empty";
+            }
+        }
+
+        private void Validation(Module module)
+        {
+            if (db.courses.Find(module.CourseId).CourseStartDate > module.ModuleStartDate)
+            {
+                ViewBag.StartDate = "Start Date of the Module can not be before the Start Date of the Course.";
+            }
+            if (db.courses.Find(module.CourseId).CourseEndDate < module.ModuleEndDate)
+            {
+                ViewBag.EndDate = "End Date of the Module can not be after the End Date of the Course.";
+            }
+            if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleName == module.ModuleName).Any())
+            {
+                ViewBag.Name = "There is already a Module with that name in the Course.";
+            }
+            if (db.activities.Where(a => a.ModuleId == module.ModuleId).Any())
+            {
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderBy(a => a.ActivityStartDate).FirstOrDefault().ActivityStartDate < module.ModuleStartDate)
+                {
+                    ViewBag.StartDate = "Module has an Activity starting before given start date of the Module.";
+                }
+                if (db.activities.Where(a => a.ModuleId == module.ModuleId).OrderByDescending(a => a.ActivityEndDate).FirstOrDefault().ActivityEndDate > module.ModuleEndDate)
+                {
+                    ViewBag.EndDate = "Module has an Activity that ends after the given end date of the Module.";
+                }
+                if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleStartDate < module.ModuleStartDate).Where(m => m.ModuleEndDate > module.ModuleStartDate).Any())
+                {
+                    ViewBag.StartDate = "Module can not start before previous modules within the Course end.";
+                }
+                if (db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleStartDate < module.ModuleEndDate).Where(m => m.ModuleEndDate > module.ModuleEndDate).Any()
+                    || db.modules.Where(m => m.CourseId == module.CourseId).Where(m => m.ModuleId != module.ModuleId).Where(m => m.ModuleStartDate > module.ModuleStartDate).Where(m => m.ModuleEndDate < module.ModuleEndDate).Any())
+                {
+                    ViewBag.EndDate = "Module can not end after the next module within the Course starts.";
+                }
             }
         }
 

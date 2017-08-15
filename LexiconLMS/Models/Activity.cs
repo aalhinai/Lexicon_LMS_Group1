@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Foolproof;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Models
 {
@@ -14,11 +16,23 @@ namespace LexiconLMS.Models
     public class Activity
     {
         public int ActivityId { get; set; }
+
+        [Display(Name = "Type")]
         public ActivityType ActivityType { get; set; }
+
+        [Display(Name = "Name")]
         public string ActivityName { get; set; }
+
+        [Display(Name = "Start Date")]
         public DateTime ActivityStartDate { get; set; }
+
+        [Display(Name = "End Date")]
+        [GreaterThan("ActivityStartDate")]
         public DateTime ActivityEndDate { get; set; }
+
+        [Display(Name = "Description")]
         public string ActivityDescription { get; set; }
+
         public int ModuleId { get; set; }
 
         public virtual Module Module { get; set; }

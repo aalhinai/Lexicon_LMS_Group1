@@ -1,15 +1,27 @@
-﻿using System;
+﻿using Foolproof;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Models
 {
     public class Module
     {
         public int ModuleId { get; set; }
+
+        [Display(Name = "Name")]
         public string ModuleName { get; set; }
+
+        [Display(Name = "Description")]
         public string ModuleDescription { get; set; }
+
+        [Display(Name = "Start Date")]
         public DateTime ModuleStartDate { get; set; }
+
+        [Display(Name = "End Date")]
+        [GreaterThan("ModuleStartDate")]
         public DateTime ModuleEndDate { get; set; }
+
         public int CourseId { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }

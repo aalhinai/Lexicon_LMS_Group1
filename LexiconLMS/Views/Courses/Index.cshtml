@@ -1,20 +1,25 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Course>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Courses";
 }
-
-<h2>@ViewBag.Title</h2>
-
+@if (ViewBag.currentAction != null)
+{
+    <h2>@ViewBag.currentAction Courses</h2>
+}
+else
+{
+    <h2>Ongoing Courses</h2>
+}
 <p class="hidden-print">
-    @Html.ActionLink("Create New", "Create")
-    @if(ViewBag.currentAction == "History")
+    <button class="btn btn-default"> @Html.ActionLink("Add New Course", "Create") </button>
+    @if (ViewBag.currentAction == "Old")
     {
-        @Html.ActionLink("Hide History", "Index", new { currentAction = "Index" })
+        <button class="btn btn-default">@Html.ActionLink("View Ongoing Courses", "Index", new { currentAction = "Ongoing" })</button>
     }
     else
     {
-        @Html.ActionLink("Show History", "Index", new { currentAction = "History"})
+        <button class="btn btn-default">@Html.ActionLink("View Old Courses", "Index", new { currentAction = "Old" })</button>
     }
 </p>
 <form class="hidden-print">
@@ -22,23 +27,56 @@
     <input type="hidden" name="currentAction" value="@ViewBag.currentAction" />
     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 </form>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseStartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseEndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </th>
-        <th class="hidden-print"></th>
-    </tr>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseDescription)
+            </th>
+            <th class="hidden-print"></th>
+        </tr>
 
+        @foreach (var item in Model)
+        {
+            string endedClass = "";
+            if (item.CourseEndDate < DateTime.Now)
+            {
+                endedClass = "danger";
+            }
+            <tr class=@endedClass>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseDescription)
+                </td>
+                <td class="hidden-print">
+                    @if (item.CourseEndDate > DateTime.Now)
+                    {
+                        @Html.ActionLink("New Student", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, null) <span> |</span>
+
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <span> |</span>
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                </td>
+            </tr>
+        }
 @foreach (var item in Model) {
     string endedClass = "";
     if (item.CourseEndDate < DateTime.Now)
@@ -71,4 +109,5 @@
     </tr>
 }
 
-</table>
+    </table>
+    </div>

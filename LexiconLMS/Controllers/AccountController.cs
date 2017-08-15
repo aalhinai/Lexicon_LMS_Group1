@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace LexiconLMS.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +36,9 @@ namespace LexiconLMS.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -61,6 +62,7 @@ namespace LexiconLMS.Controllers
             {
                 users.Add(new DisplayUserViewModel { Email = item.Email, UserFirstName = item.UserFirstName, UserLastName = item.UserLastName, Id = item.Id });
             }
+            users = users.OrderBy(u => u.UserFullName).ToList();
             return View(users);
         }
 
@@ -150,29 +152,74 @@ namespace LexiconLMS.Controllers
 
         // GET: Account/Edit/5
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string role)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser dbUser = db.Users.Find(id);
+            DisplayUserViewModel user = new DisplayUserViewModel { Id = dbUser.Id, Email = dbUser.Email, UserFirstName = dbUser.UserFirstName, UserLastName = dbUser.UserLastName };
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RedirectString = redirectCheck();
+            ViewBag.Role = role;
+            return View(user);
         }
 
 
         //POST: Account/Edit/5
-       // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Teacher")]
-        //public ActionResult Edit([Bind(Include = "Email, UserLastName, UserFirstName")] ApplicationUser user, string RedirectString)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(User).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return Redirect(RedirectString);
-        //    }
-        //    ViewBag.RedirectString = RedirectString;
-        //    return View();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit([Bind(Include = "Id, Email, UserLastName, UserFirstName")] DisplayUserViewModel user, string redirectString)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser dbUser = db.Users.FirstOrDefault(x => x.Id == user.Id);
+                dbUser.UserFirstName = user.UserFirstName;
+                dbUser.UserLastName = user.UserLastName;
+                dbUser.Email = user.Email;
+                dbUser.UserName = user.Email;
+
+                db.Entry(dbUser).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("TeacherList", "Account");
+                }
+            }
+            ViewBag.RedirectString = redirectString;
+            return View(user);
+        }
+
+
+
+
+        private string redirectCheck()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return Request.UrlReferrer.ToString();
+
+            }
+            else
+            {
+                return "Empty";
+            }
+        }
+
+
+
 
 
 
@@ -205,7 +252,7 @@ namespace LexiconLMS.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -252,14 +299,14 @@ namespace LexiconLMS.Controllers
                 {
                     UserManager.AddToRole(user.Id, Role);
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    if(redirectString != "Empty")
+                    if (redirectString != "Empty")
                     {
                         return Redirect(redirectString);
                     }

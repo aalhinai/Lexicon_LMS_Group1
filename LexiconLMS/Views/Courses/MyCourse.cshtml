@@ -7,17 +7,18 @@
 <h2>@Model.CourseName</h2>
 
 <div>
-    <h4 class="text-center">To-Do This Week</h4>
+    <h3 class="text-center">To-Do This Week</h3>
     <hr />
-    <table>
+    <table class="table">
         <tr>
-            <th>
-                Activity Name
-            </th>
+            <th>Activity Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Module Name</th>
         </tr>
-        @foreach (var Module in Model.Modules)
+        @foreach (var Module in Model.Modules.OrderBy(m => m.ModuleStartDate))
         {
-            foreach (var Activity in Module.Activities)
+            foreach (var Activity in Module.Activities.OrderBy(a => a.ActivityStartDate))
             {
                 if ((Activity.ActivityEndDate - DateTime.Now).Days <= 7 && (Activity.ActivityEndDate - DateTime.Now).Days >= 0 || (Activity.ActivityStartDate - DateTime.Now).Days <= 7 && (Activity.ActivityStartDate - DateTime.Now).Days >= 0) //within this week, check time value.
                 {
@@ -25,6 +26,9 @@
                         <td>
                             @Html.ActionLink(Activity.ActivityName, "Details", "Activities", new {id = Activity.ActivityId}, null)
                         </td>
+                        <td>@Activity.ActivityStartDate</td>
+                        <td>@Activity.ActivityEndDate</td>  
+                        <td>@Html.ActionLink(Activity.Module.ModuleName, "Details", "Modules", new { id = Activity.ModuleId}, null)</td>
                     </tr>
                 }
             }
