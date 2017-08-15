@@ -44,7 +44,6 @@ else
             </th>
             <th class="hidden-print"></th>
         </tr>
-
         @foreach (var item in Model)
         {
             string endedClass = "";
@@ -66,48 +65,17 @@ else
                     @Html.DisplayFor(modelItem => item.CourseDescription)
                 </td>
                 <td class="hidden-print">
+
+                    @Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp;&nbsp;&nbsp;
                     @if (item.CourseEndDate > DateTime.Now)
                     {
-                        @Html.ActionLink("New Student", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, null) <span> |</span>
-
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <span> |</span>
+                        @Html.ActionLink(" ", "Edit", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course" }) <text>&nbsp;&nbsp;&nbsp;</text>
+                        @Html.ActionLink(" ", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-user", title = "Register new student to this course" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
                     }
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                    @Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete this course", style = "color:red" })
                 </td>
             </tr>
         }
-@foreach (var item in Model) {
-    string endedClass = "";
-    if (item.CourseEndDate < DateTime.Now)
-    {
-        endedClass = "danger";
-    }
-    <tr class=@endedClass>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseStartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseEndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseDescription)
-        </td>
-        <td class="hidden-print">
-
-            @Html.ActionLink(" ", "Details", new { id=item.CourseId }, new { @class = "glyphicon glyphicon-file", title ="Details about this course"}) &nbsp;&nbsp;&nbsp;
-            @if (item.CourseEndDate > DateTime.Now)
-            {
-                @Html.ActionLink(" ", "Edit", new { id = item.CourseId }, new { @class="glyphicon glyphicon-edit", title="Edit this course" }) <text>&nbsp;&nbsp;&nbsp;</text>
-                @Html.ActionLink(" ", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-user", title = "Register new student to this course" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-}
-            @Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete this course", style = "color:red" })
-        </td>
-    </tr>
-}
 
     </table>
-    </div>
+</div>
