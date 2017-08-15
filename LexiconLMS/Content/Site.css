@@ -16,6 +16,18 @@
     white-space: normal;
 }
 
+.btn-default, .btn-default a
+{
+    background-color: black;
+    color: white;
+}
+.btn-default:hover > a, .btn-default:hover
+{
+    background-color: black;
+    color: lime !important;
+    text-decoration: none;
+    border-color:#333
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -170,7 +182,7 @@ This for Left sidebar collapse to right-side push
  * Off Canvas
  * --------------------------------------------------
  */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 991px) {
   .row-offcanvas {
     position: relative;
     -webkit-transition: all .25s ease-out;
@@ -202,6 +214,7 @@ This for Left sidebar collapse to right-side push
 
   .row-offcanvas-left.active {
     left: 60%; /* 6 columns */
+    background-color:white;
   }
 
     .sidebar-offcanvas {
