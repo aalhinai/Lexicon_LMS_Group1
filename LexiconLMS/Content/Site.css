@@ -16,7 +16,7 @@
     white-space: normal;
 }
 
-.btn-default, .btn-default a
+.btn-default, .btn-default a, .btn-default:focus
 {
     background-color: black;
     color: white;
@@ -24,7 +24,7 @@
 .btn-default:hover > a, .btn-default:hover
 {
     background-color: black;
-    color: lime !important;
+    color: lime;
     text-decoration: none;
     border-color:#333
 }

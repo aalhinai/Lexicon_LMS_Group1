@@ -55,6 +55,12 @@
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
+        if (Model.ActivityEndDate > DateTime.Now)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
+            @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId })<span> |</span>
+        }
+        @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null) 
         @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to course list" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
         @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-file", style = "font-size:22px", title = "Details about module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
 
