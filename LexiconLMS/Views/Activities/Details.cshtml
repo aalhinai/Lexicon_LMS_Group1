@@ -55,9 +55,12 @@
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
-        @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null) <span> |</span>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId } )
+        if (Model.ActivityEndDate > DateTime.Now)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
+            @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId })<span> |</span>
+        }
+        @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null) 
     }
     @if (User.IsInRole("Student"))
     {
