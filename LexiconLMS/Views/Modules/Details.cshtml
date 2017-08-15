@@ -55,7 +55,7 @@
             <th>Activity Name</th>
             @if (User.IsInRole("Teacher"))
             {
-                <th></th>
+                <th class="hidden-print"></th>
             }
         </tr>
         @foreach (var item in Model.Activities)
@@ -66,9 +66,8 @@
                 </td>
                 @if (User.IsInRole("Teacher"))
                 {
-                    <td>@*@{ string activityName = item.ActivityName; }*@
+                    <td class="hidden-print">
                         @Html.ActionLink(" ", "Delete", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-trash", title = "Delete activity " + item.ActivityName, style = "color:red" })
-                        @*@Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete this course", style = "color:red" })*@
                     </td>
                 }
             </tr>
@@ -87,7 +86,7 @@
     }
     else
     {
-        @Html.ActionLink(" ", "Index", "Modules", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-style:22px", title = "Back to list" })
+        @Html.ActionLink(" ", "Index", "Modules", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to list" })
     }
 
 </p>

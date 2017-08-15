@@ -59,14 +59,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-primary hidden-print" title="Save the changes for @Model.ModuleName"><span class="glyphicon glyphicon-save"></span></button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    <a href="@ViewBag.RedirectString">Back to List</a>
+    @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
 </div>
 
 @section Scripts {
@@ -75,20 +75,5 @@
     @Styles.Render("~/Content/cssjqryUi")
     @Scripts.Render("~/bundles/jqueryuiTime")
     @Styles.Render("~/Content/cssjqryUiTime")
-    <script type="text/javascript" src="~/Scripts/DateTimePicker.js">
-
-     //$(document).ready(function () {
-     //    $('.date-picker').datetimepicker({
-     //        //dateFormat: "dd/MM/yy",
-     //        dateFormat: 'yy-mm-dd',
-     //        changeMonth: true,
-     //        changeYear: true,
-     //        minDate: new Date(),
-     //        yearRange: "+0:+1",
-     //        controlType: 'select',
-     //        timeFormat: 'HH:mm'
-     //    });
-     //});
-
-</script>
+    <script type="text/javascript" src="~/Scripts/DateTimePicker.js"></script>
 }

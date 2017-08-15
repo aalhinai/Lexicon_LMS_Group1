@@ -45,6 +45,13 @@ textarea {
         border: 1px solid black;
         padding: 6px !important;
     }
+    .table-responsive {
+    width: 100%;
+    margin-bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border: 0px;
+  }
 }
 /* <-- Stefan */
 
@@ -70,12 +77,6 @@ navbar-header .navbar-brand {
   width: 38px;
 }
 
-/* some copied from lexicon.se */
-
-/*a:visited{color:#198521}*/
-/*a:hover{color:#198521;text-decoration:underline}
-a:focus{color:#198521;outline:#999 solid 2px}
-a:hover,a:active{color:#198521; outline:0}*/
 a[disabled="disabled"]{color:#000; text-decoration:none !important}
 
 .nav > li > a {
@@ -146,18 +147,24 @@ body {
 html {
     background-color:whitesmoke; /*#f6f6f6*/
 }
+
 .row {
     margin-right: 0px;
     margin-left: -15px;
 }
 
-.table {
-  border-top: 2px solid #222222;
-  border-bottom: 2px solid #222222;
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.428571429;
+  vertical-align: top;
+  border-top: 1px solid #222222;
+  border-bottom: 1px solid #222222;
 }
-th, tr, td { /*gör klasser här .th .tr .td*/
-    border-bottom: 1px solid #222222;
-    padding: 8px !important;
-}
-hr { border-color: darkgray;}
+
+hr { border-color: #222222; }
 /*************************/

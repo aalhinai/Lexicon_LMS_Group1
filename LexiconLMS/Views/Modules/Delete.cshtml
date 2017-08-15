@@ -67,8 +67,8 @@
                 @Html.ActionLink(" ", "Details", "Courses", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course details", style = "font-size:18px" })
             }
             <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-            @{ string deletModule = "Delete module " + Model.ModuleName; }
-            <button type="submit" class="btn btn-danger"><span class = "glyphicon glyphicon-trash" title = "@deletModule" style = "font-size:16px"></span></button>
+            @{ string deleteModule = "Delete module " + Model.ModuleName; }
+            <button type="submit" class="btn btn-danger" title = "@deleteModule"><span class = "glyphicon glyphicon-trash" style = "font-size:16px"></span></button>
         </div>
     }
 

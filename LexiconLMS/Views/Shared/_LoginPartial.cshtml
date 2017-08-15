@@ -7,7 +7,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>@{ string userRole = User.IsInRole("Teacher") ? "teacher" : "student"; }
-            @Html.ActionLink(User.Identity.GetUserName() + " (" + userRole +")" , "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage your account", style = "font-size:24px;"})
+            @Html.ActionLink(User.Identity.GetUserName() + " (" + userRole +")" , "Index", "Manage", routeValues: null, htmlAttributes: new { style = "font-size:24px; margin-top:4px;", title = "Manage your account"})
         </li>
         <li style="margin-left:15px;"><a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out" style="font-size:22px;", title="Log off"></a></li>
     </ul>
