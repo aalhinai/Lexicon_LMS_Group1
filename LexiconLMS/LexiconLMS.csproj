@@ -304,6 +304,7 @@
     <Content Include="Views\Courses\MyCourse.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Activities\uploadFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -323,6 +324,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="pics\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708111157119_init.resx">

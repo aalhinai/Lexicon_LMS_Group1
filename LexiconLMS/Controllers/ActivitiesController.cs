@@ -1,12 +1,14 @@
-﻿using System;
+﻿using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
-using LexiconLMS.Models;
-using Microsoft.AspNet.Identity;
 
 namespace LexiconLMS.Controllers
 {
@@ -41,8 +43,13 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Activities/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string Message)
         {
+            if (Message != null)
+            {
+                ViewBag.Message = Message.ToString();
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -212,6 +219,58 @@ namespace LexiconLMS.Controllers
                 ViewBag.EndDate = "Activity can not end after the next activity within the Module starts.";
             }
         }
+
+
+
+        // for Uploading single files:
+
+        // GET: Students
+        [HttpGet]
+        public ActionResult uploadFile(int? id)
+        {
+
+            ViewBag.Id = id;
+            return View();
+
+
+            // return View();
+
+        }
+
+        // POST: Students
+        [HttpPost]
+        public ActionResult uploadFile(HttpPostedFileBase file, int activityId)
+        {
+            if (file != null && file.ContentLength > 0)
+
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/Upload"),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+                    return RedirectToAction("Details", "Activities", new { id = activityId, Message = ViewBag.Message });
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
+            {
+                ViewBag.Message = "You have not specified a file.";
+            }
+            ViewBag.Id = activityId;
+            return View();
+
+
+
+        }
+
+
+
+
+
 
         protected override void Dispose(bool disposing)
         {

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+
 }
 
 <h2>Details for activity: @Html.DisplayFor(model => model.ActivityName)</h2>
@@ -49,15 +50,21 @@
         <dd>
             @Html.DisplayFor(model => model.ActivityDescription)
         </dd>
+       
 
     </dl>
 </div>
+
+<p>
+    @ViewBag.Message
+</p>
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ActivityId }) <span> |</span>
         @Html.ActionLink("Back", "Details", "Modules", new { id = Model.ModuleId }, null) <span> |</span>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId } )
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ActivityId } )  <span> |</span>
+        @Html.ActionLink("Upload File", "uploadFile", new { id = Model.ActivityId }) 
     }
     @if (User.IsInRole("Student"))
     {
