@@ -201,13 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708121539365_Init.cs" />
-    <Compile Include="Migrations\201708121539365_Init.Designer.cs">
-      <DependentUpon>201708121539365_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708121552086_copy\paste same file from github after unexpected deletion by mistak.cs" />
-    <Compile Include="Migrations\201708121552086_copy\paste same file from github after unexpected deletion by mistak.Designer.cs">
-      <DependentUpon>paste same file from github after unexpected deletion by mistak.cs</DependentUpon>
+    <Compile Include="Migrations\201708111157119_init.cs" />
+    <Compile Include="Migrations\201708111157119_init.Designer.cs">
+      <DependentUpon>201708111157119_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -329,11 +325,8 @@
     <Folder Include="pics\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708121539365_Init.resx">
-      <DependentUpon>201708121539365_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708121552086_copy\paste same file from github after unexpected deletion by mistak.resx">
-      <DependentUpon>paste same file from github after unexpected deletion by mistak.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708111157119_init.resx">
+      <DependentUpon>201708111157119_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

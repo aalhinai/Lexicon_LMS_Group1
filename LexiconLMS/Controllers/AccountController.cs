@@ -24,7 +24,7 @@ namespace LexiconLMS.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +36,9 @@ namespace LexiconLMS.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -154,12 +154,12 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit(string id, string role)
         {
-            if(id == null )
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser user = db.Users.Find(id);
-          
+            ApplicationUser dbUser = db.Users.Find(id);
+            DisplayUserViewModel user = new DisplayUserViewModel { Id = dbUser.Id, Email = dbUser.Email, UserFirstName = dbUser.UserFirstName, UserLastName = dbUser.UserLastName };
             if (user == null)
             {
                 return HttpNotFound();
@@ -176,23 +176,28 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "Id, Email, UserLastName, UserFirstName")] ApplicationUser user)
+        public ActionResult Edit([Bind(Include = "Id, Email, UserLastName, UserFirstName")] DisplayUserViewModel user, string redirectString)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser dbUser= db.Users.FirstOrDefault(x => x.Id == user.Id);
+                ApplicationUser dbUser = db.Users.FirstOrDefault(x => x.Id == user.Id);
                 dbUser.UserFirstName = user.UserFirstName;
                 dbUser.UserLastName = user.UserLastName;
                 dbUser.Email = user.Email;
 
                 db.Entry(dbUser).State = EntityState.Modified;
                 db.SaveChanges();
-                
-        
+
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
                     return RedirectToAction("TeacherList", "Account");
-                
+                }
             }
-           // ViewBag.RedirectString = redirectString;
+            ViewBag.RedirectString = redirectString;
             return View(user);
         }
 
@@ -246,7 +251,7 @@ namespace LexiconLMS.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -293,14 +298,14 @@ namespace LexiconLMS.Controllers
                 {
                     UserManager.AddToRole(user.Id, Role);
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    if(redirectString != "Empty")
+                    if (redirectString != "Empty")
                     {
                         return Redirect(redirectString);
                     }

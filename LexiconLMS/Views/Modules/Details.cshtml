@@ -52,8 +52,13 @@
             }
         </tr>
         @foreach (var item in Model.Activities)
+        {
+            string endedClass = "";
+            if (item.ActivityEndDate < DateTime.Now)
             {
-            <tr>
+                endedClass = "danger";
+            }
+            <tr class="@endedClass">
                 <td>
                     @Html.ActionLink(item.ActivityName, "Details", "Activities", new { id = item.ActivityId }, null)
                 </td>
@@ -63,7 +68,7 @@
                 <td>
                     @item.ActivityEndDate
                 </td>
-                @if (User.IsInRole("Teacher"))
+                @if (User.IsInRole("Teacher") && Model.ModuleEndDate > DateTime.Now)
                 {
                     <td>
                         @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.ActivityId }, null) <span> |</span>
@@ -78,9 +83,12 @@
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
-        @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) <span> |</span>
-        @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Model.ModuleId }, null)
+        if(Model.ModuleEndDate > DateTime.Now)
+        {
+            @Html.ActionLink("Add New Activity", "Create", "Activities", new { id = Model.ModuleId }, null) <span> |</span>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) <span> |</span>
+        }
+        @Html.ActionLink("Back to list", "Details", "Courses", new { id = Model.CourseId }, null) 
     }
     else
     {
