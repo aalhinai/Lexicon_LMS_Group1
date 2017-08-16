@@ -71,7 +71,7 @@
                 @if (User.IsInRole("Teacher") && Model.ModuleEndDate > DateTime.Now)
                 {
                     <td class="hidden-print">
-                        @Html.ActionLink(" ", "Edit", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this activity", style = "font-size: 22px" })
+                        @Html.ActionLink(" ", "Edit", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this activity" }) <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         @Html.ActionLink(" ", "Delete", "Activities", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-trash", title = "Delete activity " + item.ActivityName, style = "color:red" })
                     </td>
 

@@ -57,9 +57,9 @@
                 <td>@item.Email</td>
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
-                    <td>
-                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", title = "Edit this student", style = "font-size:22px" }) 
-                        @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", title = "Remove this student", style= "font-size: 22px"})
+                    <td class="hidden-print">
+                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", title = "Edit this student" }) 
+                        @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", title = "Remove this student", style= "color:red"})
                     </td>
                 }
             </tr>
@@ -71,9 +71,9 @@
 
     @if (Model.CourseEndDate > DateTime.Now)
     {
-        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })        <span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp </span>;
+        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" }) <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, new { style = "font-size:16px" }) </span>
-        <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { style = "font-size:16px" })</span>
+        <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student Account", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { style = "font-size:16px" })</span>
     }
 </p>
 <script>

@@ -72,7 +72,7 @@ else
                         @Html.ActionLink(" ", "Edit", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course" }) <text>&nbsp;&nbsp;&nbsp;</text>
                         @Html.ActionLink(" ", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-user", title = "Register new student to this course" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
                     }
-                    @Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete this course", style = "color:red" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete the course " + item.CourseName, style = "color:red" })
                 </td>
             </tr>
         }

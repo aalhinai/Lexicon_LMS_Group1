@@ -57,9 +57,9 @@
     {
         if (Model.ActivityEndDate > DateTime.Now)
         {
-            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Details about module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-            @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Back to course list" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-        }
+            @Html.ActionLink(" ", "Index", "Activities",null , new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to activity list" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @*@Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-file", style = "font-size:22px", title = "Details about module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>*@
+    }
 
         @*@Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp; &nbsp; &nbsp;*@
         @*@Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
