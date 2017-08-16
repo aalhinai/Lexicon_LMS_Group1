@@ -27,7 +27,7 @@ namespace LexiconLMS.Models
         public DateTime ActivityStartDate { get; set; }
 
         [Display(Name = "End Date")]
-        [GreaterThan("ActivityStartDate")]
+        [GreaterThan("ActivityStartDate", ErrorMessage = "End Date can't be before Start Date")]
         public DateTime ActivityEndDate { get; set; }
 
         [Display(Name = "Description")]
