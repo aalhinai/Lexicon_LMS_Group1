@@ -47,7 +47,14 @@
                                       onmouseout="document.getElementById('print').style.color = 'white'; document.getElementById('print').style.cursor = 'default';" onclick="print()"></span>
                             </li>
                         </ul>
-                        @Html.Partial("_LoginPartial")
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @Html.Action("LoginPartial", "Account")
+                        }
+                        else
+                        {
+                            @Html.Partial("_LoginPartial")
+                        }
                     </div>
             </div>
     </div>
