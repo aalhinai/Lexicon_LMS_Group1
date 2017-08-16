@@ -246,7 +246,7 @@ namespace LexiconLMS.Controllers
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Upload"),
-                                               Path.GetFileName(file.FileName));
+                                               Path.GetFileName(activityId + "_" + file.FileName));
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
                     return RedirectToAction("Details", "Activities", new { id = activityId, Message = ViewBag.Message });
