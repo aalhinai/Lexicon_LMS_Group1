@@ -175,11 +175,10 @@ html {
   border-top: 2px solid #222222;
   border-bottom: 2px solid #222222;
 }
-th, tr, td {
+/*th, tr, td {
     border-bottom: 1px solid #222222;
     padding: 8px !important;
-}
-
+}*/
 
 /**********************************
 This for Left sidebar collapse to right-side push
@@ -234,7 +233,6 @@ This for Left sidebar collapse to right-side push
 
 }
 
-
 .list-group a {
     background-color: black;
     font-size: 20px !important;
@@ -245,8 +243,6 @@ This for Left sidebar collapse to right-side push
         color: lime !important;
         background-color: black;
 }
-
-
 
 .list-group a.active, .list-group a.active:hover {
         background-color: #d60000;
