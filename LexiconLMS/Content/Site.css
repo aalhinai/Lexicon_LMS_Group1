@@ -250,6 +250,8 @@ This for Left sidebar collapse to right-side push
 
 .list-group a.active, .list-group a.active:hover {
         background-color: #d60000;
+}
+
 .table thead > tr > th,
 .table tbody > tr > th,
 .table tfoot > tr > th,
