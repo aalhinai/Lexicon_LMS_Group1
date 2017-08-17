@@ -42,9 +42,13 @@ namespace LexiconLMS.Controllers
             return View(course);
         }
         [Authorize(Roles = "Student")]
-        public ActionResult MyCourse()
+        public ActionResult MyCourse(int? week)
         {
             Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            if (week != null)
+            {
+                ViewBag.Week = week;
+            }
             return View(course);
         }
         // GET: Courses/Details/5
