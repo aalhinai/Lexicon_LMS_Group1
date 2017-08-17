@@ -11,7 +11,7 @@ namespace LexiconLMS.Models
         public string DocDescription { get; set; }
         public DateTime DocTimestamp { get; set; }
         public DateTime? DocDeadline { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int? CourseId { get; set; }
         public int? ModuleId { get; set; }
         public int? ActivityId { get; set; }
