@@ -19,7 +19,7 @@
             <th>@Html.DisplayNameFor(m => m.Modules.FirstOrDefault().ModuleEndDate)</th>
             @if (Model.CourseEndDate > DateTime.Now)
             {
-                <th>Actions</th>
+                <th class="hidden-print">Actions</th>
             }
         </tr>
         @foreach (var item in Model.Modules)
@@ -30,9 +30,9 @@
                 <td>@item.ModuleEndDate</td>
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
-                    <td>
-                        @Html.ActionLink(" ", "Edit", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this module", style = "font-size:22px" }) 
-                        @Html.ActionLink(" ", "Delete", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-trash", title = "Remove this student", style = "font-size: 22px" })
+                    <td class="hidden-print">
+                        @Html.ActionLink(" ", "Edit", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-edit", title = "Edit module " + item.ModuleName })  &nbsp;&nbsp;&nbsp;
+                        @Html.ActionLink(" ", "Delete", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-trash", title = "Delete module " + item.ModuleName, style = "color:red" })
                     </td>
                 }
             </tr>
