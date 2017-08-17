@@ -42,9 +42,13 @@ namespace LexiconLMS.Controllers
             return View(course);
         }
         [Authorize(Roles = "Student")]
-        public ActionResult MyCourse()
+        public ActionResult MyCourse(int? week)
         {
             Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            if (week != null)
+            {
+                ViewBag.Week = week;
+            }
             return View(course);
         }
         // GET: Courses/Details/5
@@ -79,7 +83,7 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.courses.Where(c => c.CourseName == course.CourseName).Any())
+                if (db.courses.Where(c => c.CourseName == course.CourseName).Where(c => c.CourseEndDate > DateTime.Now).Any())
                 {
                     ViewBag.Name = "There is already a course with that name.";
                 }
@@ -134,7 +138,7 @@ namespace LexiconLMS.Controllers
                         ViewBag.EndDate = "Course has a module that ends after the given end date of the course.";
                     }
                 }
-                if (db.courses.Where(c => c.CourseName == course.CourseName).Where(c => c.CourseId != course.CourseId).Any())
+                if (db.courses.Where(c => c.CourseName == course.CourseName).Where(c => c.CourseEndDate > DateTime.Now).Where(c => c.CourseId != course.CourseId).Any())
                 {
                     ViewBag.Name = "There is already a course with that name.";
                 }

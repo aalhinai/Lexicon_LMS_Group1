@@ -16,7 +16,7 @@ namespace LexiconLMS.Models
         public DateTime CourseStartDate { get; set; }
 
         [Display(Name = "End Date")]
-        [GreaterThan("CourseStartDate")]
+        [GreaterThan("CourseStartDate", ErrorMessage = "End Date can't be before Start Date")]
         public DateTime CourseEndDate { get; set; }
 
         [Display(Name = "Description")]
