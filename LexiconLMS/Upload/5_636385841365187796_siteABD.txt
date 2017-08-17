@@ -1,0 +1,231 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+button > a, button > a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+
+/* Set padding to keep content from hitting the edges  */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Stefan don't remove!*/
+@media print {
+    a[href]:after {
+        content: none /*!important*/;
+    }
+    a {
+        color: black;
+    }
+    body {
+        color: black;
+        background-color: white;
+    }
+    .table {
+        border: 3px solid black;
+        border-collapse: separate;
+        border-radius: 10px;
+        width: auto;
+    }
+    th, tr, td {
+        border: 1px solid black;
+        padding: 6px !important;
+    }
+}
+/* <-- Stefan */
+
+/**********************************
+Responsive navbar-brand image CSS
+- Remove navbar-brand padding for firefox bug workaround
+- add 100% height and width auto ... similar to how bootstrap img-responsive class works
+***********************************/
+/*navbar-header .navbar-brand {
+  padding: 0px;
+}*/
+
+/*.navbar-brand {
+  float: left;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}*/
+
+/*.navbar> .navbar-header> .navbar-brand> img {
+  height: 110px;
+  padding: 15px;
+  width: 38px;
+}
+
+
+/**********************************
+This for Left sidebar collapse to right-side push
+
+***********************************/
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+  }
+
+  .row-offcanvas-right {
+    right: 0;
+  }
+
+  .row-offcanvas-left {
+    left: 0;
+  }
+
+  .row-offcanvas-right
+  .sidebar-offcanvas {
+    right: -60%; /* 6 columns */
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -60%; /* 6 columns */
+  }
+
+  .row-offcanvas-right.active {
+    right: 60%; /* 6 columns */
+  }
+
+  .row-offcanvas-left.active {
+    left: 60%; /* 6 columns */
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 60%; /* 6 columns */
+  }
+}
+
+
+/* some copied from lexicon.se */
+
+/*a:visited{color:#198521}*/
+/*a:hover{color:#198521;text-decoration:underline}
+a:focus{color:#198521;outline:#999 solid 2px}
+a:hover,a:active{color:#198521; outline:0}
+a[disabled="disabled"]{color:#000; text-decoration:none !important}*/
+
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 10px;
+}
+.nav > li > a:link { color:white; text-decoration:none; }
+.nav > li > a:visited { color:white; }
+.nav > li > a:active  { color:lime; }
+.nav > li > a:hover   { color:lime !important; }
+.nav > li > a:focus   { color:lime !important; }
+
+.nav {
+    background-color:#222222 !important;
+    font-size:18px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+.sidebar-navbar-collapse {
+    background-color:#222222; 
+    float: left;
+    padding-left:0px;
+    padding-right:0px;
+    margin-left:0px;
+    /*max-width: 160px;*/
+    margin: 10px;
+}
+.sidebar-navbar-collapse > .nav >  li { font-size:20px !important; }
+
+.navbar {
+    background-color:#222222;
+    border-color:#222222;
+    /*border: 0px;*/
+}
+.navbar-inverse { background-color:#222222; border-color:#222222; }
+
+.navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*padding-left: 0px;
+    padding-right: 0px;*/
+    /* line-height: 20px; */
+}
+.navbar-default .navbar-brand {
+    color:white;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #222222;
+    background-color:white;
+}
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333333;
+  background-color:#f6f6f6;
+  padding-bottom: 0px;
+}
+.body { padding-bottom: 0px; }
+.body-content { border-color:black;
+}
+html {
+    background-color:#f6f6f6;
+}
+.row {
+    margin-right: 0px;
+    margin-left: -15px;
+}
+
+.table {
+  border-top: 2px solid #222222;
+  border-bottom: 2px solid #222222;
+}
+th, tr, td {
+    border-bottom: 1px solid #222222;
+    padding: 8px !important;
+}
+/*@media (min-width: 1200px)
+bootstrap.css:1245
+.container {
+    max-width: 1170px;
+}
+@media (min-width: 992px)
+bootstrap.css:1082
+.container {
+    max-width: 970px;
+}
+@media (min-width: 768px)
+bootstrap.css:928
+.container {
+    max-width: 750px;
+}*/
+/*************************/
