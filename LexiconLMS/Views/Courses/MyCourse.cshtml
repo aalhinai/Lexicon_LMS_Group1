@@ -1,37 +1,93 @@
 ﻿@model LexiconLMS.Models.Course
-
+@using System.Globalization
+@using LexiconLMS.Models
 @{
     ViewBag.Title = "MyCourse";
 }
 
-<h2>Course Name: @Model.CourseName</h2>
+<h2>Course Name:  @Model.CourseName</h2>
 
 <div>
-    <h3 class="text-center">To-Do This Week</h3>
+    @{
+        DateTimeFormatInfo dfi = DateTimeFormatInfo.InvariantInfo;
+        Calendar cal = dfi.Calendar;
+        int week;
+        string current;
+        if (ViewBag.Week == null)
+        {
+            week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+            current = " (current week)";
+        }
+        else
+        {
+            week = ViewBag.Week;
+            if(week == cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek))
+            {
+                current = " (current week)";
+            }
+            else
+            {
+                current = "";
+            }
+        }
+    }
+    <div class="row">
+        @Html.ActionLink(" ", "MyCourse", new { week = week - 1 }, new { @class = "glyphicon glyphicon-arrow-left col-md-2", title = "Previous week", style = "font-size:22px; top: 20px;" })
+        <h3 class="text-center col-md-8">To-Do Week @week @current</h3>
+        @Html.ActionLink(" ", "MyCourse", new { week = week + 1 }, new { @class = "glyphicon glyphicon-arrow-right col-md-2", title = "Next week", style = "font-size:22px; top: 20px;" })
+    </div>
     <hr />
     <table class="table">
-        <tr>
-            <th>Activity Name</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Module Name</th>
-        </tr>
+        @{
+            var Activities = new List<Activity>();
+        }
         @foreach (var Module in Model.Modules.OrderBy(m => m.ModuleStartDate))
         {
             foreach (var Activity in Module.Activities.OrderBy(a => a.ActivityStartDate))
             {
-                if ((Activity.ActivityEndDate - DateTime.Now).Days <= 7 && (Activity.ActivityEndDate - DateTime.Now).Days >= 0 || (Activity.ActivityStartDate - DateTime.Now).Days <= 7 && (Activity.ActivityStartDate - DateTime.Now).Days >= 0) //within this week, check time value.
+                if (week == cal.GetWeekOfYear(Activity.ActivityStartDate, dfi.CalendarWeekRule, dfi.FirstDayOfWeek))
                 {
-                    <tr>
-                        <td>
-                            @Html.ActionLink(Activity.ActivityName, "Details", "Activities", new {id = Activity.ActivityId}, null)
-                        </td>
-                        <td>@Activity.ActivityStartDate</td>
-                        <td>@Activity.ActivityEndDate</td>  
-                        <td>@Html.ActionLink(Activity.Module.ModuleName, "Details", "Modules", new { id = Activity.ModuleId}, null)</td>
-                    </tr>
+                    Activities.Add(Activity);
                 }
             }
+        }
+        @if (Activities.Any())
+        {
+            foreach (var day in dfi.DayNames)
+            {
+                var printed = false;
+                if (Activities.Where(a => a.ActivityStartDate.DayOfWeek.ToString() == day).Any())
+                {
+                    if (!printed)
+                    {
+                        <tr><td colspan="4" class="h4 text-center">Day: @day</td></tr>
+                        <tr>
+                            <th>Activity Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Module Name</th>
+                        </tr>
+                        printed = true;
+                    }
+
+                    foreach (var Activity in Activities)
+                    {
+                        if (Activity.ActivityStartDate.DayOfWeek.ToString() == day)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(Activity.ActivityName, "Details", "Activities", new { id = Activity.ActivityId }, null)</td>
+                                <td>@Activity.ActivityStartDate</td>
+                                <td>@Activity.ActivityEndDate</td>
+                                <td>@Html.ActionLink(Activity.Module.ModuleName, "Details", "Modules", new { id = Activity.ModuleId }, null)</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            <tr><td colspan="4" class="text-center h4">No activities week @week.</td></tr>
         }
     </table>
 </div>

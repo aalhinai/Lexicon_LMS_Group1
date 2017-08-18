@@ -156,6 +156,10 @@ a[disabled="disabled"] {
         font-size: 20px !important;
     }
 
+    .sidebar-navbar-collapse > .nav > li {
+        font-size: 20px !important;
+    }
+
 .navbar {
     background-color: #222222;
     border-color: #222222;

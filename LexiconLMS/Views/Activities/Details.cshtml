@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+
 }
 
 <h2>Details for activity: @Html.DisplayFor(model => model.ActivityName)</h2>
@@ -50,9 +51,23 @@
             <span class="visible-print"> @Html.DisplayFor(model => model.ActivityDescription) </span> @* <---- for print *@
             @Html.TextAreaFor(model => model.ActivityDescription, new { @class = "hidden-print" })    @* <---- for screen view *@
         </dd>
+        <dt>
+
+        </dt>
+        @foreach (var item in Model.Documents)
+        {
+            <dd>
+                <a href="/Upload/@item.DocURL">@item.DocName</a>
+            </dd>
+        }
+
 
     </dl>
 </div>
+
+<p>
+    @ViewBag.Message
+</p>
 <p class="hidden-print">
     @if (User.IsInRole("Teacher"))
     {
@@ -66,7 +81,9 @@
         @*@Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
         @*@Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
 
+        @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
         @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
+
     }
     @if (User.IsInRole("Student"))
     {
