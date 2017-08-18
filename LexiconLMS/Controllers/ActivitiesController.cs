@@ -226,10 +226,12 @@ namespace LexiconLMS.Controllers
 
         // GET: Students
         [HttpGet]
-        public ActionResult uploadFile(int? id)
+        public ActionResult uploadFile(int? activityId, int? courseID, int? moduleId)
         {
 
-            ViewBag.Id = id;
+            ViewBag.activityId = activityId;
+            ViewBag.courseId = courseID;
+            ViewBag.moduleId = moduleId;
             return View();
 
 
@@ -239,7 +241,7 @@ namespace LexiconLMS.Controllers
 
         // POST: Students
         [HttpPost]
-        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,DocURL")] Document document, HttpPostedFileBase file, int activityId)
+        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -247,7 +249,7 @@ namespace LexiconLMS.Controllers
                 {
                 var timeStamp = DateTime.Now.Ticks;
                 string path = Path.Combine(Server.MapPath("~/Upload"),
-                                           Path.GetFileName(activityId + "_" + timeStamp + "_" + file.FileName));
+                                           Path.GetFileName(timeStamp + "_" + file.FileName));
                 file.SaveAs(path);
 
                 document.DocName = Path.GetFileName(file.FileName);
@@ -255,15 +257,17 @@ namespace LexiconLMS.Controllers
                 document.DocTimestamp = DateTime.Now;
                 document.ActivityId = activityId;
                 //rename the file
-                 document.DocURL = Path.GetFileName("/Upload/" + activityId + "_" + timeStamp + "_" + file.FileName); 
-                                                                                                                    
- 
+                 document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
+                 document.CourseId = courseID;
+                 document.ModuleId = moduleId;
+
+
                 document.UserId = User.Identity.GetUserId();
                 db.documents.Add(document);
                 db.SaveChanges();
 
                 ViewBag.Message = "File uploaded successfully";
-                return RedirectToAction("Details", "Activities", new { id = activityId, Message = ViewBag.Message });
+                return RedirectToAction("Index", "Home");
 
                 }
                 catch (Exception ex)
