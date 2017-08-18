@@ -42,39 +42,6 @@ namespace LexiconLMS.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var emails = new[] { "user@lexicon.se", "teacher@lexicon.se", "student@lexicon.se" };
-            foreach (var email in emails)
-            {
-                if (!context.Users.Any(u => u.UserName == email))
-                {
-
-                    //creating user
-                    var user = new ApplicationUser
-                    {
-                        UserName = email,
-                        Email = email,
-                        UserStartDate = DateTime.Now
-                    };
-
-                    var result = userManager.Create(user, "foobar");
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception(string.Join("\n", result.Errors));
-                    }
-
-                }
-            }
-
-            var teacherUser = userManager.FindByName("teacher@lexicon.se");
-            userManager.AddToRole(teacherUser.Id, "Teacher");
-            // teacherUser.UserFirstName.Replace(null, "Teacher");
-
-
-            var studentUser = userManager.FindByName("student@lexicon.se");
-            userManager.AddToRole(studentUser.Id, "Student");
-            //teacherUser.UserFirstName.Replace(null, "Student");
-
-
 
 
             // adding Course data
@@ -109,6 +76,41 @@ namespace LexiconLMS.Migrations
                 });
             context.SaveChanges();
 
+            var emails = new[] { "user@lexicon.se", "teacher@lexicon.se", "student@lexicon.se" };
+            foreach (var email in emails)
+            {
+                if (!context.Users.Any(u => u.UserName == email))
+                {
+
+                    //creating user
+                    var user = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                        UserStartDate = DateTime.Now,
+                        CourseId = context.courses.Where(c => c.CourseName == ".Net").FirstOrDefault().CourseId
+                    };
+
+                    var result = userManager.Create(user, "foobar");
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
+
+                }
+            }
+
+            var teacherUser = userManager.FindByName("teacher@lexicon.se");
+            userManager.AddToRole(teacherUser.Id, "Teacher");
+            // teacherUser.UserFirstName.Replace(null, "Teacher");
+
+
+            var studentUser = userManager.FindByName("student@lexicon.se");
+            userManager.AddToRole(studentUser.Id, "Student");
+            //teacherUser.UserFirstName.Replace(null, "Student");
+
+            var userUser = userManager.FindByName("user@lexicon.se");
+            userManager.AddToRole(userUser.Id, "Student");
 
 
 
