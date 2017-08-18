@@ -330,3 +330,11 @@ hr {
     border-color: #222222;
 }
 /*************************/
+
+
+ /*for displaying Download input thead center*/
+.List-item {
+ margin-left: 180px;
+ width: 50%;
+
+}
