@@ -1,63 +1,65 @@
-﻿
-@{
-    ViewBag.Title = "uploadFile";
+﻿@{
+    ViewBag.Title = "Upload File";
 }
 
-<h2>UploadFiles</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("uploadFile",
-                                        "Activities",
-                                       FormMethod.Post,
-                                       new { enctype = "multipart/form-data", id = "Myform" }))   /*if use Process Bar code then use this  id = "Myform" inside*/
-        {
+                       "Activities",
+                       FormMethod.Post,
+                       new { enctype = "multipart/form-data", id = "Myform", @class= "" }))   /*if use Process Bar code then use this  id = "Myform" inside*/
+{
     <label for="file">Upload File:</label>
-    <input type="file" name="file" id="file" /><br><br>
+    <input type="file" name="file" id="file" class="btn btn-default" required/>
     <input type="hidden" value="@ViewBag.Id" name="activityId" />
     <input type="hidden" value="@ViewBag.message" name="message" />
-    <input type="submit" class="btn btn-success " value="Upload file" />
-    <br><br>
+    <input type="submit" class="btn btn-success" value="Upload file" />
+    <br /><text>&nbsp;</text><br />
     @ViewBag.Message
 }
 
+@*<script type="text/javascript">
+    document.getElementById("file").className = "btn btn-default";
+</script>*@
 
 @*For Process bar in the Upload*@
 
 @*<div class="progress" style="width:50%">
-    <div class="progress-bar"></div>
-    <div class="percent">0%</div>
-</div>
+        <div class="progress-bar"></div>
+        <div class="percent">0%</div>
+    </div>
 
-<div id="status"></div>
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <div id="status"></div>
 
 
-<script>
-$.noConflict();
-    jQuery(document).ready(function ($) {
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        var bar = $('.progress-bar');
-        var percent = $('.percent');
-        var status = $('#status');
 
-        $('#Myform').ajaxForm({
-            beforeSend: function () {
-                status.empty();
-                var percentVal = '0%';
-                bar.width(percentVal);
-                percent.html(percentVal);
-            },
-            uploadProgress: function (event, position, total, percentComplete) {
-                var percentVal = percentComplete + '%';
-                bar.width(percentVal);
-                percent.html(percentVal);
-            },
-            complete: function () {
-                status.html(@ViewBag.Message );
-            }
-        });
-    });</script>*@
+    <script>
+    $.noConflict();
+        jQuery(document).ready(function ($) {
+
+            var bar = $('.progress-bar');
+            var percent = $('.percent');
+            var status = $('#status');
+
+            $('#Myform').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentVal = '0%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                },
+                complete: function () {
+                    status.html(@ViewBag.Message );
+                }
+            });
+        });</script>*@

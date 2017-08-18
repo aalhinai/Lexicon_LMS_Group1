@@ -1,5 +1,5 @@
 ﻿@model LexiconLMS.Models.DisplayUserViewModel
-@using Microsoft.AspNet.Identity
+@*@using Microsoft.AspNet.Identity*@
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -8,19 +8,23 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @{ string userRole = User.IsInRole("Teacher") ? "teacher" : "student"; }
-                @Html.ActionLink("Hello, " + Model.UserFullName, "Index", "Manage", routeValues: null, htmlAttributes: new { style = "font-size:24px; margin-top:4px;", title = "Manage your account" })
+                @{ 
+                    string userName = Model.UserFullName.Trim();
+                    if (string.IsNullOrEmpty(userName)) { userName = Model.Email; }
+                }
+                @Html.ActionLink("Hello, " + userName, "Index", "Manage", routeValues: null, htmlAttributes: new { style = "font-size:24px; margin-top:5px;", title = "Manage your account" })
             </li>
             <li style="margin-left:15px;">
-                <a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out" style="font-size:22px;" , title="Log off">
+                <a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out" style="font-size:22px; margin-top:2px;", title="Log off">
                 </a>
             </li>
         </ul>
                         }
                     }
-                    else
+                    @*else
                     {
                         <ul class="nav navbar-nav navbar-right">
                             <li>@Html.ActionLink(" ", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "visite glyphicon glyphicon-log-in", id = "loginLink", style = "font-size:22px;", title = "Log in" })</li>
                         </ul>
-                    }
+                    }*@
+
