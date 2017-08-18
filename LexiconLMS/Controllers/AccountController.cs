@@ -557,13 +557,17 @@ namespace LexiconLMS.Controllers
 
         public ActionResult LoginPartial()
         {
-            var dbUser = db.Users.Find(User.Identity.GetUserId());
-            DisplayUserViewModel user = new DisplayUserViewModel
-            {
-                Email = dbUser.Email,
-                UserFirstName = dbUser.UserFirstName,
-                UserLastName = dbUser.UserLastName
-            };
+            DisplayUserViewModel user = new DisplayUserViewModel();
+            if (db.Users.Find(User.Identity.GetUserId()) != null){
+                var dbUser = db.Users.Find(User.Identity.GetUserId());
+
+                user = new DisplayUserViewModel
+                {
+                    Email = dbUser.Email,
+                    UserFirstName = dbUser.UserFirstName,
+                    UserLastName = dbUser.UserLastName
+                };
+            }
             return PartialView("_LoginPartial", user);
 
         }
