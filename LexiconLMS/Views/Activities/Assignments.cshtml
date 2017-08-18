@@ -20,7 +20,7 @@
         <th>
             Module @Html.DisplayNameFor(model => model.Module.ModuleName)
         </th>
-        <th></th>
+        <th class="hidden-print"></th>
     </tr>
     @if (Model.Any())
     {
@@ -44,8 +44,9 @@
                 <td>
                     @Html.ActionLink(item.Module.ModuleName, "Details", "Modules", new { id = item.ModuleId}, null)
                 </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ActivityId })
+                <td class="hidden-print">
+                    @*@Html.ActionLink("Details", "Details", new { id = item.ActivityId })*@
+                    @Html.ActionLink(" ", "Details", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-file", title = "Details about this assignments" })
                 </td>
             </tr>
         }

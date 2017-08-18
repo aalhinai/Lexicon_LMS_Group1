@@ -87,7 +87,7 @@
                     @if (User.IsInRole("Student"))
                     {
                         <a href="@Url.Action("MyCourse", "Courses")" class="list-group-item @Html.IsActive("Courses", "MyCourse")">Home</a>
-                        <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
+                            <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
                             <a href="@Url.Action("Assignments", "Activities")" class="list-group-item @Html.IsActive("Activities", "Assignments")">Assignments</a>
                             <a href="@Url.Action("Participants", "Courses")" class="list-group-item @Html.IsActive("Courses", "Participants")">Course Participants</a>
                     }
@@ -100,7 +100,6 @@
         </div><!--/row-->
         @*</div>*@<!--/container-fluid-->
     </div>
-
 
 </body>
 </html>

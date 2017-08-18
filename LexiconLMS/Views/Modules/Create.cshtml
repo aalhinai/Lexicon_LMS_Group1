@@ -60,22 +60,23 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @*<input type="submit" value="Create" class="btn btn-default" />*@
-                <button type="submit" value="Create" class="btn btn-primary hidden-print" title="Create the module"><span class="glyphicon glyphicon-save"></span></button>
+                <button type="submit" value="Create Module" class="btn btn-primary hidden-print" title="Create the module"><span class="glyphicon glyphicon-save"></span></button>
             </div>
         </div>
     </div>
 }
 
-<div>
+<div class="hidden-print">
     @if (ViewBag.RedirectString != "Empty")
     {
         @*<a href=@ViewBag.RedirectString>Back</a>*@
-        <a href=@ViewBag.RedirectString class="glyphicon glyphicon-arrow-left hidden-print" style="font-size:22px" title="Back"></a>
+        @*<a href=@ViewBag.RedirectString class="glyphicon glyphicon-arrow-left" style="font-size:22px" title="Back"></a>*@
+        @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back" })
     }
     else
     {
         @*@Html.ActionLink("Back", "Details", "Courses", new { id = ViewBag.Course }, null)*@
-        @Html.ActionLink(" ", "Index", new { id = ViewBag.Course }, new { @class = "glyphicon glyphicon-arrow-left hidden-print", title = "Back to course details", style = "font-size:16px" })
+        @Html.ActionLink(" ", "Index", new { id = ViewBag.Course }, new { @class = "glyphicon glyphicon-arrow-left hidden-print", title = "Back to course details", style = "font-size:22px" })
     }
 </div>
 
