@@ -67,21 +67,24 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
+<div class="hidden-print">
+    @*@Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })*@
     @if (ViewBag.RedirectString != "Empty")
     {
-        <a href=@ViewBag.RedirectString>Back to list</a>
+        @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
     }
     else
     {
         if (User.IsInRole("Student"))
         {
-            @Html.ActionLink("Back", "Index")
+            @*@Html.ActionLink("Back", "Index")*@
+            @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to list" })
+
         }
         else
         {
-            @Html.ActionLink("Back", "Details", "Courses", new { id = Model.CourseId}, null)
+            @*@Html.ActionLink("Back", "Details", "Courses", new { id = Model.CourseId}, null)*@
+            @Html.ActionLink(" ", "Details", "Courses", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to course list" })
         }
     }
 </div>

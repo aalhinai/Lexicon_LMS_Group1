@@ -66,13 +66,13 @@ else
                 </td>
                 <td class="hidden-print">
 
-                    @Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp;&nbsp;&nbsp;
+                    @Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details course " + item.CourseName }) &nbsp;&nbsp;&nbsp;
                     @if (item.CourseEndDate > DateTime.Now)
                     {
-                        @Html.ActionLink(" ", "Edit", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course" }) <text>&nbsp;&nbsp;&nbsp;</text>
-                        @Html.ActionLink(" ", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-user", title = "Register new student to this course" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+                        @Html.ActionLink(" ", "Edit", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit course " + item.CourseName }) <text>&nbsp;&nbsp;&nbsp;</text>
+                        @Html.ActionLink(" ", "Register", "Account", new { courseId = item.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-user", title = "Register new student to course " + item.CourseName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
                     }
-                    @Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete this course", style = "color:red" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-trash", title = "Delete the course " + item.CourseName, style = "color:red" })
                 </td>
             </tr>
         }

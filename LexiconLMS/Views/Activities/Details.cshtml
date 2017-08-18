@@ -48,7 +48,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ActivityDescription)
+            <span class="visible-print"> @Html.DisplayFor(model => model.ActivityDescription) </span> @* <---- for print *@
+            @Html.TextAreaFor(model => model.ActivityDescription, new { @class = "hidden-print" })    @* <---- for screen view *@
         </dd>
 
 
@@ -114,6 +115,11 @@
             {
                 @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName })
 
-            }
         }
-    </p>
+    }
+</p>
+<script type="text/javascript">
+    document.getElementById("ActivityDescription").cols = 30;
+    document.getElementById("ActivityDescription").rows = 5;
+    document.getElementById("ActivityDescription").readOnly = true;
+</script>

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Activity>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Activities";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -52,10 +52,17 @@
         <td>
             @Html.DisplayFor(modelItem => item.ActivityDescription)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ActivityId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ActivityId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ActivityId })
+        <td class="hidden-print">
+
+            @*@Html.ActionLink("Details", "Details", new { id=item.ActivityId })*@
+            @Html.ActionLink(" ", "Details", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-file", title = "Details about activity " + item.ActivityName }) &nbsp;&nbsp;&nbsp;
+
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ActivityId })*@
+            @Html.ActionLink(" ", "Edit", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this activity " + item.ActivityName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ActivityId })*@
+            @Html.ActionLink(" ", "Delete", new { id = item.ActivityId }, new { @class = "glyphicon glyphicon-trash", title = "Delete the activity " + item.ActivityName, style = "color:red" })
+
         </td>
     </tr>
 }

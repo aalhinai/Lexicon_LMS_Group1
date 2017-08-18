@@ -75,33 +75,32 @@
                     <footer>
                         <p>&copy; @DateTime.Now - Lexicon Learning Management System</p>
                     </footer>
-                    </div>
-                </div><!--/.col-xs-12.col-sm-9-->
+                </div>
+            </div><!--/.col-xs-12.col-sm-9-->
 
-                <div class="col-md-2 col-xs-3 col-sm-3 col-sm-pull-9 sidebar-offcanvas hidden-print" id="sidebar">
-                    <div class="list-group">
+            <div class="col-lg-3 col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas hidden-print" style="width:190px;" id="sidebar">
+                <div class="list-group">
 
-                        @if (User.IsInRole("Teacher"))
-                        {
-                            <a href="@Url.Action("Index", "Courses")" class="list-group-item @Html.IsActive("Courses", "Index")">Courses</a>
-                        }
-                        @if (User.IsInRole("Student"))
-                        {
-                            <a href="@Url.Action("MyCourse", "Courses")"  class="list-group-item @Html.IsActive("Courses", "MyCourse")">Home</a>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <a href="@Url.Action("Index", "Courses")" class="list-group-item @Html.IsActive("Courses", "Index")">Courses</a>
+                    }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <a href="@Url.Action("MyCourse", "Courses")" class="list-group-item @Html.IsActive("Courses", "MyCourse")">Home</a>
                             <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
                             <a href="@Url.Action("Assignments", "Activities")" class="list-group-item @Html.IsActive("Activities", "Assignments")">Assignments</a>
                             <a href="@Url.Action("Participants", "Courses")" class="list-group-item @Html.IsActive("Courses", "Participants")">Course Participants</a>
-                        }
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <a href="@Url.Action("TeacherList", "Account")" class="list-group-item @Html.IsActive("Account", "TeacherList")">Teachers</a>
-                        }
-                    </div>
-                </div><!--/.sidebar-offcanvas-->
-            </div><!--/row-->
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("TeacherList", "Account")" class="list-group-item @Html.IsActive("Account", "TeacherList")">Teachers</a>
+                    }
+                </div>
+            </div><!--/.sidebar-offcanvas-->
+        </div><!--/row-->
         @*</div>*@<!--/container-fluid-->
     </div>
-
 
 </body>
 </html>

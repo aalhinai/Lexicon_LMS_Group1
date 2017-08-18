@@ -69,7 +69,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @*<input type="submit" value="Save" class="btn btn-default" />*@
+                <button type="submit" class="btn btn-primary hidden-print" title="Save the changes for @Model.ActivityName"><span class="glyphicon glyphicon-save"></span></button>
             </div>
         </div>
     </div>
@@ -78,11 +79,14 @@
 <div>
     @if (ViewBag.RedirectString != "Empty")
     {
-        <a href=@ViewBag.RedirectString>Back to list</a>
+        @*<a href=@ViewBag.RedirectString>Back to list</a>*@
+        @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
     }
     else
     {
-        @Html.ActionLink("Back", "Details", "Activities", new { id = Model.ActivityId})
+        @*@Html.ActionLink("Back", "Details", "Activities", new { id = Model.ActivityId })*@
+        @Html.ActionLink(" ", "Details", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to the activity", style = "font-size:22px" })
+
     }
 </div>
 
