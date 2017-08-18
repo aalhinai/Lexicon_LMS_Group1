@@ -239,23 +239,38 @@ namespace LexiconLMS.Controllers
 
         // POST: Students
         [HttpPost]
-        public ActionResult uploadFile(HttpPostedFileBase file, int activityId)
+        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,DocURL")] Document document, HttpPostedFileBase file, int activityId)
         {
             if (file != null && file.ContentLength > 0)
-
+            {
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/Upload"),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                    ViewBag.Message = "File uploaded successfully";
-                    return RedirectToAction("Details", "Activities", new { id = activityId, Message = ViewBag.Message });
+                var timeStamp = DateTime.Now.Ticks;
+                string path = Path.Combine(Server.MapPath("~/Upload"),
+                                           Path.GetFileName(activityId + "_" + timeStamp + "_" + file.FileName));
+                file.SaveAs(path);
+
+                document.DocName = Path.GetFileName(file.FileName);
+                document.DocDescription = "TESTING";
+                document.DocTimestamp = DateTime.Now;
+                document.ActivityId = activityId;
+                //rename the file
+                 document.DocURL = Path.GetFileName("/Upload/" + activityId + "_" + timeStamp + "_" + file.FileName); 
+                                                                                                                    
+ 
+                document.UserId = User.Identity.GetUserId();
+                db.documents.Add(document);
+                db.SaveChanges();
+
+                ViewBag.Message = "File uploaded successfully";
+                return RedirectToAction("Details", "Activities", new { id = activityId, Message = ViewBag.Message });
 
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = "ERROR:" + ex.Message.ToString();
                 }
+            }
             else
             {
                 ViewBag.Message = "You have not specified a file.";

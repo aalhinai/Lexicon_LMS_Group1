@@ -555,6 +555,19 @@ namespace LexiconLMS.Controllers
             return View();
         }
 
+        public ActionResult LoginPartial()
+        {
+            var dbUser = db.Users.Find(User.Identity.GetUserId());
+            DisplayUserViewModel user = new DisplayUserViewModel
+            {
+                Email = dbUser.Email,
+                UserFirstName = dbUser.UserFirstName,
+                UserLastName = dbUser.UserLastName
+            };
+            return PartialView("_LoginPartial", user);
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

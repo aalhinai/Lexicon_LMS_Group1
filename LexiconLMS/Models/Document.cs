@@ -11,11 +11,13 @@ namespace LexiconLMS.Models
         public string DocDescription { get; set; }
         public DateTime DocTimestamp { get; set; }
         public DateTime? DocDeadline { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int? CourseId { get; set; }
         public int? ModuleId { get; set; }
         public int? ActivityId { get; set; }
-
+        //public string DocURL { get { return DocURL; }  }
+        //public string DocURL { get { return DocId.ToString(); } set { DocURL = this.DocId.ToString(); } }
+        public string DocURL { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Course Course { get; set; }
