@@ -278,8 +278,6 @@ namespace LexiconLMS.Controllers
             ViewBag.Id = activityId;
             return View();
 
-
-
         }
 
         //download documents 
