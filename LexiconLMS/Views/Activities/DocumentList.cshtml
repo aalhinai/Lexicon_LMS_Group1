@@ -46,7 +46,7 @@
                     </a>
                 </td>
                 <td style="text-align: center">
-                    @Html.ActionLink(" ", "DownloadDocument", new { docLink = "/Upload/" + @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
+                    @Html.ActionLink(" ", "DownloadDocument", "Activities", new { docLink = @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
                 </td>
             </tr>
         }

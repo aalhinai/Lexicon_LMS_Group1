@@ -6,29 +6,6 @@
 
 <h2>CourseName: @Model.CourseName</h2>
 
-@*@if (Model.Documents.Any())
-{
-    <table class='List-item' style="text-align :left">
-
-        <tr><th>Document Name </th><th>Open</th><th>Download</th></tr>
-        @foreach (var item in Model.Documents)
-        {
-            <tr>
-                <td>
-                    @item.DocName
-                </td>
-                <td style="text-align :center">
-                    <a href="/Upload/@item.DocURL">
-                        <span class="glyphicon glyphicon-eye-open" style="font-size:22px" title="Open"></span>
-                    </a>
-                </td>
-                <td style="text-align :center">
-                    @Html.ActionLink(" ", "DownloadDocument", new { docLink = "/Upload/" + @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
-                </td>
-            </tr>
-        }
-    </table>
-}*@
 
 <div>
     @*<hr />*@
@@ -136,7 +113,7 @@
                     </a>
                 </td>
                 <td style="text-align :center">
-                    @Html.ActionLink(" ", "DownloadDocument", new { docLink = "/Upload/" + @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
+                    @Html.ActionLink(" ", "DownloadDocument", "Activities", new { docLink = @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
                 </td>
             </tr>
         }
