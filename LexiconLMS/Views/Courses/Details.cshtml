@@ -58,10 +58,7 @@
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
                     <td class="hidden-print">
-                        @*@Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", title = "Edit this student" }) 
-                        @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", title = "Remove this student", style= "color:red"})*@
-
-                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", title = "Edit student account " + item.Email }) &nbsp;&nbsp;&nbsp;
+                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", style="margin-right:25px;", title = "Edit student account " + item.Email })
                         @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", title = "Remove student account " + item.Email, style = "color:red" })
                     </td>
                 }
@@ -70,11 +67,11 @@
     </table>
 </div>
 <p class="hidden-print">
-    @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px; margin-right:30px", title = "Back to course list" }) 
 
     @if (Model.CourseEndDate > DateTime.Now)
     {
-        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" }) <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px; margin-right:35px", title = "Edit this course" })
         <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, new { style = "font-size:16px" }) </span>
         <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student Account", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { style = "font-size:16px" })</span>
     }
