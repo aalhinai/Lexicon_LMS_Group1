@@ -72,7 +72,7 @@
 <div>
     @if(ViewBag.RedirectString != "Empty")
     {
-        @*<a href=@ViewBag.RedirectString class = "glyphicon glyphicon-arrow-left hidden-print"  style = "font-size:22px" title = "Back to list"></a>*@
+
         @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", href = ViewBag.RedirectString, title = "Back to list" })
     }
     else

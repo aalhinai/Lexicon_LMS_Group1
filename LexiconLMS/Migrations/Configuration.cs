@@ -109,12 +109,6 @@ namespace LexiconLMS.Migrations
                 });
             context.SaveChanges();
 
-
-
-
-
-
-
         }
     }
 }

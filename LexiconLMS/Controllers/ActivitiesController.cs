@@ -232,6 +232,7 @@ namespace LexiconLMS.Controllers
             ViewBag.activityId = activityId;
             ViewBag.courseId = courseID;
             ViewBag.moduleId = moduleId;
+            ViewBag.RedirectString = redirectCheck();
             return View();
 
 
@@ -241,7 +242,7 @@ namespace LexiconLMS.Controllers
 
         // POST: Students
         [HttpPost]
-        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId)
+        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId, string redirectString)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -255,6 +256,10 @@ namespace LexiconLMS.Controllers
                 document.DocName = Path.GetFileName(file.FileName);
                 document.DocDescription = "TESTING";
                 document.DocTimestamp = DateTime.Now;
+                if (activityId != null)
+                {
+                    document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
+                }
                 document.ActivityId = activityId;
                 //rename the file
                  document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
@@ -267,7 +272,7 @@ namespace LexiconLMS.Controllers
                 db.SaveChanges();
 
                 ViewBag.Message = "File uploaded successfully";
-                return RedirectToAction("Index", "Home");
+                return Redirect(redirectString);
 
                 }
                 catch (Exception ex)
@@ -292,6 +297,38 @@ namespace LexiconLMS.Controllers
         }
 
 
+        //Show documents
+        public ActionResult DocumentList(string role, bool? ontime, int activityId) //Role of the user who uploaded the documents.
+        {
+            var documents = db.documents.Where(d => d.ActivityId == activityId);
+
+            if (User.IsInRole(role) && role == "Student")
+            {
+                var userId = User.Identity.GetUserId();
+                documents = documents.Where(d => d.UserId == userId);
+            }
+            else
+            {
+                documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any());
+            }
+            if (role == "Student")
+            {
+                if (ontime.Value)
+                {
+                    documents = documents.Where(d => d.DocTimestamp < d.DocDeadline);
+                }
+                else
+                {
+                    documents = documents.Where(d => d.DocTimestamp > d.DocDeadline);
+                }
+            }
+            if (ontime.HasValue)
+            {
+                ViewBag.OnTime = ontime.Value;
+            }
+            ViewBag.Role = role;
+            return PartialView(documents.ToList());
+        }
 
         protected override void Dispose(bool disposing)
         {

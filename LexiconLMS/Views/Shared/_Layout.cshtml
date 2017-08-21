@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en-gb">
 @using LexiconLMS.Utilities
 <head>
     <meta charset="utf-8" />
@@ -37,12 +37,11 @@
             </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li style="margin-right:10px">@Html.ActionLink(" ", "Index", "Home", null, new { @class = "glyphicon glyphicon-home", style = "font-size:22px;", title = "Home page"})</li>
-                            <li style="margin-right:10px">@Html.ActionLink(" ", "About", "Home", null, new { @class = "glyphicon glyphicon-info-sign", style = "font-size:22px;", title = "About us"})</li>
-                            @*<li>@Html.ActionLink(" ", "Contact", "Home", null, new { @class = "glyphicon glyphicon-earphone", style = "font-size:22px;", title = "Contact us"})</li>*@
-                            <li title="Contact us" style="margin-right:30px">@Html.ActionLink(" ", "Contact", "Home", null, new { @class = "glyphicon glyphicon-earphone", style = "font-size:22px;" })</li>
-                            <li title="Print the page">
-                                <span id="print" class="glyphicon glyphicon-print" style="font-size:22px; color:white; margin-top:8px;"
+                            <li style="margin-left:10px; margin-top:4px;">@Html.ActionLink(" ", "Index", "Home", null, new { @class = "glyphicon glyphicon-home", style = "font-size:22px;", title = "Home page" })</li>
+                            <li style="margin-left:10px; margin-top:4px;">@Html.ActionLink(" ", "About", "Home", null, new { @class = "glyphicon glyphicon-info-sign", style = "font-size:22px;", title = "About us" })</li>
+                            <li title="Contact us" style="margin-left:10px; margin-right:20px; margin-top:4px;">@Html.ActionLink(" ", "Contact", "Home", null, new { @class = "glyphicon glyphicon-earphone", style = "font-size:22px;" })</li>
+                            <li title="Print the page" style="margin-left:20px; margin-top:12px;">
+                                <span id="print" class="glyphicon glyphicon-print" style="font-size:22px; color:white;"
                                       onmouseover="document.getElementById('print').style.color = 'lime'; document.getElementById('print').style.cursor = 'pointer';"
                                       onmouseout="document.getElementById('print').style.color = 'white'; document.getElementById('print').style.cursor = 'default';" onclick="print()"></span>
                             </li>
@@ -87,7 +86,7 @@
                     }
                     @if (User.IsInRole("Student"))
                     {
-                        <a href="@Url.Action("MyCourse", "Courses")" class="list-group-item @Html.IsActive("Courses", "MyCourse")">Home</a>
+                        <a href="@Url.Action("MyCourse", "Courses")" class="list-group-item @Html.IsActive("Courses", "MyCourse")">My Course</a>
                             <a href="@Url.Action("Index", "Modules")" class="list-group-item @Html.IsActive("Modules", "Index")">Modules</a>
                             <a href="@Url.Action("Assignments", "Activities")" class="list-group-item @Html.IsActive("Activities", "Assignments")">Assignments</a>
                             <a href="@Url.Action("Participants", "Courses")" class="list-group-item @Html.IsActive("Courses", "Participants")">Course Participants</a>
