@@ -95,6 +95,7 @@ textarea {
         color: black;
         background-color: white;
     }
+
     /*.table {
         border-top: 1px solid black;
         border-bottom: 1px solid black;
@@ -106,6 +107,7 @@ textarea {
         border: 1px solid black;
         padding: 6px !important;
     }*/
+
     .table-responsive {
     width: 100%;
     margin-bottom: 0px;
@@ -312,4 +314,66 @@ This for Left sidebar collapse to right-side push
 
 hr { border-color: #222222; }
 /*************************/
+.list-group-item {
+    /*position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #ffffff;*/
+    border: 1px solid #dddddd;
+}
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    /*z-index: 2;*/
+    /*color: #ffffff;*/
+    background-color: #222222;
+    border-color: #222222;
 ----------------------------------------------------------------------------site.css
+proj 253 bort
+modules/edit 70-75
+
+_layout 30 
+<ul class="nav navbar-nav">
+                    <li style="margin-left:10px; margin-top:4px;">@Html.ActionLink(" ", "Index", "Home", null, new { @class = "glyphicon glyphicon-home", style = "font-size:22px;", title = "Home page" })</li>
+                    <li style="margin-left:10px; margin-top:4px;">@Html.ActionLink(" ", "About", "Home", null, new { @class = "glyphicon glyphicon-info-sign", style = "font-size:22px;", title = "About us" })</li>
+                    <li title="Contact us" style="margin-left:10px; margin-right:20px; margin-top:4px;">@Html.ActionLink(" ", "Contact", "Home", null, new { @class = "glyphicon glyphicon-earphone", style = "font-size:22px;" })</li>
+                    <li title="Print the page" style="margin-left:20px; margin-top:12px;">
+                        <span id="print" class="glyphicon glyphicon-print" style="font-size:22px; color:white;"
+                              onmouseover="document.getElementById('print').style.color = 'lime'; document.getElementById('print').style.cursor = 'pointer';"
+                              onmouseout="document.getElementById('print').style.color = 'white'; document.getElementById('print').style.cursor = 'default';" onclick="print()"></span>
+                    </li>
+                </ul>
+---------------------------------
+72-73
+<div class="col-lg-3 col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas hidden-print" style="width:190px;" id="sidebar">
+                <div class="list-group">
+--------------------
+_LoginPartial
+
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right"}))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @*@{ string userRole = User.IsInRole("Teacher") ? "teacher" : "student"; }
+            @Html.ActionLink(User.Identity.GetUserName() + " (" + userRole +")" , "Index", "Manage", routeValues: null, htmlAttributes: new { style = "font-size:24px; margin-top:4px;", title = "Manage your account"})*@
+            @Html.ActionLink("Welcome " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { style = "font-size:24px; margin-top:5px;", title = "Manage your account" })
+        </li>
+        <li style="margin-left:15px;"><a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out" style="font-size:22px; margin-top:2px;", title="Log off"></a></li>
+    </ul>
+    }
+}
+@*else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(" ", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "visite glyphicon glyphicon-log-in", id = "loginLink", style = "font-size:22px;", title="Log in"})</li>
+    </ul>
+}*@
+--------
+Course/Details
+Create new module => Add new module
+---------
+uploudFile => Välj fil => Ingen fil har valts

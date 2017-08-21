@@ -2,11 +2,11 @@
 @using System.Globalization
 @using LexiconLMS.Models
 @{
-    ViewBag.Title = "MyCourse";
+    ViewBag.Title = "My Course";
 }
 
 <h2>Course Name:  @Model.CourseName</h2>
-
+<hr />
 <div>
     @{
         DateTimeFormatInfo dfi = DateTimeFormatInfo.InvariantInfo;
@@ -32,10 +32,11 @@
         }
     }
     <div class="row">
-        @Html.ActionLink(" ", "MyCourse", new { week = week - 1 }, new { @class = "glyphicon glyphicon-arrow-left col-md-2", title = "Previous week", style = "font-size:22px; top: 20px;" })
+        @Html.ActionLink(" ", "MyCourse", new { week = week - 1 }, new { @class = "glyphicon glyphicon-arrow-left col-md-2 hidden-print", title = "Previous week", style = "font-size:22px; top: 20px;" })
         <h3 class="text-center col-md-8">To-Do Week @week @current</h3>
-        @Html.ActionLink(" ", "MyCourse", new { week = week + 1 }, new { @class = "glyphicon glyphicon-arrow-right col-md-2", title = "Next week", style = "font-size:22px; top: 20px;" })
+        @Html.ActionLink(" ", "MyCourse", new { week = week + 1 }, new { @class = "glyphicon glyphicon-arrow-right col-md-2 hidden-print", title = "Next week", style = "font-size:22px; top: 20px;" })
     </div>
+
     <table class="table">
         @{
             var Activities = new List<Activity>();
