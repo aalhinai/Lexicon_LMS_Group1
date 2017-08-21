@@ -262,3 +262,6 @@ __pycache__/
 /LexiconLMS/Stefan
 /LexiconLMS/Upload/1_636386524832915544_Kursschema NB17-10Juli.pdf
 /LexiconLMS/Upload/1_636386528810396163_Övning 5 - Garage 1.pdf
+/LexiconLMS/Migrations/201708210816545_Init.resx
+/LexiconLMS/Migrations/201708210816545_Init.Designer.cs
+/LexiconLMS/Migrations/201708210816545_Init.cs
