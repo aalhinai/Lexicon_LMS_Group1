@@ -47,13 +47,9 @@
                                       onmouseout="document.getElementById('print').style.color = 'white'; document.getElementById('print').style.cursor = 'default';" onclick="print()"></span>
                             </li>
                         </ul>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated)// Since the user is automatically told to log in if they are logged out only logged in users need to see this.
                         {
-                            @Html.Action("LoginPartial", "Account")
-                        }
-                        else
-                        {
-                            @Html.Partial("_LoginPartial")
+                            @Html.Action("LoginPartial", "Account") 
                         }
                     </div>
             </div>
