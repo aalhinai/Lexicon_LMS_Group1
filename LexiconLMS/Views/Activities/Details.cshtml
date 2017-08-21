@@ -90,7 +90,7 @@
         @*@Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
 
     }
-    @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+    @Html.ActionLink(" ", "uploadFile", "Activities", new { activityId = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
