@@ -58,7 +58,9 @@
         
 
     </dl>
+     @if(Model.Documents.Any() ){
     <table class='List-item' style="text-align :left">
+        
         <tr><th>Document Name </th><th>Open</th><th>Download</th></tr>
         @foreach (var item in Model.Documents)
         {
@@ -77,7 +79,7 @@
             </tr>
         }
         </table>
-
+    }
 
 
 

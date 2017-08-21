@@ -6,6 +6,30 @@
 
 <h2>Details for module: @Html.DisplayFor(model => model.ModuleName)</h2>
 
+@if (Model.Documents.Any())
+{
+<table class='List-item' style="text-align :left">
+
+    <tr><th>Document Name </th><th>Open</th><th>Download</th></tr>
+    @foreach (var item in Model.Documents)
+    {
+        <tr>
+            <td>
+                @item.DocName
+            </td>
+            <td style="text-align :center">
+                <a href="/Upload/@item.DocURL">
+                    <span class="glyphicon glyphicon-eye-open" style="font-size:22px" title="Open"></span>
+                </a>
+            </td>
+            <td style="text-align :center">
+                @Html.ActionLink(" ", "DownloadDocument", new { docLink = "/Upload/" + @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
+            </td>
+        </tr>
+    }
+</table>
+
+}
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -100,6 +124,7 @@
         if (Model.ModuleEndDate > DateTime.Now)
         {
             @Html.ActionLink(" ", "Edit", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Edit module details" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @Html.ActionLink(" ", "uploadFile", "Activities", new { moduleId = Model.ModuleId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })
             @Html.ActionLink("Add New Activity", "Create", "Activities", new { id = Model.ModuleId }, new { style = "font-size:18px", title = "for this module" })
         }
 
