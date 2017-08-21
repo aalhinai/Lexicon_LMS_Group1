@@ -5,9 +5,9 @@
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("uploadFile",
-                       "Activities",
-                       FormMethod.Post,
-                       new { enctype = "multipart/form-data", id = "Myform", @class= "" }))   /*if use Process Bar code then use this  id = "Myform" inside*/
+                                        "Activities",
+                                       new { redirectString = ViewBag.RedirectString },
+                                       FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class= "" }))   /*if use Process Bar code then use this  id = "Myform" inside*/
 {
     <label for="file">Upload File:</label>
     <input type="file" name="file" id="file" class="btn btn-default" required/>
