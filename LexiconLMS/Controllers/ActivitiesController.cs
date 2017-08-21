@@ -287,7 +287,8 @@ namespace LexiconLMS.Controllers
         //download documents 
         public FileResult DownloadDocument(string docLink)
         {
-            var FileVirtualPath = docLink;
+          
+            var FileVirtualPath = "/Upload/" + docLink;
             return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
         }
 
