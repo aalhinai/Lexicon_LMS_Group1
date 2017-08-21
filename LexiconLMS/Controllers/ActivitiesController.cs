@@ -226,10 +226,12 @@ namespace LexiconLMS.Controllers
 
         // GET: Students
         [HttpGet]
-        public ActionResult uploadFile(int? id)
+        public ActionResult uploadFile(int? activityId, int? courseID, int? moduleId)
         {
 
-            ViewBag.Id = id;
+            ViewBag.activityId = activityId;
+            ViewBag.courseId = courseID;
+            ViewBag.moduleId = moduleId;
             ViewBag.RedirectString = redirectCheck();
             return View();
 
@@ -240,35 +242,37 @@ namespace LexiconLMS.Controllers
 
         // POST: Students
         [HttpPost]
-        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,DocURL")] Document document, HttpPostedFileBase file, int? activityId, string redirectString)
+        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId, string redirectString)
         {
             if (file != null && file.ContentLength > 0)
             {
                 try
                 {
-                    var timeStamp = DateTime.Now.Ticks;
-                    string path = Path.Combine(Server.MapPath("~/Upload"),
-                                               Path.GetFileName(activityId + "_" + timeStamp + "_" + file.FileName));
-                    file.SaveAs(path);
+                var timeStamp = DateTime.Now.Ticks;
+                string path = Path.Combine(Server.MapPath("~/Upload"),
+                                           Path.GetFileName(timeStamp + "_" + file.FileName));
+                file.SaveAs(path);
 
-                    document.DocName = Path.GetFileName(file.FileName);
-                    document.DocDescription = "TESTING";
-                    document.DocTimestamp = DateTime.Now;
-                    if (activityId != null)
-                    {
-                        document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
-                    }
-                    document.ActivityId = activityId;
-                    //rename the file
-                    document.DocURL = Path.GetFileName("/Upload/" + activityId + "_" + timeStamp + "_" + file.FileName);
+                document.DocName = Path.GetFileName(file.FileName);
+                document.DocDescription = "TESTING";
+                document.DocTimestamp = DateTime.Now;
+                if (activityId != null)
+                {
+                    document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
+                }
+                document.ActivityId = activityId;
+                //rename the file
+                 document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
+                 document.CourseId = courseID;
+                 document.ModuleId = moduleId;
 
 
-                    document.UserId = User.Identity.GetUserId();
-                    db.documents.Add(document);
-                    db.SaveChanges();
+                document.UserId = User.Identity.GetUserId();
+                db.documents.Add(document);
+                db.SaveChanges();
 
-                    ViewBag.Message = "File uploaded successfully";
-                    return RedirectToAction("Details", "Activities", new { id = activityId, Message = ViewBag.Message });
+                ViewBag.Message = "File uploaded successfully";
+                return Redirect(redirectString);
 
                 }
                 catch (Exception ex)
@@ -281,9 +285,7 @@ namespace LexiconLMS.Controllers
                 ViewBag.Message = "You have not specified a file.";
             }
             ViewBag.Id = activityId;
-            return Redirect(redirectString);
-
-
+            return View();
 
         }
 
