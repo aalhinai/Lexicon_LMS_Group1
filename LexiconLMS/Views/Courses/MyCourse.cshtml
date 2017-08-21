@@ -36,7 +36,6 @@
         <h3 class="text-center col-md-8">To-Do Week @week @current</h3>
         @Html.ActionLink(" ", "MyCourse", new { week = week + 1 }, new { @class = "glyphicon glyphicon-arrow-right col-md-2", title = "Next week", style = "font-size:22px; top: 20px;" })
     </div>
-    <hr />
     <table class="table">
         @{
             var Activities = new List<Activity>();
