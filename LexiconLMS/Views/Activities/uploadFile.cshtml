@@ -7,9 +7,9 @@
 
 @using (Html.BeginForm("uploadFile",
                                         "Activities",
-                                       FormMethod.Post,
-                                       new { enctype = "multipart/form-data", id = "Myform" }))   /*if use Process Bar code then use this  id = "Myform" inside*/
-        {
+                                       new { redirectString = ViewBag.RedirectString },
+                                       FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))   /*if use Process Bar code then use this  id = "Myform" inside*/
+{
     <label for="file">Upload File:</label>
     <input type="file" name="file" id="file" /><br><br>
     <input type="hidden" value="@ViewBag.Id" name="activityId" />
