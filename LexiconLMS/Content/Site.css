@@ -334,6 +334,15 @@ This for Left sidebar collapse to right-side push
 hr {
     border-color: #222222;
 }
+/*************************/
+
+
+ /*for displaying Download input thead center*/
+.List-item {
+ margin-left: 180px;
+ width: 50%;
+
+}
 .list-group-item {
         border: 1px solid #222222;
     }
@@ -344,4 +353,5 @@ hr {
     border-color: #222222;
 }
 
+button { color:white; }
 /*************************/

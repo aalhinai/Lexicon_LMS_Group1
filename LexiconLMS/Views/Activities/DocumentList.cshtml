@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LexiconLMS.Models.Document>
+
+@if (Model.Any())
+{
+    string ontime = "";
+    if (ViewBag.OnTime != null)
+    {
+        if (ViewBag.OnTime)
+        {
+            ontime = "success";
+            <h4 class="text-center">@ViewBag.Role Documents - On time</h4>
+        }
+        else
+        {
+            ontime = "danger";
+            <h4 class="text-center">@ViewBag.Role Documents - Past due</h4>
+        }
+    }
+    else
+    {
+        <h4 class="text-center">@ViewBag.Role Documents</h4>
+    }
+    <table class='List-item table' style="text-align: left">
+        <tr>
+            @if (ViewBag.Role == "Student")
+            {
+                <th>Student Name</th>
+            }
+            <th>Document Name </th>
+            <th>Open</th>
+            <th>Download</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr class="@ontime">
+                @if (ViewBag.Role == "Student")
+                {
+                    <td>@item.User.UserFullName</td>
+                }
+                <td>
+                    @item.DocName
+                </td>
+                <td style="text-align: center">
+                    <a href="/Upload/@item.DocURL">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size:22px" title="Open"></span>
+                    </a>
+                </td>
+                <td style="text-align: center">
+                    @Html.ActionLink(" ", "DownloadDocument", new { docLink = "/Upload/" + @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
+                </td>
+            </tr>
+        }
+    </table>
+}

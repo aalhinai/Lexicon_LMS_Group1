@@ -51,52 +51,49 @@
             <span class="visible-print"> @Html.DisplayFor(model => model.ActivityDescription) </span> @* <---- for print *@
             @Html.TextAreaFor(model => model.ActivityDescription, new { @class = "hidden-print" })    @* <---- for screen view *@
         </dd>
-        <dt>
-
-        </dt>
-        @foreach (var item in Model.Documents)
-        {
-            <dd>
-                <a href="/Upload/@item.DocURL">@item.DocName</a>
-            </dd>
-        }
-
-
     </dl>
+    @Html.Action("DocumentList", new { role = "Teacher", activityId = Model.ActivityId })
+
+    @Html.Action("DocumentList", new { role = "Student", ontime = true, activityId = Model.ActivityId })
+
+    @Html.Action("DocumentList", new { role = "Student", ontime = false, activityId = Model.ActivityId })
+
 </div>
 
 <p>
     @ViewBag.Message
 </p>
 <p class="hidden-print">
-    @if (User.IsInRole("Teacher"))
-    {
-        if (Model.ActivityEndDate > DateTime.Now)
-        {
-            @Html.ActionLink(" ", "Index", "Activities",null , new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to activity list" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-            @*@Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-file", style = "font-size:22px", title = "Details about module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>*@
-    }
-
-        @*@Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp; &nbsp; &nbsp;*@
-        @*@Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
-        @*@Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
-
-        @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-        @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
-
-    }
     @if (User.IsInRole("Student"))
     {
         if (Request.UrlReferrer != null)
         {
             @*<a href="@Request.UrlReferrer.ToString()">Back</a>*@
-            @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = @Request.UrlReferrer.ToString(), style = "font-size:22px", title = "Back" })
+            @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = @Request.UrlReferrer.ToString(), style = "font-size:22px", title = "Back" })<text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
         }
         else
         {
-            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName })
+            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName })<text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
 
         }
+    }
+    @if (User.IsInRole("Teacher"))
+    {
+        @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        if (Model.ActivityEndDate > DateTime.Now)
+        {
+            @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Activity" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        }
+
+        @*@Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp; &nbsp; &nbsp;*@
+        @*@Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
+        @*@Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
+
+    }
+    @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+    @if (User.IsInRole("Teacher"))
+    {
+        @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
     }
 </p>
 <script type="text/javascript">

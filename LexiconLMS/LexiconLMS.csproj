@@ -201,10 +201,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708171436136_init.cs" />
-    <Compile Include="Migrations\201708171436136_init.Designer.cs">
-      <DependentUpon>201708171436136_init.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -298,7 +294,6 @@
     <Content Include="Views\Activities\Delete.cshtml" />
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\Edit.cshtml" />
-    <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Activities\Assignments.cshtml" />
     <Content Include="Views\Courses\Participants.cshtml" />
     <Content Include="Views\Account\TeacherList.cshtml" />
@@ -306,6 +301,7 @@
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Activities\uploadFile.cshtml" />
+    <Content Include="Views\Activities\DocumentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
