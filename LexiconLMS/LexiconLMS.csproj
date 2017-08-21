@@ -302,6 +302,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Activities\uploadFile.cshtml" />
     <Content Include="Views\Activities\DocumentList.cshtml" />
+    <Content Include="Views\Activities\AssignmentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

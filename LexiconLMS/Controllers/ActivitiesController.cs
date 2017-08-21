@@ -228,16 +228,11 @@ namespace LexiconLMS.Controllers
         [HttpGet]
         public ActionResult uploadFile(int? activityId, int? courseID, int? moduleId)
         {
-
             ViewBag.activityId = activityId;
             ViewBag.courseId = courseID;
             ViewBag.moduleId = moduleId;
             ViewBag.RedirectString = redirectCheck();
             return View();
-
-
-            // return View();
-
         }
 
         // POST: Students
@@ -300,20 +295,20 @@ namespace LexiconLMS.Controllers
         //Show documents
         public ActionResult DocumentList(string role, bool? ontime, int activityId) //Role of the user who uploaded the documents.
         {
-            var documents = db.documents.Where(d => d.ActivityId == activityId);
+            var documents = db.documents.Where(d => d.ActivityId == activityId); //Grabs all documents where the activity ids match from the database.
 
-            if (User.IsInRole(role) && role == "Student")
+            if (User.IsInRole(role) && role == "Student") //Checks if the role variable is set to student, and if the user is in that role.
             {
                 var userId = User.Identity.GetUserId();
-                documents = documents.Where(d => d.UserId == userId);
+                documents = documents.Where(d => d.UserId == userId); // Limits the list of documents to just those that match the users id.
             }
             else
             {
-                documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any());
+                documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any()); // Limits the documents to those uploaded by the users in the role the variable role is set to.
             }
-            if (role == "Student")
+            if (role == "Student") 
             {
-                if (ontime.Value)
+                if (ontime.Value) // This part decides if we show documents uploaded on time or past due.
                 {
                     documents = documents.Where(d => d.DocTimestamp < d.DocDeadline);
                 }
@@ -322,12 +317,18 @@ namespace LexiconLMS.Controllers
                     documents = documents.Where(d => d.DocTimestamp > d.DocDeadline);
                 }
             }
-            if (ontime.HasValue)
+            if (ontime.HasValue) //If the variable ontime has a value we set a viewbag variable to that value.
             {
                 ViewBag.OnTime = ontime.Value;
             }
-            ViewBag.Role = role;
-            return PartialView(documents.ToList());
+            ViewBag.Role = role; // Set a viewbag variable to the variable role.
+            return PartialView(documents.ToList()); //Return the list of documents to a partial view.
+        }
+
+        public ActionResult AssignmentDetails(int id)
+        {
+            db.documents.Find(id);
+            return View();
         }
 
         protected override void Dispose(bool disposing)
