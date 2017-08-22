@@ -28,7 +28,8 @@
             {  
                 <th>Student Name</th>
             }
-            <th>Document Name </th>
+            <th>Name </th>
+            <th>Description </th>
             <th>Open</th>
             <th>Download</th>
         </tr>
@@ -41,6 +42,9 @@
                 }
                 <td>
                     @item.DocName
+                </td>
+                <td>
+                    @item.DocDescription
                 </td>
                 <td style="text-align: center">
                     <a href="/Upload/@item.DocURL">

@@ -134,8 +134,9 @@
 
 </p>
 
+@Html.Action("DocumentList", "Activities", new { moduleId = Model.ModuleId })
 
-@if (Model.Documents.Any())
+@*@if (Model.Documents.Any())
 {
     <table class='List-item table' style="text-align :left">
 
@@ -162,4 +163,4 @@
         }
     </table>
 
-}
+}*@

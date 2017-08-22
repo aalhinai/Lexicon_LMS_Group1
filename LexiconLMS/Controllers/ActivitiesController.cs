@@ -242,7 +242,7 @@ namespace LexiconLMS.Controllers
 
         // POST: Students
         [HttpPost]
-        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId, string redirectString)
+        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId, string redirectString, string description)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -254,7 +254,7 @@ namespace LexiconLMS.Controllers
                 file.SaveAs(path);
 
                 document.DocName = Path.GetFileName(file.FileName);
-                document.DocDescription = "TESTING";
+                document.DocDescription = description;
                 document.DocTimestamp = DateTime.Now;
                 if (activityId != null)
                 {
@@ -299,35 +299,48 @@ namespace LexiconLMS.Controllers
 
 
         //Show documents
-        public ActionResult DocumentList(string role, bool? ontime, int activityId) //Role of the user who uploaded the documents.
+        public ActionResult DocumentList(string role, bool? ontime, int? activityId, int? courseId, int? moduleId) //Role of the user who uploaded the documents.
         {
-            var documents = db.documents.Where(d => d.ActivityId == activityId);
+            var documents = db.documents.Select(d => d);
+            if (activityId.HasValue)
+            {
+                documents = db.documents.Where(d => d.ActivityId == activityId);
 
-            if (User.IsInRole(role) && role == "Student")
-            {
-                var userId = User.Identity.GetUserId();
-                documents = documents.Where(d => d.UserId == userId);
-            }
-            else
-            {
-                documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any());
-            }
-            if (role == "Student")
-            {
-                if (ontime.Value)
+                if (User.IsInRole(role) && role == "Student")
                 {
-                    documents = documents.Where(d => d.DocTimestamp < d.DocDeadline);
+                    var userId = User.Identity.GetUserId();
+                    documents = documents.Where(d => d.UserId == userId);
                 }
                 else
                 {
-                    documents = documents.Where(d => d.DocTimestamp > d.DocDeadline);
+                    documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any());
                 }
-            }
-            if (ontime.HasValue)
+                if (role == "Student")
+                {
+                    if (ontime.Value)
+                    {
+                        documents = documents.Where(d => d.DocTimestamp < d.DocDeadline);
+                    }
+                    else
+                    {
+                        documents = documents.Where(d => d.DocTimestamp > d.DocDeadline);
+                    }
+                }
+                if (ontime.HasValue)
+                {
+                    ViewBag.OnTime = ontime.Value;
+                }
+
+                ViewBag.Role = role;
+
+            }//end of activityId.HasValue
+            else if (courseId.HasValue)
             {
-                ViewBag.OnTime = ontime.Value;
+                 documents = db.documents.Where(d => d.CourseId == courseId);
             }
-            ViewBag.Role = role;
+            else {
+                 documents = db.documents.Where(d => d.ModuleId == moduleId);
+            }
             return PartialView(documents.ToList());
         }
 
