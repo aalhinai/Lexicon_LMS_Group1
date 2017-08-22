@@ -4,84 +4,16 @@
     ViewBag.Title = "AssignmentDetails";
 }
 
-<h2>AssignmentDetails</h2>
+<h2>Assignment: @Model.Activity.ActivityName</h2>
 
 <div>
-    <h4>Document</h4>
-    <hr />
+     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Activity.ActivityName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Activity.ActivityName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.CourseName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Course.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Module.ModuleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Module.ModuleName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.UserFirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.UserFirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DocName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DocDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DocTimestamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocTimestamp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DocDeadline)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocDeadline)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DocURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocURL)
-        </dd>
-
+        <dt>Document Name</dt>
+        <dd>@Model.DocName</dd>
+        <br />
+        <dt>Feedback</dt>
+        <dd>-</dd>
     </dl>
 </div>
 <p>

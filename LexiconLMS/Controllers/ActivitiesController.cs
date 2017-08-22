@@ -328,8 +328,8 @@ namespace LexiconLMS.Controllers
 
         public ActionResult AssignmentDetails(int id)
         {
-            db.documents.Find(id);
-            return View();
+            var document = db.documents.Find(id);
+            return View(document);
         }
 
         protected override void Dispose(bool disposing)
