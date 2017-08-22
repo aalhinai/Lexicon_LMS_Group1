@@ -10,11 +10,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
-            $(document).ready(function () {
-                $('[data-toggle="offcanvas"]').click(function () {
-                    $('.row-offcanvas').toggleClass('active')
-                });
+        $(document).ready(function () {
+            $('[data-toggle="offcanvas"]').click(function () {
+                $('.row-offcanvas').toggleClass('active')
             });
+        });
     </script>
     @Styles.Render("~/Content/css")
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
@@ -28,7 +28,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" style="padding:0px;"href="http://www.lexicon.se" title="Lexicon.se"> @*@Url.Action("Index", "Home")*@
+                <a class="navbar-brand" style="padding:0px;" href="http://www.lexicon.se" title="Lexicon.se">
+                    @*@Url.Action("Index", "Home")*@
                     <img src="~/pics/logo-lexicon@2x.jpg" alt="Lexicon Home" class="img-responsive" style="margin-right:15px">
                 </a>
 
@@ -46,13 +47,9 @@
                                       onmouseout="document.getElementById('print').style.color = 'white'; document.getElementById('print').style.cursor = 'default';" onclick="print()"></span>
                             </li>
                         </ul>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated)// Since the user is automatically told to log in if they are logged out only logged in users need to see this.
                         {
-                            @Html.Action("LoginPartial", "Account")
-                        }
-                        else
-                        {
-                            @Html.Partial("_LoginPartial")
+                            @Html.Action("LoginPartial", "Account") 
                         }
                     </div>
             </div>
@@ -60,24 +57,25 @@
 
     <div class="container" style="background-color:white; padding-bottom:0px; padding-left:0px;">
         @*<div class="container">*@
-            <div class="row row-offcanvas row-offcanvas-left">
-                <div class="col-lg-9 col-xs-9 col-sm-9 col-sm-push-2">
-                @if(User.Identity.IsAuthenticated) {
+        <div class="row row-offcanvas row-offcanvas-left">
+            <div class="col-lg-9 col-xs-9 col-sm-9 col-sm-push-2">
+                @if (User.Identity.IsAuthenticated)
+                {
                     <p class="pull-left visible-xs visible-sm">
                         <button type="button" class="btn btn-primary btn-xs hidden-print" data-toggle="offcanvas" title="Toggle sidebar" style="background-color:black; font-size:22px;"><i class="fa fa-chevron-left"></i></button>
                     </p>
-                    }
-                    <br>
-                    <div class="container-fluid"  style="margin-left:10px">
+                }
+                <br>
+                <div class="container-fluid" style="margin-left:10px">
                     @RenderBody()
-                    <p/>
+                    <p />
                     <footer>
                         <p>&copy; @DateTime.Now - Lexicon Learning Management System</p>
                     </footer>
                 </div>
             </div><!--/.col-xs-12.col-sm-9-->
 
-            <div class="col-lg-3 col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas hidden-print" style="width:190px;" id="sidebar">
+            <div class="col-md-2 col-xs-3 col-sm-3 col-sm-pull-9 sidebar-offcanvas hidden-print" id="sidebar">
                 <div class="list-group">
 
                     @if (User.IsInRole("Teacher"))

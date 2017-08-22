@@ -42,38 +42,7 @@ namespace LexiconLMS.Migrations
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             var emails = new[] { /*"user@lexicon.se",*/ "teacher@lexicon.se"/*, "student@lexicon.se"*/ };
-            foreach (var email in emails)
-            {
-                if (!context.Users.Any(u => u.UserName == email))
-                {
 
-                    //creating user
-                    var user = new ApplicationUser
-                    {
-                        UserName = email,
-                        Email = email,
-                        UserStartDate = DateTime.Now
-                    };
-
-                    var result = userManager.Create(user, "foobar");
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception(string.Join("\n", result.Errors));
-                    }
-
-                }
-            }
-
-            var teacherUser = userManager.FindByName("teacher@lexicon.se");
-            userManager.AddToRole(teacherUser.Id, "Teacher");
-            teacherUser.UserFirstName = "John";
-            teacherUser.UserLastName = "Teacher";
-
-            // teacherUser.UserFirstName.Replace(null, "Teacher");
-
-            //var studentUser = userManager.FindByName("student@lexicon.se");
-            //userManager.AddToRole(studentUser.Id, "Student");
-            //teacherUser.UserFirstName.Replace(null, "Student");
 
             // adding Course data
             context.courses.AddOrUpdate(
@@ -106,6 +75,53 @@ namespace LexiconLMS.Migrations
                     ModuleId = context.modules.FirstOrDefault().ModuleId
                 });
             context.SaveChanges();
+
+            var emails = new[] { "user@lexicon.se", "teacher@lexicon.se", "student@lexicon.se" };
+            foreach (var email in emails)
+            {
+                if (!context.Users.Any(u => u.UserName == email))
+                {
+
+                    //creating user
+                    var user = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                        UserStartDate = DateTime.Now,
+                        CourseId = context.courses.Where(c => c.CourseName == ".Net").FirstOrDefault().CourseId
+                    };
+
+                    var result = userManager.Create(user, "foobar");
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
+
+                }
+            }
+
+            var teacherUser = userManager.FindByName("teacher@lexicon.se");
+            userManager.AddToRole(teacherUser.Id, "Teacher");
+            teacherUser.UserFirstName = "John";
+            teacherUser.UserLastName = "Teacher";
+
+            // teacherUser.UserFirstName.Replace(null, "Teacher");
+
+            //var studentUser = userManager.FindByName("student@lexicon.se");
+            //userManager.AddToRole(studentUser.Id, "Student");
+            //teacherUser.UserFirstName.Replace(null, "Student");
+
+            // adding Course data
+            context.courses.AddOrUpdate(
+                c => c.CourseName,
+                new Course { CourseName = ".Net", CourseStartDate = DateTime.Now, CourseEndDate = DateTime.Now.AddMonths(4), CourseDescription = "see the PDF files " },
+                new Course { CourseName = "Java", CourseStartDate = DateTime.Now, CourseEndDate = DateTime.Now.AddMonths(4), CourseDescription = "see the PDF files " });
+            context.SaveChanges();
+
+
+
+
+
 
         }
     }

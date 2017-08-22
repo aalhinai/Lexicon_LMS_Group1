@@ -20,13 +20,16 @@
     {
         <h4 class="text-center">@ViewBag.Role Documents</h4>
     }
+
+
     <table class='List-item table' style="text-align: left">
         <tr>
             @if (ViewBag.Role == "Student")
-            {
+            {  
                 <th>Student Name</th>
             }
-            <th>Document Name </th>
+            <th>Name </th>
+            <th>Description </th>
             <th>Open</th>
             <th>Download</th>
         </tr>
@@ -40,13 +43,16 @@
                 <td>
                     @item.DocName
                 </td>
+                <td>
+                    @item.DocDescription
+                </td>
                 <td style="text-align: center">
                     <a href="/Upload/@item.DocURL">
                         <span class="glyphicon glyphicon-eye-open" style="font-size:22px" title="Open"></span>
                     </a>
                 </td>
                 <td style="text-align: center">
-                    @Html.ActionLink(" ", "DownloadDocument", new { docLink = "/Upload/" + @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
+                    @Html.ActionLink(" ", "DownloadDocument", "Activities", new { docLink = @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
                 </td>
             </tr>
         }
