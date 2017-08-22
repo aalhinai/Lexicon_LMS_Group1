@@ -38,7 +38,6 @@ namespace LexiconLMS.Migrations
                 }
             }
 
-
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
@@ -72,13 +71,9 @@ namespace LexiconLMS.Migrations
 
             // teacherUser.UserFirstName.Replace(null, "Teacher");
 
-
             //var studentUser = userManager.FindByName("student@lexicon.se");
             //userManager.AddToRole(studentUser.Id, "Student");
             //teacherUser.UserFirstName.Replace(null, "Student");
-
-
-
 
             // adding Course data
             context.courses.AddOrUpdate(
