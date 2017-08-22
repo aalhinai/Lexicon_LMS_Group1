@@ -69,35 +69,31 @@
         if (Request.UrlReferrer != null)
         {
             @*<a href="@Request.UrlReferrer.ToString()">Back</a>*@
-            @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = @Request.UrlReferrer.ToString(), style = "font-size:22px", title = "Back" })<text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = @Request.UrlReferrer.ToString(), style = "font-size:22px; margin-right:30px", title = "Back" })
         }
         else
         {
-            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName })<text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px; margin-right:30px", title = "Back to module " + Model.Module.ModuleName })
 
         }
     }
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px; margin-right:30px;", title = "Back to module " + Model.Module.ModuleName })
         if (Model.ActivityEndDate > DateTime.Now)
         {
-            @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px", title = "Activity" }) <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px; margin-right:30px;", title = "Edit activity" })
         }
-
-        @*@Html.ActionLink(" ", "Details", new { id = item.CourseId }, new { @class = "glyphicon glyphicon-file", title = "Details about this course" }) &nbsp; &nbsp; &nbsp;*@
-        @*@Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
-        @*@Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", title = "Edit this course", style = "font-size:22px" })  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*@
-
     }
-    @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+    @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; margin-right:40px", title = "Upload new activity file " })
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
     }
 </p>
 <script type="text/javascript">
-    document.getElementById("ActivityDescription").cols = 30;
-    document.getElementById("ActivityDescription").rows = 5;
+    document.getElementById("ActivityDescription").style.maxWidth = "650px";
+    document.getElementById("ActivityDescription").cols = "100";
+    document.getElementById("ActivityDescription").rows = "5";
     document.getElementById("ActivityDescription").readOnly = true;
 </script>

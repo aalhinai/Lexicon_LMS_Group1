@@ -117,8 +117,8 @@
         if (Model.ModuleEndDate > DateTime.Now)
         {
             @Html.ActionLink(" ", "Edit", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px; margin-right:35px;", title = "Edit module details" })
-            @Html.ActionLink(" ", "uploadFile", "Activities", new { moduleId = Model.ModuleId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; margin-right:60px; ", title = "Upload new activity file " })
-            @Html.ActionLink("New Activity", "Create", "Activities", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-plus", style = "font-size:22px", title = "for this module" })
+            @Html.ActionLink(" ", "uploadFile", "Activities", new { moduleId = Model.ModuleId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; margin-right:35px; ", title = "Upload new activity file " })
+            @Html.ActionLink(" ", "Create", "Activities", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-plus", style = "font-size:22px", title = "Create new activity for module " + Model.ModuleName })
         }
 
         @*@Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", style = "color:red" })*@

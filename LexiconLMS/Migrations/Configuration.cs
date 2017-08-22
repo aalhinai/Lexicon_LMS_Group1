@@ -42,7 +42,7 @@ namespace LexiconLMS.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var emails = new[] { "user@lexicon.se", "teacher@lexicon.se", "student@lexicon.se" };
+            var emails = new[] { /*"user@lexicon.se",*/ "teacher@lexicon.se"/*, "student@lexicon.se"*/ };
             foreach (var email in emails)
             {
                 if (!context.Users.Any(u => u.UserName == email))
@@ -67,11 +67,14 @@ namespace LexiconLMS.Migrations
 
             var teacherUser = userManager.FindByName("teacher@lexicon.se");
             userManager.AddToRole(teacherUser.Id, "Teacher");
+            teacherUser.UserFirstName = "John";
+            teacherUser.UserLastName = "Teacher";
+
             // teacherUser.UserFirstName.Replace(null, "Teacher");
 
 
-            var studentUser = userManager.FindByName("student@lexicon.se");
-            userManager.AddToRole(studentUser.Id, "Student");
+            //var studentUser = userManager.FindByName("student@lexicon.se");
+            //userManager.AddToRole(studentUser.Id, "Student");
             //teacherUser.UserFirstName.Replace(null, "Student");
 
 
