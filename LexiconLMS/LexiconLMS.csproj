@@ -201,6 +201,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708221255453_Init.cs" />
+    <Compile Include="Migrations\201708180914239_Init.Designer.cs">
+      <DependentUpon>201708221255453_Init.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -323,6 +327,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="pics\" />
     <Folder Include="Upload\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708180914239_Init.resx">
+      <DependentUpon>201708221255453_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -88,7 +88,7 @@ namespace LexiconLMS.Migrations
                         UserName = email,
                         Email = email,
                         UserStartDate = DateTime.Now,
-                        CourseId = context.courses.Where(c => c.CourseName == ".Net").FirstOrDefault().CourseId
+                        //CourseId = context.courses.Where(c => c.CourseName == ".Net").FirstOrDefault().CourseId
                     };
 
                     var result = userManager.Create(user, "foobar");
