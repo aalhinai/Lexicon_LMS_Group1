@@ -6,9 +6,10 @@ namespace LexiconLMS.Models
 {
     public class Document
     {
-        [DefaultValue(NotCompleted)]
+        [DefaultValue(NoStatus)]
         public enum StatusType
         {
+            NoStatus,
             NotCompleted,
             Completed,
             Redo,

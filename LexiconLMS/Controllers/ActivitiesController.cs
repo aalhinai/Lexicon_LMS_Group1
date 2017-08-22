@@ -265,9 +265,13 @@ namespace LexiconLMS.Controllers
                  document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
                  document.CourseId = courseID;
                  document.ModuleId = moduleId;
-
+                 
 
                 document.UserId = User.Identity.GetUserId();
+                 if(User.IsInRole("Student"))
+                {
+                   document.Status = Document.StatusType.NotCompleted;
+                }
                 db.documents.Add(document);
                 db.SaveChanges();
 
@@ -297,10 +301,44 @@ namespace LexiconLMS.Controllers
             return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
         }
 
+     
+
+        // GET: 
+        //public ActionResult DeleteDocument(int docId, string docLink)
+        //{
+          
+        //    Document document  = db.documents.Find(docId);
+
+        //    return View(document);
+        //}
+
+        // POST:
+
+        public ActionResult DeleteDocument(int? docId, string docLink, string redirectString)
+        {
+            var FileVirtualPath = "~/Upload/" + docLink;
+            //System.IO.File.Delete(Path.GetFileName(FileVirtualPath));
+            System.IO.File.Delete(Server.MapPath(FileVirtualPath));
+
+            Document document = db.documents.Find(docId);
+            if (docId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            db.documents.Remove(document);
+            db.SaveChanges();
+            return Redirect(redirectCheck());
+        }
 
         //Show documents
         public ActionResult DocumentList(string role, bool? ontime, int? activityId, int? courseId, int? moduleId) //Role of the user who uploaded the documents.
         {
+            //ViewBag.RedirectString = redirectCheck();
             var documents = db.documents.Select(d => d);
             if (activityId.HasValue)
             {

@@ -30,8 +30,13 @@
             }
             <th>Name </th>
             <th>Description </th>
+            @if (ViewBag.Role == "Student")
+            {
+                <th>Status</th>
+            }
             <th>Open</th>
             <th>Download</th>
+            <th>Delete</th>
         </tr>
         @foreach (var item in Model)
         {
@@ -46,6 +51,10 @@
                 <td>
                     @item.DocDescription
                 </td>
+                @if (ViewBag.Role == "Student")
+                {
+                    <td>@item.Status</td>
+                }
                 <td style="text-align: center">
                     <a href="/Upload/@item.DocURL">
                         <span class="glyphicon glyphicon-eye-open" style="font-size:22px" title="Open"></span>
@@ -54,6 +63,10 @@
                 <td style="text-align: center">
                     @Html.ActionLink(" ", "DownloadDocument", "Activities", new { docLink = @item.DocURL }, new { @class = "glyphicon glyphicon-download", style = "font-size:22px;", title = "Download" })
                 </td>
+                <td style="text-align: center">
+                    @Html.ActionLink(" ", "DeleteDocument", "Activities", new { docId = @item.DocId , docLink = @item.DocURL }, new { @class = "btn-danger glyphicon glyphicon-trash", style = "font-size:20px; height:25px; background-color:white; color:red;", title = "Delete" })
+                </td>
+                
             </tr>
         }
     </table>
