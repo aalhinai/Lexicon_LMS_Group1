@@ -11,12 +11,14 @@
     <dl class="dl-horizontal">
         <dt>Document Name</dt>
         <dd>@Model.DocName</dd>
-        <br />
         <dt>Feedback</dt>
+        <dd>@Html.TextAreaFor(model => model.DocDescription, new { @class = "hidden-print" }) </dd>
+        <dt>Assignment Status</dt>
         <dd>-</dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DocId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<script type="text/javascript">
+    document.getElementById("DocFeedback").cols = 30;
+    document.getElementById("DocFeedback").rows = 5;
+    document.getElementById("DocFeedback").readOnly = true;
+</script>
