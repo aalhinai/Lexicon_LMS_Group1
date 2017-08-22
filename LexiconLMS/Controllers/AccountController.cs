@@ -10,6 +10,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace LexiconLMS.Controllers
 {
@@ -598,8 +601,78 @@ namespace LexiconLMS.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
+
+        [HttpGet]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult ParticipantList(int courseId = 0)
+        {
+            if (courseId > 0)
+            {
+                Course currentCourse = db.courses.Where(c => c.CourseId == courseId).FirstOrDefault();
+                ViewBag.courseId = courseId;
+                ViewBag.courseName = currentCourse.CourseName;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public async Task<ActionResult> ParticipantList(HttpPostedFileBase ParticipantListFile, int CourseId = 0)
+        {
+            //string filePath = Server.MapPath("~/App_Data/" + ParticipantListFile.FileName);
+
+            ParticipantListFile.SaveAs(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
+
+            try 
+            {
+                //No model is used in this view
+                var _userStore = new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(db);
+                var _userManager = new UserManager<ApplicationUser>(_userStore);
+
+                XDocument xdocFromFile = XDocument.Load(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
+
+                var studentXList = xdocFromFile.Root.Elements().ElementAt(4); //Office 2003: ElementAt(4) 
+
+                if (studentXList.FirstAttribute.Value.ToUpper() == "PARTICIPANTS" &&
+                    studentXList.Elements().First().Elements().ElementAt(3).Elements().First().Value.ToUpper() == "USERFIRSTNAME" &&
+                    studentXList.Elements().First().Elements().ElementAt(3).Elements().ElementAt(1).Value.ToUpper() == "USERLASTNAME" &&
+                    studentXList.Elements().First().Elements().ElementAt(3).Elements().ElementAt(2).Value.ToUpper() == "EMAIL")
+                {
+                    ApplicationUser student = null;
+
+                    for (var i = 4; i < studentXList.Elements().First().Elements().Count(); i++)
+                    {
+                        student = new ApplicationUser();
+
+                        student.UserFirstName = studentXList.Elements().First().Elements().ElementAt(i).Elements().First().Value;
+                        student.UserLastName = studentXList.Elements().First().Elements().ElementAt(i).Elements().ElementAt(1).Value;
+                        student.Email = studentXList.Elements().First().Elements().ElementAt(i).Elements().ElementAt(2).Value;
+                        student.UserName = student.Email;
+                        student.CourseId = CourseId;
+                        student.UserStartDate = DateTime.Now;
+
+                        var result = await _userManager.CreateAsync(student, "leXicon");
+                        if (result.Succeeded)
+                        {
+                            _userManager.AddToRole(student.Id, "Student");
+                        }
+                    }
+                    System.IO.File.Delete(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
+
+                    return RedirectToAction("Details", "Courses", new { Id = CourseId });
+                }
+                else return View();
+            }
+            catch (Exception)
+            {
+                return View(); //RedirectToAction("Index", "Home");
+            }
+
+            //return View();
+        }
+
         #region Helpers
-            // Used for XSRF protection when adding external logins
+        // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager

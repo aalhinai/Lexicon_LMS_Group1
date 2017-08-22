@@ -67,14 +67,14 @@
         <div class="form-actions no-color">
             @if (ViewBag.RedirectString != "Empty")
             {
-                @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = ViewBag.RedirectString, style = "font-size:22px", title = "Back" })
+                @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", href = ViewBag.RedirectString, style = "font-size:22px; margin-right:60px;", title = "Back" })
             }
             else
             {
-                @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px", title = "Back to module " + Model.Module.ModuleName })
+                @Html.ActionLink(" ", "Details", "Modules", new { id = Model.ModuleId }, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px; margin-right:60px;", title = "Back to module " + Model.Module.ModuleName })
             }
-            <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-            <button type="submit" value="Delete" class="btn btn-danger" title="Delete activity @Model.ActivityName"><span class="glyphicon glyphicon-trash" style="font-size:16px"></span></button>
+            @*<text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>*@
+            <button type="submit" value="Delete" class="btn btn-danger" title="Delete activity @Model.ActivityName"><span class="glyphicon glyphicon-trash" style="font-size:18px"></span></button>
         </div>
     }
 </div>

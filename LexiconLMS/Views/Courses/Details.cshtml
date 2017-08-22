@@ -31,8 +31,8 @@
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
                     <td class="hidden-print">
-                        @Html.ActionLink(" ", "Edit", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-edit", title = "Edit module " + item.ModuleName }) &nbsp;&nbsp;&nbsp;
-                        @Html.ActionLink(" ", "Delete", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-trash", title = "Delete module " + item.ModuleName, style = "color:red" })
+                        @Html.ActionLink(" ", "Edit", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-edit", style="margin-right:20px", title = "Edit module " + item.ModuleName })
+                        @Html.ActionLink(" ", "Delete", "Modules", new { id = item.ModuleId }, new { @class = "glyphicon glyphicon-trash", style = "color:red", title = "Delete module " + item.ModuleName })
                     </td>
                 }
             </tr>
@@ -58,8 +58,8 @@
                 @if (Model.CourseEndDate > DateTime.Now)
                 {
                     <td class="hidden-print">
-                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", style="margin-right:25px;", title = "Edit student account " + item.Email })
-                        @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", title = "Remove student account " + item.Email, style = "color:red" })
+                        @Html.ActionLink(" ", "Edit", "Account", new { id = item.Id, role = "Student" }, new { @class = "glyphicon glyphicon-edit", style="margin-right:20px;", title = "Edit student account " + item.Email })
+                        @Html.ActionLink(" ", "Delete", "Account", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash", style = "color:red", title = "Remove student account " + item.Email })
                     </td>
                 }
             </tr>
@@ -71,10 +71,16 @@
 
     @if (Model.CourseEndDate > DateTime.Now)
     {
-        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px; margin-right:35px", title = "Edit this course" })
-        <span id="ModuleLink"> @Html.ActionLink("Add New Module", "Create", "Modules", new { Course = Model.CourseId }, new { style = "font-size:16px" }) </span>
-        @Html.ActionLink(" ", "uploadFile", "Activities", new { courseID = Model.CourseId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; ", title = "Upload new file " })
-        <span id="StudentLink" style="display:none;">@Html.ActionLink("New Student Account", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { style = "font-size:16px" })</span>
+        @Html.ActionLink(" ", "Edit", new { id = Model.CourseId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px; margin-right:35px;", title = "Edit this course" })
+        @Html.ActionLink(" ", "uploadFile", "Activities", new { courseID = Model.CourseId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; margin-right:40px;", title = "Upload new activity file " })
+        <span id="ModuleLink">
+         @Html.ActionLink(" ", "Create", "Modules", new { Course = Model.CourseId }, new { @class = "glyphicon glyphicon-plus", style = "font-size:22px;", title = "Create new module" })
+         @*@Html.ActionLink("New Module", "Create", "Modules", new { Course = Model.CourseId }, new { style = "font-size:20px;", title = "Create new module" })*@
+        </span>    
+        <span id="StudentLink" style="display:none;">
+         @*@Html.ActionLink(" ", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-plus", style = "font-size:14px;", title = "Add new student account" })*@
+         @Html.ActionLink(" ", "Register", "Account", new { courseId = Model.CourseId, role = "Student" }, new { @class = "glyphicon glyphicon-user", style = "font-size:22px;", title = "Add new student account" })
+        </span>
     }
 </p>
 <script>

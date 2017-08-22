@@ -201,13 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708211434363_AddedFeedback and status in Document module .cs" />
-    <Compile Include="Migrations\201708211434363_AddedFeedback and status in Document module .Designer.cs">
-      <DependentUpon>201708211434363_AddedFeedback and status in Document module .cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708211448282_Added default value for enum in decoment  model.cs" />
-    <Compile Include="Migrations\201708211448282_Added default value for enum in decoment  model.Designer.cs">
-      <DependentUpon>201708211448282_Added default value for enum in decoment  model.cs</DependentUpon>
+    <Compile Include="Migrations\201708221255453_Init.cs" />
+    <Compile Include="Migrations\201708180914239_Init.Designer.cs">
+      <DependentUpon>201708221255453_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201708221155375_Added no satus on documnt module enum.cs" />
     <Compile Include="Migrations\201708221155375_Added no satus on documnt module enum.Designer.cs">
@@ -314,6 +310,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Activities\uploadFile.cshtml" />
     <Content Include="Views\Activities\DocumentList.cshtml" />
+    <Content Include="Views\Account\ParticipantList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -336,11 +333,8 @@
     <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708211434363_AddedFeedback and status in Document module .resx">
-      <DependentUpon>201708211434363_AddedFeedback and status in Document module .cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708211448282_Added default value for enum in decoment  model.resx">
-      <DependentUpon>201708211448282_Added default value for enum in decoment  model.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708180914239_Init.resx">
+      <DependentUpon>201708221255453_Init.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708221155375_Added no satus on documnt module enum.resx">
       <DependentUpon>201708221155375_Added no satus on documnt module enum.cs</DependentUpon>
