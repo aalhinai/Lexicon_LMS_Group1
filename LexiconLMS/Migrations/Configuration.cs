@@ -76,7 +76,7 @@ namespace LexiconLMS.Migrations
                 });
             context.SaveChanges();
 
-            var emails = new[] { "user@lexicon.se", "teacher@lexicon.se", "student@lexicon.se" };
+            emails = new[] { /*"user@lexicon.se",*/ "teacher@lexicon.se"/*, "student@lexicon.se"*/ };
             foreach (var email in emails)
             {
                 if (!context.Users.Any(u => u.UserName == email))
