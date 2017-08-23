@@ -47,7 +47,14 @@
             <tr class="@ontime">
                 @if (ViewBag.Role == "Student")
                 {
-                    <td>@item.User.UserFullName</td>
+                    if (User.IsInRole("Teacher"))
+                    {
+                        <td>@Html.ActionLink(@item.User.UserFullName, "AssignmentFeedback", "Activities", new { id = item.DocId }, null)</td>
+                    }
+                    else
+                    {
+                        <td>@item.User.UserFullName</td>
+                    }
                 }
                 <td>
                     @item.DocName
