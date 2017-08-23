@@ -386,7 +386,6 @@ namespace LexiconLMS.Controllers
         [HttpGet]
         public ActionResult AssignmentFeedback(int? id)
         {
-            ViewBag.RedirectString = redirectCheck();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -397,18 +396,19 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             FeedbackViewModel feedback = new FeedbackViewModel { DocId = document.DocId, FeedBack = document.FeedBack, Status = document.Status };
+            ViewBag.RedirectString = redirectCheck();
             return View(feedback);
         }
 
         [HttpPost]
-        public ActionResult AssignmentFeedback([Bind(Include = "DocId, FeedBack, Status")] FeedbackViewModel feedback, string redirectString)
+        public ActionResult AssignmentFeedback([Bind(Include = "DocId, FeedBack, Status")] FeedbackViewModel feedbackviewmodel, string redirectString)
         {
             if (ModelState.IsValid)
             {
-                var document = db.documents.Find(feedback.DocId);
-                document.DocId = feedback.DocId;
-                document.FeedBack = feedback.FeedBack;
-                document.Status = feedback.Status;
+                var document = db.documents.Find(feedbackviewmodel.DocId);
+                document.DocId = feedbackviewmodel.DocId;
+                document.FeedBack = feedbackviewmodel.FeedBack;
+                document.Status = feedbackviewmodel.Status;
 
                 db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
@@ -422,8 +422,8 @@ namespace LexiconLMS.Controllers
                     return RedirectToAction("TeacherList", "Account");
                 }
             }
-            ViewBag.RedirectString = redirectString;
-            return View(feedback);
+            //ViewBag.RedirectString = redirectString;
+            return View(feedbackviewmodel);
         }
 
         protected override void Dispose(bool disposing)
