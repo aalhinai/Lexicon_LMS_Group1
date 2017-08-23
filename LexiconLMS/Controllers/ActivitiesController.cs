@@ -228,16 +228,11 @@ namespace LexiconLMS.Controllers
         [HttpGet]
         public ActionResult uploadFile(int? activityId, int? courseID, int? moduleId)
         {
-
             ViewBag.activityId = activityId;
             ViewBag.courseId = courseID;
             ViewBag.moduleId = moduleId;
             ViewBag.RedirectString = redirectCheck();
             return View();
-
-
-            // return View();
-
         }
 
         // POST: Students
@@ -248,10 +243,10 @@ namespace LexiconLMS.Controllers
             {
                 try
                 {
-                var timeStamp = DateTime.Now.Ticks;
-                string path = Path.Combine(Server.MapPath("~/Upload"),
-                                           Path.GetFileName(timeStamp + "_" + file.FileName));
-                file.SaveAs(path);
+                    var timeStamp = DateTime.Now.Ticks;
+                    string path = Path.Combine(Server.MapPath("~/Upload"),
+                                               Path.GetFileName(timeStamp + "_" + file.FileName));
+                    file.SaveAs(path);
 
                 document.DocName = Path.GetFileName(file.FileName);
                 document.DocDescription = description;
@@ -270,13 +265,13 @@ namespace LexiconLMS.Controllers
                 document.UserId = User.Identity.GetUserId();
                  if(User.IsInRole("Student"))
                 {
-                   document.Status = Document.StatusType.NotCompleted;
+                   document.Status = StatusType.NotCompleted;
                 }
                 db.documents.Add(document);
                 db.SaveChanges();
 
-                ViewBag.Message = "File uploaded successfully";
-                return Redirect(redirectString);
+                    ViewBag.Message = "File uploaded successfully";
+                    return Redirect(redirectString);
 
                 }
                 catch (Exception ex)
@@ -296,7 +291,7 @@ namespace LexiconLMS.Controllers
         //download documents 
         public FileResult DownloadDocument(string docLink)
         {
-          
+
             var FileVirtualPath = "/Upload/" + docLink;
             return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
         }
@@ -380,6 +375,55 @@ namespace LexiconLMS.Controllers
                  documents = db.documents.Where(d => d.ModuleId == moduleId);
             }
             return PartialView(documents.ToList());
+        }
+
+        public ActionResult _AssignmentDetails(int id)
+        {
+            var document = db.documents.Find(id);
+            return PartialView(document);
+        }
+
+        [HttpGet]
+        public ActionResult AssignmentFeedback(int? id)
+        {
+            ViewBag.RedirectString = redirectCheck();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.documents.Find(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            FeedbackViewModel feedback = new FeedbackViewModel { DocId = document.DocId, FeedBack = document.FeedBack, Status = document.Status };
+            return View(feedback);
+        }
+
+        [HttpPost]
+        public ActionResult AssignmentFeedback([Bind(Include = "DocId, FeedBack, Status")] FeedbackViewModel feedback, string redirectString)
+        {
+            if (ModelState.IsValid)
+            {
+                var document = db.documents.Find(feedback.DocId);
+                document.DocId = feedback.DocId;
+                document.FeedBack = feedback.FeedBack;
+                document.Status = feedback.Status;
+
+                db.Entry(document).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("TeacherList", "Account");
+                }
+            }
+            ViewBag.RedirectString = redirectString;
+            return View(feedback);
         }
 
         protected override void Dispose(bool disposing)

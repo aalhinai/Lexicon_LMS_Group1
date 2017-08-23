@@ -1,0 +1,24 @@
+﻿@model LexiconLMS.Models.Document
+
+@{
+    ViewBag.Title = "AssignmentDetails";
+}
+
+<h2>Assignment: @Model.Activity.ActivityName</h2>
+
+<div style="text-align:right;">
+     <hr />
+    <h4>Document Name: @Model.DocName</h4>
+    <dl>
+        <dt>Feedback</dt>
+        <dd>@Html.TextAreaFor(model => model.FeedBack, new { @class = "hidden-print" }) </dd>
+        <dt>Assignment Status</dt>
+        <dd>@Model.Status</dd>
+    </dl>
+</div>
+<script type="text/javascript">
+    feedback = document.getElementById("FeedBack");
+    feedback.cols = 30;
+    feedback.rows = 5;
+    feedback.readOnly = true;
+</script>
