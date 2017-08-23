@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Models
 {
-    [DefaultValue(NotCompleted)]
+    [DefaultValue(NoStatus)]
     public enum StatusType
     {
+        NoStatus,
         NotCompleted,
         Completed,
         Redo,
@@ -15,7 +16,6 @@ namespace LexiconLMS.Models
     }
     public class Document
     {
-
         [Key]
         public int DocId { get; set; }
         public string DocName { get; set; }

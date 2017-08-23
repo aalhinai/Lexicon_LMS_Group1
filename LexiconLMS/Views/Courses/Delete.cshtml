@@ -49,7 +49,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color hidden-print">
-            @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:18px" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @Html.ActionLink(" ", "Index", null, new { @class = "glyphicon glyphicon-arrow-left", title = "Back to course list", style = "font-size:22px; margin-right:60px;" })
             <button type="submit" value="Delete" class="btn btn-danger" title = "Delete the course @Model.CourseName"><span class="glyphicon glyphicon-trash" style = "font-size:16px"></span></button>
         </div>
     }

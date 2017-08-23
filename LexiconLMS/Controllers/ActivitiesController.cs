@@ -237,7 +237,7 @@ namespace LexiconLMS.Controllers
 
         // POST: Students
         [HttpPost]
-        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId, string redirectString)
+        public ActionResult uploadFile([Bind(Include = "DocId,DocName,DocDescription,DocTimestamp,ActivityId,CourseId,ModuleId, DocURL")] Document document, HttpPostedFileBase file, int? activityId, int? courseID, int? moduleId, string redirectString, string description)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -248,23 +248,27 @@ namespace LexiconLMS.Controllers
                                                Path.GetFileName(timeStamp + "_" + file.FileName));
                     file.SaveAs(path);
 
-                    document.DocName = Path.GetFileName(file.FileName);
-                    document.DocDescription = "TESTING";
-                    document.DocTimestamp = DateTime.Now;
-                    if (activityId != null)
-                    {
-                        document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
-                    }
-                    document.ActivityId = activityId;
-                    //rename the file
-                    document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
-                    document.CourseId = courseID;
-                    document.ModuleId = moduleId;
+                document.DocName = Path.GetFileName(file.FileName);
+                document.DocDescription = description;
+                document.DocTimestamp = DateTime.Now;
+                if (activityId != null)
+                {
+                    document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
+                }
+                document.ActivityId = activityId;
+                //rename the file
+                 document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
+                 document.CourseId = courseID;
+                 document.ModuleId = moduleId;
+                 
 
-
-                    document.UserId = User.Identity.GetUserId();
-                    db.documents.Add(document);
-                    db.SaveChanges();
+                document.UserId = User.Identity.GetUserId();
+                 if(User.IsInRole("Student"))
+                {
+                   document.Status = Document.StatusType.NotCompleted;
+                }
+                db.documents.Add(document);
+                db.SaveChanges();
 
                     ViewBag.Message = "File uploaded successfully";
                     return Redirect(redirectString);
@@ -292,38 +296,109 @@ namespace LexiconLMS.Controllers
             return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
         }
 
+     
+
+        // GET: 
+        //public ActionResult DeleteDocument(int docId, string docLink)
+        //{
+          
+        //    Document document  = db.documents.Find(docId);
+
+        //    return View(document);
+        //}
+
+        // POST:
+
+        public ActionResult DeleteDocument(int? docId, string docLink, string redirectString)
+        {
+            var FileVirtualPath = "~/Upload/" + docLink;
+            //System.IO.File.Delete(Path.GetFileName(FileVirtualPath));
+            System.IO.File.Delete(Server.MapPath(FileVirtualPath));
+
+            Document document = db.documents.Find(docId);
+            if (docId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            db.documents.Remove(document);
+            db.SaveChanges();
+            return Redirect(redirectCheck());
+        }
 
         //Show documents
-        public ActionResult DocumentList(string role, bool? ontime, int activityId) //Role of the user who uploaded the documents.
+        public ActionResult DocumentList(string role, bool? ontime, int? activityId, int? courseId, int? moduleId) //Role of the user who uploaded the documents.
         {
-            var documents = db.documents.Where(d => d.ActivityId == activityId); //Grabs all documents where the activity ids match from the database.
+            //ViewBag.RedirectString = redirectCheck();
+            var documents = db.documents.Select(d => d);
+            if (activityId.HasValue)
+            {
+                documents = db.documents.Where(d => d.ActivityId == activityId);
 
-            if (User.IsInRole(role) && role == "Student") //Checks if the role variable is set to student, and if the user is in that role.
-            {
-                var userId = User.Identity.GetUserId();
-                documents = documents.Where(d => d.UserId == userId); // Limits the list of documents to just those that match the users id.
-            }
-            else
-            {
-                documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any()); // Limits the documents to those uploaded by the users in the role the variable role is set to.
-            }
-            if (role == "Student")
-            {
-                if (ontime.Value) // This part decides if we show documents uploaded on time or past due.
+                if (User.IsInRole(role) && role == "Student")
                 {
-                    documents = documents.Where(d => d.DocTimestamp < d.DocDeadline);
+                    var userId = User.Identity.GetUserId();
+                    documents = documents.Where(d => d.UserId == userId);
                 }
                 else
                 {
-                    documents = documents.Where(d => d.DocTimestamp > d.DocDeadline);
+                    documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any());
                 }
-            }
-            if (ontime.HasValue) //If the variable ontime has a value we set a viewbag variable to that value.
+                if (role == "Student")
+                {
+                    if (ontime.Value)
+                    {
+                        documents = documents.Where(d => d.DocTimestamp < d.DocDeadline);
+                    }
+                    else
+                    {
+                        documents = documents.Where(d => d.DocTimestamp > d.DocDeadline);
+                    }
+                }
+                if (ontime.HasValue)
+                {
+                    ViewBag.OnTime = ontime.Value;
+                }
+
+                ViewBag.Role = role;
+
+            }//end of activityId.HasValue
+            else if (courseId.HasValue)
             {
-                ViewBag.OnTime = ontime.Value;
+                 documents = db.documents.Where(d => d.CourseId == courseId);
             }
-            ViewBag.Role = role; // Set a viewbag variable to the variable role.
-            return PartialView(documents.ToList()); //Return the list of documents to a partial view.
+            else {
+                 documents = db.documents.Where(d => d.ModuleId == moduleId);
+            }
+            return PartialView(documents.ToList());
+             the user is in that role.
+            
+            
+            se that match the users id.
+            
+            
+            
+            = role).FirstOrDefault().Id).Any()); // Limits the documents to those uploaded by the users in the role the variable role is set to.
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
 
         public ActionResult _AssignmentDetails(int id)

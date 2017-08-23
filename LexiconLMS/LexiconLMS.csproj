@@ -313,6 +313,7 @@
     <Content Include="Views\Activities\DocumentList.cshtml" />
     <Content Include="Views\Activities\_AssignmentDetails.cshtml" />
     <Content Include="Views\Activities\AssignmentFeedback.cshtml" />
+    <Content Include="Views\Account\ParticipantList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Participant List";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("ParticipantList",
+                       "Account",
+                       null,
+                       FormMethod.Post, 
+                       new { enctype = "multipart/form-data", id = "¨Participants", @class = "" }))
+{
+    <label for="file">Upload:</label>
+    <input type="file" name="ParticipantListFile" id="ParticipantListFile" class="btn btn-default" required accept=".xml" />
+    <input type="hidden" value="@ViewBag.courseId" name="CourseID" />
+    <br /><text>&nbsp;</text><br />
+    <input type="submit" class="btn btn-success" value="Populate course @ViewBag.courseName with the participants" />
+}
