@@ -53,7 +53,7 @@
             </dd>
         </dl>
     </div>
-    @if (User.IsInRole("Teacher"))
+    @if (User.IsInRole("Teacher") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
     {
         <div class="col-xs-4">
             <dl>
@@ -103,14 +103,14 @@
             @Html.ActionLink(" ", "Edit", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-edit", style = "font-size:22px; margin-right:30px;", title = "Edit activity" })
         }
     }
-    @Html.ActionLink(" ", "uploadFile", "Activities", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; margin-right:40px", title = "Upload new activity file " })
+    @Html.ActionLink(" ", "uploadFile", "Activities", new { activityId = Model.ActivityId }, new { @class = "glyphicon glyphicon-upload", style = "font-size:22px; margin-right:40px", title = "Upload new activity file " })
     @if (User.IsInRole("Teacher"))
     {
         @Html.ActionLink(" ", "Delete", new { id = Model.ActivityId }, new { @class = "glyphicon glyphicon-trash", style = "font-size:22px; color:red;", title = "Delete " + Model.ActivityName })
     }
 </p>
 <script type="text/javascript">
-    document.getElementById("ActivityDescription").style.maxWidth = "650px";
+    document.getElementById("ActivityDescription").style.maxWidth = "375px";
     document.getElementById("ActivityDescription").cols = "100";
     document.getElementById("ActivityDescription").rows = "5";
     document.getElementById("ActivityDescription").readOnly = true;
