@@ -371,6 +371,6 @@ button { color:white; }
 
 /*https://stackoverflow.com/questions/16004099/zebra-stripe-every-two-trs-in-a-row-with-css*/
 
-.Not-SubmittedStudent tbody tr:nth-child(4n+2), table tbody tr:nth-child(4n) {
+.Not-SubmittedStudent tbody tr:nth-child(4n+2), .Not-SubmittedStudent tbody tr:nth-child(4n) {
     background: #ccc;
 }
