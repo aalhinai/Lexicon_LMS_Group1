@@ -69,7 +69,7 @@
             </dl>
         </div>
                     }
-                    else
+                    else if(User.IsInRole("Student") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
                     {
                         var userId = User.Identity.GetUserId();
                         var documents = Model.Documents.Where(d => d.UserId == userId);
