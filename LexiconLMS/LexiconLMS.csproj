@@ -214,6 +214,7 @@
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Module.cs" />
@@ -310,7 +311,8 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Activities\uploadFile.cshtml" />
     <Content Include="Views\Activities\DocumentList.cshtml" />
-    <Content Include="Views\Activities\AssignmentDetails.cshtml" />
+    <Content Include="Views\Activities\_AssignmentDetails.cshtml" />
+    <Content Include="Views\Activities\AssignmentFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

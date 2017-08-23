@@ -243,31 +243,31 @@ namespace LexiconLMS.Controllers
             {
                 try
                 {
-                var timeStamp = DateTime.Now.Ticks;
-                string path = Path.Combine(Server.MapPath("~/Upload"),
-                                           Path.GetFileName(timeStamp + "_" + file.FileName));
-                file.SaveAs(path);
+                    var timeStamp = DateTime.Now.Ticks;
+                    string path = Path.Combine(Server.MapPath("~/Upload"),
+                                               Path.GetFileName(timeStamp + "_" + file.FileName));
+                    file.SaveAs(path);
 
-                document.DocName = Path.GetFileName(file.FileName);
-                document.DocDescription = "TESTING";
-                document.DocTimestamp = DateTime.Now;
-                if (activityId != null)
-                {
-                    document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
-                }
-                document.ActivityId = activityId;
-                //rename the file
-                 document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
-                 document.CourseId = courseID;
-                 document.ModuleId = moduleId;
+                    document.DocName = Path.GetFileName(file.FileName);
+                    document.DocDescription = "TESTING";
+                    document.DocTimestamp = DateTime.Now;
+                    if (activityId != null)
+                    {
+                        document.DocDeadline = db.activities.Find(activityId).ActivityEndDate;
+                    }
+                    document.ActivityId = activityId;
+                    //rename the file
+                    document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
+                    document.CourseId = courseID;
+                    document.ModuleId = moduleId;
 
 
-                document.UserId = User.Identity.GetUserId();
-                db.documents.Add(document);
-                db.SaveChanges();
+                    document.UserId = User.Identity.GetUserId();
+                    db.documents.Add(document);
+                    db.SaveChanges();
 
-                ViewBag.Message = "File uploaded successfully";
-                return Redirect(redirectString);
+                    ViewBag.Message = "File uploaded successfully";
+                    return Redirect(redirectString);
 
                 }
                 catch (Exception ex)
@@ -287,7 +287,7 @@ namespace LexiconLMS.Controllers
         //download documents 
         public FileResult DownloadDocument(string docLink)
         {
-          
+
             var FileVirtualPath = "/Upload/" + docLink;
             return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
         }
@@ -307,7 +307,7 @@ namespace LexiconLMS.Controllers
             {
                 documents = documents.Where(d => d.User.Roles.Where(r => r.RoleId == db.Roles.Where(x => x.Name == role).FirstOrDefault().Id).Any()); // Limits the documents to those uploaded by the users in the role the variable role is set to.
             }
-            if (role == "Student") 
+            if (role == "Student")
             {
                 if (ontime.Value) // This part decides if we show documents uploaded on time or past due.
                 {
@@ -326,10 +326,53 @@ namespace LexiconLMS.Controllers
             return PartialView(documents.ToList()); //Return the list of documents to a partial view.
         }
 
-        public ActionResult AssignmentDetails(int id)
+        public ActionResult _AssignmentDetails(int id)
         {
             var document = db.documents.Find(id);
-            return View(document);
+            return PartialView(document);
+        }
+
+        [HttpGet]
+        public ActionResult AssignmentFeedback(int? id)
+        {
+            ViewBag.RedirectString = redirectCheck();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.documents.Find(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            FeedbackViewModel feedback = new FeedbackViewModel { DocId = document.DocId, FeedBack = document.FeedBack, Status = document.Status };
+            return View(feedback);
+        }
+
+        [HttpPost]
+        public ActionResult AssignmentFeedback([Bind(Include = "DocId, FeedBack, Status")] FeedbackViewModel feedback, string redirectString)
+        {
+            if (ModelState.IsValid)
+            {
+                var document = db.documents.Find(feedback.DocId);
+                document.DocId = feedback.DocId;
+                document.FeedBack = feedback.FeedBack;
+                document.Status = feedback.Status;
+
+                db.Entry(document).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("TeacherList", "Account");
+                }
+            }
+            ViewBag.RedirectString = redirectString;
+            return View(feedback);
         }
 
         protected override void Dispose(bool disposing)

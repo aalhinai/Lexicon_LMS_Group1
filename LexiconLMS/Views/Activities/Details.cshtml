@@ -1,4 +1,5 @@
 ﻿@model LexiconLMS.Models.Activity
+@using Microsoft.AspNet.Identity;
 
 @{
     ViewBag.Title = "Details";
@@ -67,7 +68,16 @@
                 }
             </dl>
         </div>
-    }
+                    }
+                    else
+                    {
+                        var userId = User.Identity.GetUserId();
+                        var documents = Model.Documents.Where(d => d.UserId == userId);
+                        foreach(var item in documents)
+                        {
+                            @Html.Action("_AssignmentDetails", new { id = item.DocId})
+                        }
+                    }
 </div>
 
 @Html.Action("DocumentList", new { role = "Teacher", activityId = Model.ActivityId })
