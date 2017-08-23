@@ -53,7 +53,38 @@
             </dd>
         </dl>
     </div>
-    @if (User.IsInRole("Teacher") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
+
+    @*message shows inside the table:*@
+    <table class="Not-SubmittedStudent">
+      <tr>
+          <th style=" padding-bottom: 10px;"> Students that have not handed in assignment:</th>
+      </tr>
+      <tbody>
+          @if (User.IsInRole("Teacher") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
+          {
+
+              {
+                  var students = Model.Module.Course.Students.Where(s => !s.Documents.Where(d => d.ActivityId == Model.ActivityId).Any()).ToList(); // Grabs all students in the course of the assignment, then limits it to only those that have not uploaded a document on that assignment.
+                  foreach (var item in students)
+                  {
+                      <tr>
+                          <td>
+                              @item.UserFullName
+                          </td>
+                      </tr>
+
+
+                  }
+              }
+
+
+          }
+      </tbody>
+
+    </table>
+
+    
+    @*@if (User.IsInRole("Teacher") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
     {
         <div class="col-xs-4">
             <dl>
@@ -67,7 +98,7 @@
                 }
             </dl>
         </div>
-    }
+    }*@
 </div>
 
 @Html.Action("DocumentList", new { role = "Teacher", activityId = Model.ActivityId })
@@ -110,7 +141,7 @@
     }
 </p>
 <script type="text/javascript">
-    document.getElementById("ActivityDescription").style.maxWidth = "375px";
+    document.getElementById("ActivityDescription").style.maxWidth = "250px";
     document.getElementById("ActivityDescription").cols = "100";
     document.getElementById("ActivityDescription").rows = "5";
     document.getElementById("ActivityDescription").readOnly = true;
