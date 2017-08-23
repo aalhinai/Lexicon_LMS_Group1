@@ -265,7 +265,7 @@ namespace LexiconLMS.Controllers
                 document.UserId = User.Identity.GetUserId();
                  if(User.IsInRole("Student"))
                 {
-                   document.Status = Document.StatusType.NotCompleted;
+                   document.Status = StatusType.NotCompleted;
                 }
                 db.documents.Add(document);
                 db.SaveChanges();
@@ -375,30 +375,6 @@ namespace LexiconLMS.Controllers
                  documents = db.documents.Where(d => d.ModuleId == moduleId);
             }
             return PartialView(documents.ToList());
-             the user is in that role.
-            
-            
-            se that match the users id.
-            
-            
-            
-            = role).FirstOrDefault().Id).Any()); // Limits the documents to those uploaded by the users in the role the variable role is set to.
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }
 
         public ActionResult _AssignmentDetails(int id)
