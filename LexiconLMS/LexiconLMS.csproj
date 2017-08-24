@@ -201,13 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708211434363_AddedFeedback and status in Document module .cs" />
-    <Compile Include="Migrations\201708211434363_AddedFeedback and status in Document module .Designer.cs">
-      <DependentUpon>201708211434363_AddedFeedback and status in Document module .cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708211448282_Added default value for enum in decoment  model.cs" />
-    <Compile Include="Migrations\201708211448282_Added default value for enum in decoment  model.Designer.cs">
-      <DependentUpon>201708211448282_Added default value for enum in decoment  model.cs</DependentUpon>
+    <Compile Include="Migrations\201708241301400_init.cs" />
+    <Compile Include="Migrations\201708241301400_init.Designer.cs">
+      <DependentUpon>201708241301400_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -336,11 +332,8 @@
     <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708211434363_AddedFeedback and status in Document module .resx">
-      <DependentUpon>201708211434363_AddedFeedback and status in Document module .cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708211448282_Added default value for enum in decoment  model.resx">
-      <DependentUpon>201708211448282_Added default value for enum in decoment  model.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708241301400_init.resx">
+      <DependentUpon>201708241301400_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

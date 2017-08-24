@@ -7,13 +7,13 @@ namespace LexiconLMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Addeddefaultvalueforenumindecomentmodel : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Addeddefaultvalueforenumindecomentmodel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201708211448282_Added default value for enum in decoment  model"; }
+            get { return "201708241301400_init"; }
         }
         
         string IMigrationMetadata.Source
