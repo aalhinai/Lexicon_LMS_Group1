@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Participant List";
+    ViewBag.Title = "Participant List for course "+ ViewBag.CourseName;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -13,7 +13,7 @@
 {
     <label for="file">Upload:</label>
     <input type="file" name="ParticipantListFile" id="ParticipantListFile" class="btn btn-default" required accept=".xml" />
-    <input type="hidden" value="@ViewBag.courseId" name="CourseID" />
+    <input type="hidden" value="@ViewBag.CourseId" name="CourseID" />
     <br /><text>&nbsp;</text><br />
-    <input type="submit" class="btn btn-success" value="Populate course @ViewBag.courseName with the participants" />
+    <input type="submit" class="btn btn-success" value="Populate course @ViewBag.CourseName with the participants" />
 }

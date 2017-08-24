@@ -44,7 +44,7 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Student")]
         public ActionResult MyCourse(int? week)
         {
-            Course course = db.Users.Find(User.Identity.GetUserId()).Course;
+            Course course = db.Users.Find(User.Identity.GetUserId()).Course; //<--- Test if null
             if (week != null)
             {
                 ViewBag.Week = week;
