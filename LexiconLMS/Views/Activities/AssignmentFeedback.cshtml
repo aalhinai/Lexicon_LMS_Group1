@@ -34,7 +34,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-arrow-left", style = "font-size:22px; margin-right:30px;", href = ViewBag.RedirectString, title = "Back to list" })
+
+                <button type="submit" value="Save" class="btn btn-primary hidden-print" title="Save Feedback" style = "font-size:16px;"><span class="glyphicon glyphicon-save"></span></button>  
             </div>
         </div>
     </div>
