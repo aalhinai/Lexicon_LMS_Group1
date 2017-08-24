@@ -4,17 +4,23 @@
     ViewBag.Title = "AssignmentDetails";
 }
 
-<h2>Assignment: @Model.Activity.ActivityName</h2>
+<h2>Assignment:</h2>
+  <h3>@Model.Activity.ActivityName</h3>
 
-<div style="text-align:right;">
+<div style="text-align:left;">
      <hr />
-    <h4>Document Name: @Model.DocName</h4>
+    <h5><b>Document Name:</b> @Model.DocName</h5>
+    <h5><b>Assignment Status:</b> <font color="red">@Model.Status</font></h5>
+    <h5><b>Teacher's Feedback:</b></h5>
+
     <dl>
-        <dt>Feedback</dt>
+        @*<dt>Your Feedback</dt>*@
         <dd>@Html.TextAreaFor(model => model.FeedBack, new { @class = "hidden-print" }) </dd>
-        <dt>Assignment Status</dt>
-        <dd>@Model.Status</dd>
+        @*<dt>Assignment Status</dt>
+        <dd>@Model.Status</dd>*@
     </dl>
+
+
 </div>
 <script type="text/javascript">
     feedback = document.getElementById("FeedBack");
