@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -276,6 +277,10 @@ namespace LexiconLMS.Controllers
         {
             ViewBag.Role = role;
             ViewBag.Course = courseId;
+
+            if (courseId != null) ViewBag.CourseName = "course " + db.courses.Where(ci => ci.CourseId == courseId).FirstOrDefault().CourseName;
+            else ViewBag.CourseName = "all courses";
+
             if (Request.UrlReferrer != null)
             {
                 ViewBag.RedirectString = Request.UrlReferrer.ToString();
@@ -595,7 +600,7 @@ namespace LexiconLMS.Controllers
             base.Dispose(disposing);
         }
 
-        //---------tillagt av Stefans
+        //---------tillagt av Stefan
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Manage");
@@ -609,8 +614,8 @@ namespace LexiconLMS.Controllers
             if (courseId > 0)
             {
                 Course currentCourse = db.courses.Where(c => c.CourseId == courseId).FirstOrDefault();
-                ViewBag.courseId = courseId;
-                ViewBag.courseName = currentCourse.CourseName;
+                ViewBag.CourseId = courseId;
+                ViewBag.CourseName = currentCourse.CourseName;
             }
             return View();
         }
@@ -619,21 +624,23 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<ActionResult> ParticipantList(HttpPostedFileBase ParticipantListFile, int CourseId = 0)
         {
-            //string filePath = Server.MapPath("~/App_Data/" + ParticipantListFile.FileName);
-
-            ParticipantListFile.SaveAs(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
-
-            try 
+            try
             {
-                //No model is used in this view
+                string ParticipantFilePath = Path.Combine(Server.MapPath("~/App_Data"), Path.GetFileName(ParticipantListFile.FileName));
+
+                //ParticipantListFile.SaveAs(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
+                ParticipantListFile.SaveAs(ParticipantFilePath);
+
                 var _userStore = new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(db);
                 var _userManager = new UserManager<ApplicationUser>(_userStore);
 
-                XDocument xdocFromFile = XDocument.Load(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
+                //XDocument xdocFromFile = XDocument.Load(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
+                XDocument xdocFromFile = XDocument.Load(ParticipantFilePath);
 
-                var studentXList = xdocFromFile.Root.Elements().ElementAt(4); //Office 2003: ElementAt(4) 
+                XElement studentXList = xdocFromFile.Root.Elements().ElementAt(4); //Excel 2003: ElementAt(3) 
 
-                if (studentXList.FirstAttribute.Value.ToUpper() == "PARTICIPANTS" &&
+                if (studentXList != null &&
+                    studentXList.FirstAttribute.Value.ToUpper() == "PARTICIPANTS" &&
                     studentXList.Elements().First().Elements().ElementAt(3).Elements().First().Value.ToUpper() == "USERFIRSTNAME" &&
                     studentXList.Elements().First().Elements().ElementAt(3).Elements().ElementAt(1).Value.ToUpper() == "USERLASTNAME" &&
                     studentXList.Elements().First().Elements().ElementAt(3).Elements().ElementAt(2).Value.ToUpper() == "EMAIL")
@@ -657,15 +664,28 @@ namespace LexiconLMS.Controllers
                             _userManager.AddToRole(student.Id, "Student");
                         }
                     }
-                    System.IO.File.Delete(Server.MapPath("~/App_Data/" + ParticipantListFile.FileName));
-
-                    return RedirectToAction("Details", "Courses", new { Id = CourseId });
+                    System.IO.File.Delete(ParticipantFilePath);
+                    return RedirectToAction("Details", "Courses", new { Id = CourseId }); // Success!
                 }
-                else return View();
+                else
+                {
+                    try
+                    {
+                        System.IO.File.Delete(ParticipantFilePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                        return View();
+                    }
+                    ViewBag.Message = "Uploaded file is not of the right standard for these accounts!";
+                    return View();
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(); //RedirectToAction("Index", "Home");
+                ViewBag.Message = ex.Message;
+                return View();
             }
 
             //return View();
