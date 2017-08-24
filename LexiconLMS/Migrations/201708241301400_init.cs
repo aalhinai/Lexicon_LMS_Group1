@@ -40,9 +40,9 @@ namespace LexiconLMS.Migrations
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.DocId)
-                .ForeignKey("dbo.Activities", t => t.ActivityId, cascadeDelete: true)
-                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
-                .ForeignKey("dbo.Modules", t => t.ModuleId, cascadeDelete: true)
+                .ForeignKey("dbo.Activities", t => t.ActivityId)
+                .ForeignKey("dbo.Courses", t => t.CourseId)
+                .ForeignKey("dbo.Modules", t => t.ModuleId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.CourseId)
