@@ -62,12 +62,8 @@
             <tr style="background-color:wheat">
                 <th style="padding-bottom: 10px;"> Not yet submitted:</th>
             </tr>
-          
             <tbody>
-
-
                 @{
-
                     var students = Model.Module.Course.Students.Where(s => !s.Documents.Where(d => d.ActivityId == Model.ActivityId).Any()).ToList(); // Grabs all students in the course of the assignment, then limits it to only those that have not uploaded a document on that assignment.
                 }
                 @foreach (var item in students)
@@ -78,12 +74,10 @@
                         </td>
                     </tr>
                 }
-
             </tbody>
-
         </table>
                     }
-                    else if(User.IsInRole("Student") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
+                    else if (User.IsInRole("Student") && Model.ActivityType == LexiconLMS.Models.ActivityType.Assignment)
                     {
                         var userId = User.Identity.GetUserId();
                         var documents = Model.Documents.Where(d => d.UserId == userId);
@@ -94,15 +88,9 @@
                     }
 </div>
 
-
-
 @Html.Action("DocumentList", new { role = "Teacher", activityId = Model.ActivityId })
-
 @Html.Action("DocumentList", new { role = "Student", ontime = true, activityId = Model.ActivityId })
-
 @Html.Action("DocumentList", new { role = "Student", ontime = false, activityId = Model.ActivityId })
-
-
 
 <p>
     @ViewBag.Message

@@ -77,7 +77,7 @@
                 <th class="hidden-print">Actions</th>
             }
         </tr>
-        @foreach (var item in Model.Activities)
+        @foreach (var item in Model.Activities.OrderBy(a => a.ActivityStartDate))
         {
             string endedClass = "";
             if (item.ActivityEndDate < DateTime.Now)
