@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Models
 {
+    [DefaultValue(NoStatus)]
+    public enum StatusType
+    {
+        NoStatus,
+        NotCompleted,
+        Completed,
+        Redo,
+
+
+    }
     public class Document
     {
-        [DefaultValue(NotCompleted)]
-        public enum StatusType
-        {
-            NotCompleted,
-            Completed,
-            Redo,
-
-
-        }
-
         [Key]
         public int DocId { get; set; }
         public string DocName { get; set; }
@@ -28,14 +28,15 @@ namespace LexiconLMS.Models
         public int? ModuleId { get; set; }
         public int? ActivityId { get; set; }
         public string DocURL { get; set; }
-        [Display(Name = " FeedBack")]
+        [Display(Name = "Feedback")]
         public string FeedBack { get; set; }
         [Display(Name = "Status")]
-        public StatusType Status {  get; set; } 
+        public StatusType Status { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Course Course { get; set; }
         public virtual Module Module { get; set; }
         public virtual Activity Activity { get; set; }
     }
+
 }

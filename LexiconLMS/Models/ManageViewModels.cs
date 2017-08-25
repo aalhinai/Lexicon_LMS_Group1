@@ -83,4 +83,11 @@ namespace LexiconLMS.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class FeedbackViewModel
+    {
+        public int DocId { get; set; }
+        public string FeedBack { get; set; }
+        public StatusType Status { get; set; }
+    }
 }

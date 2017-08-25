@@ -356,3 +356,21 @@ hr {
 
 button { color:white; }
 /*************************/
+
+
+/*List of people that have not submitted their assignment*/
+
+.Not-SubmittedStudent {
+    margin-top: 30px;
+    margin-bottom: 100px;
+    margin-left: 180px;
+    border: 1px solid black;
+    background-color: #eee;
+    border-collapse: collapse;
+}
+
+/*https://stackoverflow.com/questions/16004099/zebra-stripe-every-two-trs-in-a-row-with-css*/
+
+.Not-SubmittedStudent tbody tr:nth-child(4n+2), .Not-SubmittedStudent tbody tr:nth-child(4n) {
+    background: #ccc;
+}

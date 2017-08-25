@@ -228,16 +228,11 @@ namespace LexiconLMS.Controllers
         [HttpGet]
         public ActionResult uploadFile(int? activityId, int? courseID, int? moduleId)
         {
-
             ViewBag.activityId = activityId;
             ViewBag.courseId = courseID;
             ViewBag.moduleId = moduleId;
             ViewBag.RedirectString = redirectCheck();
             return View();
-
-
-            // return View();
-
         }
 
         // POST: Students
@@ -248,10 +243,10 @@ namespace LexiconLMS.Controllers
             {
                 try
                 {
-                var timeStamp = DateTime.Now.Ticks;
-                string path = Path.Combine(Server.MapPath("~/Upload"),
-                                           Path.GetFileName(timeStamp + "_" + file.FileName));
-                file.SaveAs(path);
+                    var timeStamp = DateTime.Now.Ticks;
+                    string path = Path.Combine(Server.MapPath("~/Upload"),
+                                               Path.GetFileName(timeStamp + "_" + file.FileName));
+                    file.SaveAs(path);
 
                 document.DocName = Path.GetFileName(file.FileName);
                 document.DocDescription = description;
@@ -265,14 +260,18 @@ namespace LexiconLMS.Controllers
                  document.DocURL = Path.GetFileName("/Upload/" + timeStamp + "_" + file.FileName);
                  document.CourseId = courseID;
                  document.ModuleId = moduleId;
-
+                 
 
                 document.UserId = User.Identity.GetUserId();
+                 if(User.IsInRole("Student"))
+                {
+                   document.Status = StatusType.NotCompleted;
+                }
                 db.documents.Add(document);
                 db.SaveChanges();
 
-                ViewBag.Message = "File uploaded successfully";
-                return Redirect(redirectString);
+                    ViewBag.Message = "File uploaded successfully";
+                    return Redirect(redirectString);
 
                 }
                 catch (Exception ex)
@@ -292,15 +291,49 @@ namespace LexiconLMS.Controllers
         //download documents 
         public FileResult DownloadDocument(string docLink)
         {
-          
+
             var FileVirtualPath = "/Upload/" + docLink;
             return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
         }
 
+     
+
+        // GET: 
+        //public ActionResult DeleteDocument(int docId, string docLink)
+        //{
+          
+        //    Document document  = db.documents.Find(docId);
+
+        //    return View(document);
+        //}
+
+        // POST:
+
+        public ActionResult DeleteDocument(int? docId, string docLink, string redirectString)
+        {
+            var FileVirtualPath = "~/Upload/" + docLink;
+            //System.IO.File.Delete(Path.GetFileName(FileVirtualPath));
+            System.IO.File.Delete(Server.MapPath(FileVirtualPath));
+
+            Document document = db.documents.Find(docId);
+            if (docId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            db.documents.Remove(document);
+            db.SaveChanges();
+            return Redirect(redirectCheck());
+        }
 
         //Show documents
         public ActionResult DocumentList(string role, bool? ontime, int? activityId, int? courseId, int? moduleId) //Role of the user who uploaded the documents.
         {
+            //ViewBag.RedirectString = redirectCheck();
             var documents = db.documents.Select(d => d);
             if (activityId.HasValue)
             {
@@ -342,6 +375,55 @@ namespace LexiconLMS.Controllers
                  documents = db.documents.Where(d => d.ModuleId == moduleId);
             }
             return PartialView(documents.ToList());
+        }
+
+        public ActionResult _AssignmentDetails(int id)
+        {
+            var document = db.documents.Find(id);
+            return PartialView(document);
+        }
+
+        [HttpGet]
+        public ActionResult AssignmentFeedback(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.documents.Find(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            FeedbackViewModel feedback = new FeedbackViewModel { DocId = document.DocId, FeedBack = document.FeedBack, Status = document.Status };
+            ViewBag.RedirectString = redirectCheck();
+            return View(feedback);
+        }
+
+        [HttpPost]
+        public ActionResult AssignmentFeedback([Bind(Include = "DocId, FeedBack, Status")] FeedbackViewModel feedbackviewmodel, string redirectString)
+        {
+            if (ModelState.IsValid)
+            {
+                var document = db.documents.Find(feedbackviewmodel.DocId);
+                document.DocId = feedbackviewmodel.DocId;
+                document.FeedBack = feedbackviewmodel.FeedBack;
+                document.Status = feedbackviewmodel.Status;
+
+                db.Entry(document).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (redirectString != "Empty")
+                {
+                    return Redirect(redirectString);
+                }
+                else
+                {
+                    return RedirectToAction("TeacherList", "Account");
+                }
+            }
+            //ViewBag.RedirectString = redirectString;
+            return View(feedbackviewmodel);
         }
 
         protected override void Dispose(bool disposing)

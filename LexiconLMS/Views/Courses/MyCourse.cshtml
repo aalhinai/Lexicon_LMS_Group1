@@ -90,4 +90,5 @@
             <tr><td colspan="4" class="text-center h4">No activities week @week.</td></tr>
         }
     </table>
+    @Html.Action("DocumentList", "Activities", new { courseId = Model.CourseId })
 </div>
